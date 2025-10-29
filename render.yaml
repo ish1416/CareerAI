@@ -35,8 +35,5 @@ services:
   - type: web
     name: careerai-frontend
     env: static
-    buildCommand: cd frontend && npm install && npm run build
+    buildCommand: cd frontend && npm install && VITE_API_URL=https://careerai-efza.onrender.com/api npm run build
     staticPublishPath: ./frontend/dist
-    envVars:
-      - key: VITE_API_URL
-        value: https://careerai-efza.onrender.com/api
