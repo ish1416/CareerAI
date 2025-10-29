@@ -49,13 +49,18 @@ api.interceptors.response.use(
         } catch (refreshError) {
           console.warn('Token refresh failed:', refreshError.message);
           localStorage.removeItem('careerai_auth');
-          if (!window.location.pathname.includes('/login')) {
+          // Only redirect to login if on protected routes
+          const protectedRoutes = ['/dashboard', '/builder', '/analysis', '/settings', '/history', '/trends'];
+          const currentPath = window.location.pathname;
+          if (protectedRoutes.some(route => currentPath.startsWith(route))) {
             window.location.href = '/login';
           }
         }
       } else {
-        // No auth data, redirect to login
-        if (!window.location.pathname.includes('/login')) {
+        // No auth data, only redirect protected routes to login
+        const protectedRoutes = ['/dashboard', '/builder', '/analysis', '/settings', '/history', '/trends'];
+        const currentPath = window.location.pathname;
+        if (protectedRoutes.some(route => currentPath.startsWith(route))) {
           window.location.href = '/login';
         }
       }
