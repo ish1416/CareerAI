@@ -6,13 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: { port: 5174, strictPort: true },
   preview: { port: 5174, strictPort: true },
-  base: './',
   build: {
-    assetsDir: 'assets',
-    rollupOptions: {
-      output: {
-        manualChunks: undefined
-      }
-    }
+    assetsDir: 'assets'
   }
 })
