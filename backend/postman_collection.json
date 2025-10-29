@@ -1,0 +1,149 @@
+{
+  "info": {
+    "name": "CareerAI API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Postman collection for CareerAI backend APIs. Set {{baseUrl}} and {{token}} in environment."
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api" },
+    { "key": "token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth / Register",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "url": { "raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"] },
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}" }
+      }
+    },
+    {
+      "name": "Auth / Login",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] },
+        "body": { "mode": "raw", "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}" }
+      }
+    },
+    {
+      "name": "Auth / Logout",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": { "raw": "{{baseUrl}}/auth/logout", "host": ["{{baseUrl}}"], "path": ["auth", "logout"] }
+      }
+    },
+
+    {
+      "name": "User / Dashboard",
+      "request": {
+        "method": "GET",
+        "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+        "url": { "raw": "{{baseUrl}}/user/dashboard", "host": ["{{baseUrl}}"], "path": ["user", "dashboard"] }
+      }
+    },
+    {
+      "name": "User / Profile (GET)",
+      "request": {
+        "method": "GET",
+        "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+        "url": { "raw": "{{baseUrl}}/user/profile", "host": ["{{baseUrl}}"], "path": ["user", "profile"] }
+      }
+    },
+    {
+      "name": "User / Profile (PUT)",
+      "request": {
+        "method": "PUT",
+        "header": [ { "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" } ],
+        "url": { "raw": "{{baseUrl}}/user/profile", "host": ["{{baseUrl}}"], "path": ["user", "profile"] },
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Updated User\"\n}" }
+      }
+    },
+    {
+      "name": "User / Delete Account",
+      "request": {
+        "method": "DELETE",
+        "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+        "url": { "raw": "{{baseUrl}}/user/account", "host": ["{{baseUrl}}"], "path": ["user", "account"] }
+      }
+    },
+
+    {
+      "name": "Resume / Upload",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+        "url": { "raw": "{{baseUrl}}/resume/upload", "host": ["{{baseUrl}}"], "path": ["resume", "upload"] },
+        "body": {
+          "mode": "formdata",
+          "formdata": [ { "key": "file", "type": "file", "src": "resume.pdf" } ]
+        }
+      }
+    },
+    {
+      "name": "Resume / Analyze",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" } ],
+        "url": { "raw": "{{baseUrl}}/resume/analyze", "host": ["{{baseUrl}}"], "path": ["resume", "analyze"] },
+        "body": { "mode": "raw", "raw": "{\n  \"resumeText\": \"Paste resume text here\"\n}" }
+      }
+    },
+    {
+      "name": "Resume / Rewrite",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" } ],
+        "url": { "raw": "{{baseUrl}}/resume/rewrite", "host": ["{{baseUrl}}"], "path": ["resume", "rewrite"] },
+        "body": { "mode": "raw", "raw": "{\n  \"text\": \"Make this more professional...\"\n}" }
+      }
+    },
+    {
+      "name": "Resume / Build (Save)",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" } ],
+        "url": { "raw": "{{baseUrl}}/resume/build", "host": ["{{baseUrl}}"], "path": ["resume", "build"] },
+        "body": { "mode": "raw", "raw": "{\n  \"title\": \"My Resume\",\n  \"content\": {\n    \"personal\": { \"name\": \"Test\", \"email\": \"test@example.com\", \"phone\": \"123-456\" },\n    \"education\": \"...\",\n    \"experience\": \"...\",\n    \"skills\": \"...\"\n  }\n}" }
+      }
+    },
+    {
+      "name": "Resume / List",
+      "request": {
+        "method": "GET",
+        "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+        "url": { "raw": "{{baseUrl}}/resume/list", "host": ["{{baseUrl}}"], "path": ["resume", "list"] }
+      }
+    },
+    {
+      "name": "Resume / Get by ID",
+      "request": {
+        "method": "GET",
+        "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+        "url": { "raw": "{{baseUrl}}/resume/1", "host": ["{{baseUrl}}"], "path": ["resume", "1"] }
+      }
+    },
+
+    {
+      "name": "Job / Compare",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" } ],
+        "url": { "raw": "{{baseUrl}}/job/compare", "host": ["{{baseUrl}}"], "path": ["job", "compare"] },
+        "body": { "mode": "raw", "raw": "{\n  \"resumeText\": \"...\",\n  \"jobDescription\": \"...\"\n}" }
+      }
+    },
+
+    {
+      "name": "CoverLetter / Generate",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" } ],
+        "url": { "raw": "{{baseUrl}}/coverletter/generate", "host": ["{{baseUrl}}"], "path": ["coverletter", "generate"] },
+        "body": { "mode": "raw", "raw": "{\n  \"jobTitle\": \"Frontend Engineer\",\n  \"resumeText\": \"Paste resume text here\"\n}" }
+      }
+    }
+  ]
+}

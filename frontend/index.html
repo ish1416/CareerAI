@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    
+    <!-- Primary Meta Tags -->
+    <title>Career AI - AI-Powered Resume Builder & Optimizer</title>
+    <meta name="title" content="Career AI - AI-Powered Resume Builder & Optimizer" />
+    <meta name="description" content="Build, analyze, and optimize your resume with AI-powered insights. Land your dream job faster with ATS-optimized resumes." />
+    <meta name="keywords" content="resume builder, ATS optimization, AI resume, job search, career" />
+    <meta name="author" content="Career AI" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://careerai.app/" />
+    <meta property="og:title" content="Career AI - AI-Powered Resume Builder" />
+    <meta property="og:description" content="Build, analyze, and optimize your resume with AI-powered insights." />
+    <meta property="og:image" content="/brand.png" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://careerai.app/" />
+    <meta property="twitter:title" content="Career AI - AI-Powered Resume Builder" />
+    <meta property="twitter:description" content="Build, analyze, and optimize your resume with AI-powered insights." />
+    <meta property="twitter:image" content="/brand.png" />
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#6366f1" />
+    <meta name="background-color" content="#ffffff" />
+    <meta name="display" content="standalone" />
+    <meta name="orientation" content="portrait" />
+    
+    <!-- Apple PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Career AI" />
+    <link rel="apple-touch-icon" href="/brand.png" />
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" href="/brand.png" />
+    <link rel="shortcut icon" href="/brand.png" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Theme Script -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('careerai_theme');
+          var theme = saved || (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch(e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
