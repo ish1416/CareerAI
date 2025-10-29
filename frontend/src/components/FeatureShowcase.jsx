@@ -1,61 +1,101 @@
 import React from 'react';
+import { FileText, Brain, Target, TrendingUp, Users, Award, Zap, Shield } from 'lucide-react';
 
 const FeatureShowcase = () => {
-  return (
-    <section style={{ padding: '64px 16px', background: '#f8fafc' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
-        <h2 style={{ fontSize: '36px', fontWeight: 'bold', marginBottom: '16px', color: '#1f2937' }}>
-          Everything You Need to Land Your Dream Job
-        </h2>
-        <p style={{ fontSize: '18px', color: '#6b7280', marginBottom: '48px' }}>
-          Our comprehensive suite of AI-powered tools helps you create, optimize, and track your career documents
-        </p>
-        
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
-          gap: '24px',
-          marginBottom: '48px'
-        }}>
-          <div style={{ background: 'white', padding: '24px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-            <h3 style={{ color: '#1f2937', marginBottom: '8px' }}>AI-Powered Analysis</h3>
-            <p style={{ color: '#6b7280', fontSize: '14px' }}>Get instant ATS compatibility scores and personalized improvement suggestions</p>
-          </div>
-          <div style={{ background: 'white', padding: '24px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-            <h3 style={{ color: '#1f2937', marginBottom: '8px' }}>Professional Templates</h3>
-            <p style={{ color: '#6b7280', fontSize: '14px' }}>15+ ATS-optimized templates designed by career experts</p>
-          </div>
-          <div style={{ background: 'white', padding: '24px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-            <h3 style={{ color: '#1f2937', marginBottom: '8px' }}>Job Matching</h3>
-            <p style={{ color: '#6b7280', fontSize: '14px' }}>Find jobs that match your skills with AI-powered recommendations</p>
-          </div>
-          <div style={{ background: 'white', padding: '24px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-            <h3 style={{ color: '#1f2937', marginBottom: '8px' }}>Career Insights</h3>
-            <p style={{ color: '#6b7280', fontSize: '14px' }}>Real-time salary data, growth trends, and industry analytics</p>
-          </div>
-        </div>
+  const features = [
+    {
+      icon: Brain,
+      title: 'AI-Powered Analysis',
+      description: 'Get instant ATS compatibility scores and personalized improvement suggestions',
+      color: 'var(--accent-blue)'
+    },
+    {
+      icon: FileText,
+      title: 'Professional Templates',
+      description: '15+ ATS-optimized templates designed by career experts',
+      color: 'var(--success)'
+    },
+    {
+      icon: Target,
+      title: 'Job Matching',
+      description: 'Find jobs that match your skills with AI-powered recommendations',
+      color: 'var(--warning)'
+    },
+    {
+      icon: TrendingUp,
+      title: 'Career Insights',
+      description: 'Real-time salary data, growth trends, and industry analytics',
+      color: 'var(--info)'
+    },
+    {
+      icon: Users,
+      title: 'Interview Preparation',
+      description: 'Practice with AI-generated questions and get real-time feedback',
+      color: 'var(--accent-blue)'
+    },
+    {
+      icon: Award,
+      title: 'Performance Tracking',
+      description: 'Monitor your progress and see improvement over time',
+      color: 'var(--warning)'
+    },
+    {
+      icon: Zap,
+      title: 'Instant Optimization',
+      description: 'One-click resume enhancement with AI-powered suggestions',
+      color: 'var(--info)'
+    },
+    {
+      icon: Shield,
+      title: 'Privacy First',
+      description: 'Your data is encrypted and never shared with third parties',
+      color: 'var(--text-soft)'
+    }
+  ];
 
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', 
-          gap: '24px' 
-        }}>
-          <div style={{ background: 'white', padding: '24px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-            <h3 style={{ fontSize: '24px', fontWeight: 'bold', color: '#3b82f6', marginBottom: '4px' }}>50K+</h3>
-            <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>Resumes Created</p>
-          </div>
-          <div style={{ background: 'white', padding: '24px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-            <h3 style={{ fontSize: '24px', fontWeight: 'bold', color: '#10b981', marginBottom: '4px' }}>95%</h3>
-            <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>ATS Pass Rate</p>
-          </div>
-          <div style={{ background: 'white', padding: '24px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-            <h3 style={{ fontSize: '24px', fontWeight: 'bold', color: '#f59e0b', marginBottom: '4px' }}>2.5x</h3>
-            <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>More Interviews</p>
-          </div>
-          <div style={{ background: 'white', padding: '24px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-            <h3 style={{ fontSize: '24px', fontWeight: 'bold', color: '#8b5cf6', marginBottom: '4px' }}>24/7</h3>
-            <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>AI Support</p>
-          </div>
+  return (
+    <section className="section" id="showcase">
+      <div className="section-intro">
+        <h3 className="section-title">Everything You Need to Land Your Dream Job</h3>
+        <p className="muted">Our comprehensive suite of AI-powered tools helps you create, optimize, and track your career documents</p>
+      </div>
+      
+      <div className="grid">
+        {features.map((feature) => {
+          const Icon = feature.icon;
+          return (
+            <div key={feature.title} className="card shine feature-card">
+              <div 
+                className="icon-bubble"
+                style={{ background: feature.color }}
+              >
+                <Icon size={24} color="white" />
+              </div>
+              
+              <h4>{feature.title}</h4>
+              <p className="sub">{feature.description}</p>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Stats Section */}
+      <div className="grid stats" style={{ marginTop: 'var(--space-8)' }}>
+        <div className="card shine" style={{ textAlign: 'center' }}>
+          <h3 style={{ margin: '0 0 var(--space-1) 0', color: 'var(--accent-blue)' }}>50K+</h3>
+          <p className="muted" style={{ margin: 0 }}>Resumes Created</p>
+        </div>
+        <div className="card shine" style={{ textAlign: 'center' }}>
+          <h3 style={{ margin: '0 0 var(--space-1) 0', color: 'var(--success)' }}>95%</h3>
+          <p className="muted" style={{ margin: 0 }}>ATS Pass Rate</p>
+        </div>
+        <div className="card shine" style={{ textAlign: 'center' }}>
+          <h3 style={{ margin: '0 0 var(--space-1) 0', color: 'var(--warning)' }}>2.5x</h3>
+          <p className="muted" style={{ margin: 0 }}>More Interviews</p>
+        </div>
+        <div className="card shine" style={{ textAlign: 'center' }}>
+          <h3 style={{ margin: '0 0 var(--space-1) 0', color: 'var(--info)' }}>24/7</h3>
+          <p className="muted" style={{ margin: 0 }}>AI Support</p>
         </div>
       </div>
     </section>
