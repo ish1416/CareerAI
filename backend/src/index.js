@@ -43,7 +43,8 @@ const allowedOrigins = [
   'http://localhost:5180',
   'http://localhost:3000',
   'https://career-ai-frontend.vercel.app',
-  'https://careerai.vercel.app'
+  'https://careerai.vercel.app',
+  'https://career-ai-q0tf.onrender.com'
 ];
 
 app.use(cors({
