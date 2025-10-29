@@ -62,7 +62,7 @@ function App() {
       {showPublicNavbar && <Navbar />}
       <Routes>
         {/* Public routes wrapped with container for centered content */}
-        <Route path="/" element={<div className="container"><Landing /></div>} />
+        <Route path="/" element={<Landing />} />
         <Route path="/login" element={<div className="container"><Login /></div>} />
         <Route path="/register" element={<div className="container"><Register /></div>} />
         <Route path="/forgot" element={<div className="container"><Forgot /></div>} />
