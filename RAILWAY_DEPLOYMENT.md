@@ -5,10 +5,9 @@
 ### 1. Backend Service
 1. Connect your GitHub repo to Railway
 2. Create new service → Select your repo
-3. Set service name: `careerai-backend`
+3. Set **Root Directory**: `backend`
 4. Set environment variables:
    ```
-   RAILWAY_SERVICE_NAME=backend
    DATABASE_URL=your_database_url
    JWT_SECRET=your_jwt_secret
    GROQ_API_KEY=your_groq_key
@@ -18,10 +17,9 @@
 
 ### 2. Frontend Service  
 1. Create another service from same repo
-2. Set service name: `careerai-frontend`
+2. Set **Root Directory**: `frontend`
 3. Set environment variables:
    ```
-   RAILWAY_SERVICE_NAME=frontend
    VITE_API_URL=https://your-backend-url.railway.app/api
    ```
 4. Deploy automatically

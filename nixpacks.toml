@@ -1,11 +1,11 @@
 [phases.setup]
-nixPkgs = ['nodejs', 'npm']
+nixPkgs = ['nodejs']
 
 [phases.install]
-cmds = ['npm install --prefix backend', 'npm install --prefix frontend']
+cmds = ['npm install']
 
 [phases.build]
-cmds = ['npm run build --prefix frontend']
+cmds = ['echo "Build phase complete"']
 
 [start]
-cmd = 'npm start --prefix backend'
+cmd = './deploy.sh'
