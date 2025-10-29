@@ -1,28 +1,20 @@
-import express from 'express';
-import cors from 'cors';
+const express = require('express');
+const cors = require('cors');
 
 const app = express();
 
-// Enable CORS
-app.use(cors({
-  origin: true,
-  credentials: true,
-}));
-
+app.use(cors());
 app.use(express.json());
 
-// Simple health check
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'healthy',
-    timestamp: new Date().toISOString(),
-    message: 'Backend is running on Vercel'
+    timestamp: new Date().toISOString()
   });
 });
 
-// Catch all for now
-app.all('*', (req, res) => {
-  res.status(404).json({ error: 'Route not found' });
+app.get('/', (req, res) => {
+  res.json({ message: 'CareerAI Backend API' });
 });
 
-export default app;
+module.exports = app;
