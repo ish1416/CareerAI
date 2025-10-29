@@ -39,4 +39,4 @@ services:
     staticPublishPath: ./frontend/dist
     envVars:
       - key: VITE_API_URL
-        sync: false
+        value: https://careerai-efza.onrender.com/api
