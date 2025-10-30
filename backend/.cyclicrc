@@ -1,0 +1,8 @@
+{
+  "build": {
+    "command": "npm install && npx prisma generate"
+  },
+  "start": {
+    "command": "npm start"
+  }
+}
