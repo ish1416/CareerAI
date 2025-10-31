@@ -5,7 +5,8 @@ import helmet from 'helmet';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
-dotenv.config();
+await dotenv.config();
+import 'newrelic';
 
 import authRoutes from './routes/auth.js';
 import resumeRoutes from './routes/resume.js';
