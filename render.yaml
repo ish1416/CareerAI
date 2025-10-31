@@ -2,12 +2,14 @@ services:
   - type: web
     name: careerai-backend
     env: node
-    buildCommand: cd backend && npm install && npx prisma generate
+    buildCommand: cd backend && npm install && npx prisma generate && npx prisma migrate deploy
     startCommand: cd backend && npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
+        sync: false
+      - key: DIRECT_URL
         sync: false
       - key: JWT_SECRET
         sync: false
@@ -35,5 +37,8 @@ services:
   - type: web
     name: careerai-frontend
     env: static
-    buildCommand: cd frontend && npm install && VITE_API_URL=https://careerai-efza.onrender.com/api npm run build
+    buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: ./frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://careerai-backend.onrender.com/api
