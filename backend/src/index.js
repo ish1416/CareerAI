@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
 await dotenv.config();
-import 'newrelic';
+// import 'newrelic'; // Temporarily disabled
 
 import authRoutes from './routes/auth.js';
 import resumeRoutes from './routes/resume.js';
@@ -16,6 +16,29 @@ import userRoutes from './routes/user.js';
 import billingRoutes from './routes/billing.js';
 import webhookRoutes from './routes/webhooks.js';
 import healthRoutes from './routes/health.js';
+import aiRoutes from './routes/ai.js';
+import aiCopilotRoutes from './routes/aiCopilot.js';
+import learningRoutes from './routes/learning.js';
+import networkingRoutes from './routes/networking.js';
+import portfolioRoutes from './routes/portfolio.js';
+import jobTrackerRoutes from './routes/jobTracker.js';
+import interviewRoutes from './routes/interview.js';
+import projectFinderRoutes from './routes/projectFinder.js';
+import enterpriseRoutes from './routes/enterprise.js';
+import analyticsRoutes from './routes/analytics.js';
+import productivityRoutes from './routes/productivity.js';
+import careerDnaRoutes from './routes/careerDna.js';
+import careerTwinRoutes from './routes/careerTwin.js';
+import globalOpportunitiesRoutes from './routes/globalOpportunities.js';
+import videoResumeRoutes from './routes/videoResume.js';
+import virtualFairRoutes from './routes/virtualFair.js';
+import blockchainRoutes from './routes/blockchain.js';
+import mentorMarketplaceRoutes from './routes/mentorMarketplace.js';
+import autoDistributionRoutes from './routes/autoDistribution.js';
+import communicationCoachRoutes from './routes/communicationCoach.js';
+import jobIntelligenceRoutes from './routes/jobIntelligence.js';
+import salaryNegotiationRoutes from './routes/salaryNegotiation.js';
+import careerGoalsRoutes from './routes/careerGoals.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
 import './config/passport.js';
@@ -53,8 +76,8 @@ app.use(cors({
     // Allow requests with no origin (mobile apps, curl, etc.)
     if (!origin) return callback(null, true);
     
-    // Allow all localhost origins in development
-    if (process.env.NODE_ENV !== 'production' && origin.includes('localhost')) {
+    // Always allow localhost origins for development
+    if (origin && origin.includes('localhost')) {
       return callback(null, true);
     }
     
@@ -89,6 +112,29 @@ app.use('/api/resume', resumeRoutes);
 app.use('/api/job', jobRoutes);
 app.use('/api/coverletter', coverLetterRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/ai', aiRoutes);
+app.use('/api/copilot', aiCopilotRoutes);
+app.use('/api/learning', learningRoutes);
+app.use('/api/network', networkingRoutes);
+app.use('/api/portfolio', portfolioRoutes);
+app.use('/api/job-tracker', jobTrackerRoutes);
+app.use('/api/interview', interviewRoutes);
+app.use('/api/projects', projectFinderRoutes);
+app.use('/api/enterprise', enterpriseRoutes);
+app.use('/api/analytics', analyticsRoutes);
+app.use('/api/productivity', productivityRoutes);
+app.use('/api/career-dna', careerDnaRoutes);
+app.use('/api/career-twin', careerTwinRoutes);
+app.use('/api/global-opportunities', globalOpportunitiesRoutes);
+app.use('/api/video-resume', videoResumeRoutes);
+app.use('/api/virtual-fair', virtualFairRoutes);
+app.use('/api/blockchain', blockchainRoutes);
+app.use('/api/mentor-marketplace', mentorMarketplaceRoutes);
+app.use('/api/auto-distribution', autoDistributionRoutes);
+app.use('/api/communication-coach', communicationCoachRoutes);
+app.use('/api/job-intelligence', jobIntelligenceRoutes);
+app.use('/api/salary-negotiation', salaryNegotiationRoutes);
+app.use('/api/career-goals', careerGoalsRoutes);
 app.use('/api', billingRoutes);
 
 // 404 handler

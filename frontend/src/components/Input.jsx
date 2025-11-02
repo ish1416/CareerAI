@@ -20,6 +20,11 @@ export default function Input({
       <input
         id={inputId}
         className={error ? 'error' : ''}
+        style={{
+          boxShadow: 'var(--shadow-sm)',
+          borderColor: error ? 'var(--error)' : 'var(--border)',
+          ...props.style
+        }}
         aria-invalid={error ? 'true' : 'false'}
         aria-describedby={error ? `${inputId}-error` : helperText ? `${inputId}-helper` : undefined}
         {...props}

@@ -3,7 +3,7 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import Logo from './Logo.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useTheme } from '../context/ThemeContext.jsx';
-import { Sun, Moon, Menu, Rocket } from 'lucide-react';
+import { Sun, Moon, Menu, X, Sparkles, Zap, ChevronDown } from 'lucide-react';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -13,6 +13,7 @@ export default function Navbar() {
 
   const { hash } = useLocation();
   const navigate = useNavigate();
+  
   const navigateToSection = React.useCallback((id) => (e) => {
     e.preventDefault();
     const target = document.getElementById(id);
@@ -29,76 +30,282 @@ export default function Navbar() {
     setMenuOpen(false);
   }, [navigate]);
 
-
   React.useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  React.useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [menuOpen]);
+
   return (
-    <header className="navbar">
-      <div className="brand">
-        {/* Single brand link to align logo + name consistently */}
-        <Link to="/" className="brand-link" aria-label="Career AI">
-          <Logo size={48} pulse />
-          <span className="brand-name gradient-text" style={{ fontSize: '1.4rem' }}>Career AI</span>
-        </Link>
-        <button
-          type="button"
-          className="menu-toggle"
-          aria-label="Toggle navigation menu"
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((o) => !o)}
-        >
-          <Menu size={18} />
-        </button>
-      </div>
-      <nav className={`nav-links ${menuOpen ? 'open' : ''}`} aria-label="Primary navigation">
-        {user ? (
-          <>
-            <NavLink to="/dashboard" className={({ isActive }) => isActive ? 'active' : undefined}>Dashboard</NavLink>
-            <NavLink to="/templates" className={({ isActive }) => isActive ? 'active' : undefined}>Templates</NavLink>
-            <NavLink to="/jobs" className={({ isActive }) => isActive ? 'active' : undefined}>Jobs</NavLink>
-            <NavLink to="/interview" className={({ isActive }) => isActive ? 'active' : undefined}>Interview Prep</NavLink>
-            <NavLink to="/insights" className={({ isActive }) => isActive ? 'active' : undefined}>Career Insights</NavLink>
-          </>
-        ) : (
-          <>
-            <a href="/#features" onClick={navigateToSection('features')} aria-current={hash === '#features' ? 'page' : undefined}>Features</a>
-            <NavLink to="/pricing" className={({ isActive }) => isActive ? 'active' : undefined}>Pricing</NavLink>
-            <a href="/#testimonials" onClick={navigateToSection('testimonials')} aria-current={hash === '#testimonials' ? 'page' : undefined}>Testimonials</a>
-            <a href="/#contact" onClick={navigateToSection('contact')} aria-current={hash === '#contact' ? 'page' : undefined}>Contact</a>
-          </>
+    <>
+      <nav style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+        background: 'var(--surface)',
+        borderBottom: '1px solid var(--border)',
+        height: '64px',
+        boxShadow: 'var(--shadow-sm)'
+      }}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '0 24px',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}>
+          {/* Logo */}
+          <Link to="/" style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            textDecoration: 'none',
+            color: 'var(--text)',
+            fontWeight: '700',
+            fontSize: '20px',
+            transition: 'transform 0.2s'
+          }}>
+            <Logo size={32} />
+            <span>CareerAI</span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '24px'
+          }}>
+            {user ? (
+              <>
+                <NavLink to="/dashboard" style={({ isActive }) => ({
+                  textDecoration: 'none',
+                  color: isActive ? 'var(--primary)' : 'var(--text-soft)',
+                  fontWeight: '500',
+                  fontSize: '14px',
+                  transition: 'color 0.2s'
+                })}>Dashboard</NavLink>
+                <NavLink to="/builder" style={({ isActive }) => ({
+                  textDecoration: 'none',
+                  color: isActive ? 'var(--primary)' : 'var(--text-soft)',
+                  fontWeight: '500',
+                  fontSize: '14px',
+                  transition: 'color 0.2s'
+                })}>Builder</NavLink>
+                <NavLink to="/analysis" style={({ isActive }) => ({
+                  textDecoration: 'none',
+                  color: isActive ? 'var(--primary)' : 'var(--text-soft)',
+                  fontWeight: '500',
+                  fontSize: '14px',
+                  transition: 'color 0.2s'
+                })}>Analysis</NavLink>
+                <NavLink to="/templates" style={({ isActive }) => ({
+                  textDecoration: 'none',
+                  color: isActive ? 'var(--primary)' : 'var(--text-soft)',
+                  fontWeight: '500',
+                  fontSize: '14px',
+                  transition: 'color 0.2s'
+                })}>Templates</NavLink>
+                <NavLink to="/learning" style={({ isActive }) => ({
+                  textDecoration: 'none',
+                  color: isActive ? 'var(--primary)' : 'var(--text-soft)',
+                  fontWeight: '500',
+                  fontSize: '14px',
+                  transition: 'color 0.2s'
+                })}>Learning</NavLink>
+                <NavLink to="/jobs" style={({ isActive }) => ({
+                  textDecoration: 'none',
+                  color: isActive ? 'var(--primary)' : 'var(--text-soft)',
+                  fontWeight: '500',
+                  fontSize: '14px',
+                  transition: 'color 0.2s'
+                })}>Jobs</NavLink>
+              </>
+            ) : (
+              <>
+                <a href="/#features" onClick={navigateToSection('features')} style={{
+                  textDecoration: 'none',
+                  color: 'var(--text-soft)',
+                  fontWeight: '500',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  transition: 'color 0.2s'
+                }}>Features</a>
+                <a href="/#how" onClick={navigateToSection('how')} style={{
+                  textDecoration: 'none',
+                  color: 'var(--text-soft)',
+                  fontWeight: '500',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  transition: 'color 0.2s'
+                }}>How it Works</a>
+                <NavLink to="/pricing" style={({ isActive }) => ({
+                  textDecoration: 'none',
+                  color: isActive ? 'var(--primary)' : 'var(--text-soft)',
+                  fontWeight: '500',
+                  fontSize: '14px',
+                  transition: 'color 0.2s'
+                })}>Pricing</NavLink>
+                <a href="/#testimonials" onClick={navigateToSection('testimonials')} style={{
+                  textDecoration: 'none',
+                  color: 'var(--text-soft)',
+                  fontWeight: '500',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  transition: 'color 0.2s'
+                }}>Reviews</a>
+              </>
+            )}
+          </div>
+
+          {/* Actions */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px'
+          }}>
+            <button
+              onClick={toggleTheme}
+              style={{
+                background: 'none',
+                border: 'none',
+                padding: '6px',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                color: 'var(--text-soft)',
+                transition: 'all 0.2s',
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            >
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+
+            {!user ? (
+              <>
+                <Link to="/login" style={{
+                  textDecoration: 'none',
+                  color: 'var(--text)',
+                  fontWeight: '500',
+                  fontSize: '14px',
+                  padding: '8px 16px',
+                  border: '1px solid var(--border)',
+                  borderRadius: '6px',
+                  background: 'transparent',
+                  transition: 'all 0.2s'
+                }}>Sign In</Link>
+                <Link to="/register" style={{
+                  textDecoration: 'none',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  color: 'white',
+                  fontWeight: '600',
+                  fontSize: '14px',
+                  padding: '8px 16px',
+                  border: 'none',
+                  borderRadius: '6px',
+                  transition: 'all 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}>Get Started</Link>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={logout}
+                  style={{
+                    background: 'none',
+                    border: '1px solid var(--border)',
+                    color: 'var(--text-soft)',
+                    fontWeight: '500',
+                    fontSize: '14px',
+                    padding: '6px 12px',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s'
+                  }}
+                >Logout</button>
+              </>
+            )}
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              style={{
+                display: 'none',
+                background: 'none',
+                border: 'none',
+                padding: '8px',
+                cursor: 'pointer',
+                color: 'var(--text-soft)'
+              }}
+              className="mobile-menu-btn"
+            >
+              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <div style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            right: 0,
+            background: 'var(--surface)',
+            borderBottom: '1px solid var(--border)',
+            padding: '20px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px'
+          }} className="mobile-menu">
+            {user ? (
+              <>
+                <NavLink to="/dashboard" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', color: 'var(--text-soft)', fontWeight: '500', padding: '8px 0' }}>Dashboard</NavLink>
+                <NavLink to="/builder" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', color: 'var(--text-soft)', fontWeight: '500', padding: '8px 0' }}>Builder</NavLink>
+                <NavLink to="/analysis" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', color: 'var(--text-soft)', fontWeight: '500', padding: '8px 0' }}>Analysis</NavLink>
+                <NavLink to="/templates" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', color: 'var(--text-soft)', fontWeight: '500', padding: '8px 0' }}>Templates</NavLink>
+                <NavLink to="/learning" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', color: 'var(--text-soft)', fontWeight: '500', padding: '8px 0' }}>Learning</NavLink>
+                <NavLink to="/jobs" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', color: 'var(--text-soft)', fontWeight: '500', padding: '8px 0' }}>Jobs</NavLink>
+              </>
+            ) : (
+              <>
+                <a href="/#features" onClick={navigateToSection('features')} style={{ textDecoration: 'none', color: 'var(--text-soft)', fontWeight: '500', padding: '8px 0' }}>Features</a>
+                <a href="/#how" onClick={navigateToSection('how')} style={{ textDecoration: 'none', color: 'var(--text-soft)', fontWeight: '500', padding: '8px 0' }}>How it Works</a>
+                <NavLink to="/pricing" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none', color: 'var(--text-soft)', fontWeight: '500', padding: '8px 0' }}>Pricing</NavLink>
+                <a href="/#testimonials" onClick={navigateToSection('testimonials')} style={{ textDecoration: 'none', color: 'var(--text-soft)', fontWeight: '500', padding: '8px 0' }}>Reviews</a>
+              </>
+            )}
+          </div>
         )}
       </nav>
-      <div className="nav-actions">
-        <button
-          type="button"
-          className="btn small ghost"
-          aria-label="Toggle theme"
-          onClick={toggleTheme}
-          title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-          style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}
-        >
-          {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-          <span>{theme === 'dark' ? 'Light' : 'Dark'}</span>
-        </button>
-        <Link to="/dashboard" className="btn cta gradient small">
-          <Rocket size={16} />
-          Get Started
-        </Link>
-        {user ? (
-          <>
-            <button type="button" className="btn small ghost" onClick={logout}>Logout</button>
-          </>
-        ) : (
-          <>
-            <Link to="/login" className="btn small ghost">Login</Link>
-          </>
-        )}
-      </div>
-    </header>
+
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .mobile-menu-btn {
+            display: flex !important;
+          }
+          nav > div > div:nth-child(2) {
+            display: none !important;
+          }
+        }
+      `}</style>
+    </>
   );
 }

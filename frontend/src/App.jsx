@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useAuth } from './context/AuthContext.jsx';
 import Landing from './pages/Landing.jsx';
@@ -23,9 +24,33 @@ import Forgot from './pages/Forgot.jsx';
 import Reset from './pages/Reset.jsx';
 import VerifyEmail from './pages/VerifyEmail.jsx';
 import Verify from './pages/Verify.jsx';
+import CareerGoals from './pages/CareerGoals.jsx';
+import SkillDevelopment from './pages/SkillDevelopment.jsx';
+import LearningDashboard from './components/LearningDashboard.jsx';
+import CommunityHub from './components/CommunityHub.jsx';
+import ProfileShowcase from './components/ProfileShowcase.jsx';
+import RecruiterDashboard from './components/RecruiterDashboard.jsx';
+import PortfolioBuilder from './components/PortfolioBuilder.jsx';
+import JobTracker from './components/JobTracker.jsx';
+import InterviewSimulator from './components/InterviewSimulator.jsx';
+import ProjectFinder from './components/ProjectFinder.jsx';
+import AnalyticsCenter from './components/AnalyticsCenter.jsx';
+import CareerDNA from './components/CareerDNA.jsx';
+import CareerTwin from './components/CareerTwin.jsx';
+import GlobalOpportunities from './components/GlobalOpportunities.jsx';
+import VideoResume from './components/VideoResume.jsx';
+import VirtualCareerFair from './components/VirtualCareerFair.jsx';
+import BlockchainVerification from './components/BlockchainVerification.jsx';
+import MentorMarketplace from './components/MentorMarketplace.jsx';
+import AutoDistribution from './components/AutoDistribution.jsx';
+import CommunicationCoach from './components/CommunicationCoach.jsx';
+import JobIntelligence from './components/JobIntelligence.jsx';
+import SalaryNegotiation from './components/SalaryNegotiation.jsx';
+import VoiceCommands from './components/VoiceCommands.jsx';
+import GoalNavigator from './components/GoalNavigator.jsx';
+import { WorkspaceIntegration, DigitalID, CollaborationTools, StudentEcosystem, MultiAIAgents, CareerLab } from './components/PlaceholderComponents.jsx';
 import { ConnectionStatus } from './components/LoadingSystem.jsx';
-import AIStatus from './components/AIStatus.jsx';
-import ConnectionTest from './components/ConnectionTest.jsx';
+import AICopilot, { CopilotToggle } from './components/AICopilot.jsx';
 
 
 function RequireAuth({ children }) {
@@ -43,6 +68,7 @@ function RequireVerified({ children }) {
 function App() {
   const { user } = useAuth(); // initialize and read auth context
   const location = useLocation();
+  const [copilotOpen, setCopilotOpen] = useState(false);
 
   // Show public navbar only for public pages, except pricing when user is authenticated
   const showPublicNavbar = (
@@ -57,9 +83,15 @@ function App() {
   return (
     <ToastProvider>
       <ConnectionStatus />
-      <AIStatus />
-      <ConnectionTest />
       {showPublicNavbar && <Navbar />}
+      
+      {/* AI Copilot - Available on authenticated pages */}
+      {user && (
+        <>
+          <AICopilot isOpen={copilotOpen} onToggle={() => setCopilotOpen(!copilotOpen)} />
+          {!copilotOpen && <CopilotToggle onClick={() => setCopilotOpen(true)} />}
+        </>
+      )}
       <Routes>
         {/* Public routes wrapped with container for centered content */}
         <Route path="/" element={<Landing />} />
@@ -97,6 +129,37 @@ function App() {
         <Route path="/jobs" element={<RequireAuth><AuthShell><JobMatcher /></AuthShell></RequireAuth>} />
         <Route path="/interview" element={<RequireAuth><AuthShell><InterviewPrep /></AuthShell></RequireAuth>} />
         <Route path="/insights" element={<RequireAuth><AuthShell><CareerInsights /></AuthShell></RequireAuth>} />
+        <Route path="/goals" element={<RequireAuth><AuthShell><CareerGoals /></AuthShell></RequireAuth>} />
+        <Route path="/skills" element={<RequireAuth><AuthShell><SkillDevelopment /></AuthShell></RequireAuth>} />
+        <Route path="/learning" element={<RequireAuth><AuthShell><LearningDashboard /></AuthShell></RequireAuth>} />
+        <Route path="/community" element={<RequireAuth><AuthShell><CommunityHub /></AuthShell></RequireAuth>} />
+        <Route path="/profile" element={<RequireAuth><AuthShell><ProfileShowcase isOwnProfile={true} /></AuthShell></RequireAuth>} />
+        <Route path="/profile/:userId" element={<RequireAuth><AuthShell><ProfileShowcase /></AuthShell></RequireAuth>} />
+        <Route path="/recruiter" element={<RequireAuth><AuthShell><RecruiterDashboard /></AuthShell></RequireAuth>} />
+        <Route path="/portfolio" element={<RequireAuth><AuthShell><PortfolioBuilder /></AuthShell></RequireAuth>} />
+        <Route path="/job-tracker" element={<RequireAuth><AuthShell><JobTracker /></AuthShell></RequireAuth>} />
+        <Route path="/interview" element={<RequireAuth><AuthShell><InterviewSimulator /></AuthShell></RequireAuth>} />
+        <Route path="/projects" element={<RequireAuth><AuthShell><ProjectFinder /></AuthShell></RequireAuth>} />
+        <Route path="/analytics" element={<RequireAuth><AuthShell><AnalyticsCenter /></AuthShell></RequireAuth>} />
+        <Route path="/career-dna" element={<RequireAuth><AuthShell><CareerDNA /></AuthShell></RequireAuth>} />
+        <Route path="/career-twin" element={<RequireAuth><AuthShell><CareerTwin /></AuthShell></RequireAuth>} />
+        <Route path="/global-ops" element={<RequireAuth><AuthShell><GlobalOpportunities /></AuthShell></RequireAuth>} />
+        <Route path="/video-resume" element={<RequireAuth><AuthShell><VideoResume /></AuthShell></RequireAuth>} />
+        <Route path="/virtual-fair" element={<RequireAuth><AuthShell><VirtualCareerFair /></AuthShell></RequireAuth>} />
+        <Route path="/blockchain-verify" element={<RequireAuth><AuthShell><BlockchainVerification /></AuthShell></RequireAuth>} />
+        <Route path="/mentor-marketplace" element={<RequireAuth><AuthShell><MentorMarketplace /></AuthShell></RequireAuth>} />
+        <Route path="/auto-distribution" element={<RequireAuth><AuthShell><AutoDistribution /></AuthShell></RequireAuth>} />
+        <Route path="/communication-coach" element={<RequireAuth><AuthShell><CommunicationCoach /></AuthShell></RequireAuth>} />
+        <Route path="/job-intelligence" element={<RequireAuth><AuthShell><JobIntelligence /></AuthShell></RequireAuth>} />
+        <Route path="/workspace-integration" element={<RequireAuth><AuthShell><WorkspaceIntegration /></AuthShell></RequireAuth>} />
+        <Route path="/digital-id" element={<RequireAuth><AuthShell><DigitalID /></AuthShell></RequireAuth>} />
+        <Route path="/collaboration-tools" element={<RequireAuth><AuthShell><CollaborationTools /></AuthShell></RequireAuth>} />
+        <Route path="/goal-navigator" element={<RequireAuth><AuthShell><GoalNavigator /></AuthShell></RequireAuth>} />
+        <Route path="/student-ecosystem" element={<RequireAuth><AuthShell><StudentEcosystem /></AuthShell></RequireAuth>} />
+        <Route path="/voice-commands" element={<RequireAuth><AuthShell><VoiceCommands /></AuthShell></RequireAuth>} />
+        <Route path="/salary-negotiation" element={<RequireAuth><AuthShell><SalaryNegotiation /></AuthShell></RequireAuth>} />
+        <Route path="/ai-agents" element={<RequireAuth><AuthShell><MultiAIAgents /></AuthShell></RequireAuth>} />
+        <Route path="/career-lab" element={<RequireAuth><AuthShell><CareerLab /></AuthShell></RequireAuth>} />
       </Routes>
     </ToastProvider>
   );

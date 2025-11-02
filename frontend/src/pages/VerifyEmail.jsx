@@ -69,102 +69,216 @@ export default function VerifyEmail() {
   };
 
   return (
-    <>
-      <div className="auth-wrap">
-        <div className="card auth-card form">
-          <div className="auth-header">
-            <Logo size={56} />
-            <h2>Verify your email</h2>
-            <p className="sub">
-              We sent a secure verification link{user?.email ? ` to ` : ''}
-              <span className="font-medium">{user?.email}</span>
-            </p>
+    <div className="auth-wrap" style={{ minHeight: '100vh', background: 'linear-gradient(135deg, var(--bg) 0%, var(--bg-subtle) 100%)' }}>
+      <div className="card auth-card form" style={{ maxWidth: '480px', position: 'relative', overflow: 'hidden' }}>
+        {/* Header */}
+        <div className="auth-header" style={{ textAlign: 'center', marginBottom: 'var(--space-6)' }}>
+          <div style={{ 
+            display: 'inline-flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            width: '64px',
+            height: '64px',
+            background: 'rgba(99,102,241,0.12)',
+            borderRadius: 'var(--radius)',
+            marginBottom: 'var(--space-4)'
+          }}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
           </div>
+          <Logo size={48} />
+          <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: '700', margin: 'var(--space-2) 0' }}>
+            Verify Your Email
+          </h2>
+          <p className="muted" style={{ fontSize: 'var(--text-sm)', lineHeight: '1.6' }}>
+            We've sent a secure verification link to
+            {user?.email && (
+              <span style={{ 
+                display: 'block', 
+                fontWeight: '600', 
+                color: 'var(--primary)', 
+                marginTop: 'var(--space-1)' 
+              }}>
+                {user.email}
+              </span>
+            )}
+          </p>
+        </div>
 
-          {message && (
-            <div className="form-success" role="alert">
-              <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                <polyline points="22 4 12 14.01 9 11.01" />
-              </svg>
-              <div>{message}</div>
-            </div>
-          )}
+        {/* Status Messages */}
+        {message && (
+          <div className="badge success" style={{ 
+            width: '100%', 
+            padding: 'var(--space-3)', 
+            marginBottom: 'var(--space-4)',
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: 'var(--space-2)'
+          }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22,4 12,14.01 9,11.01"/>
+            </svg>
+            <span>{message}</span>
+          </div>
+        )}
+        
+        {error && (
+          <div className="badge error" style={{ 
+            width: '100%', 
+            padding: 'var(--space-3)', 
+            marginBottom: 'var(--space-4)',
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: 'var(--space-2)'
+          }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span>{error}</span>
+          </div>
+        )}
+
+        {/* Instructions */}
+        <div className="card" style={{ 
+          background: 'var(--muted)', 
+          padding: 'var(--space-4)', 
+          marginBottom: 'var(--space-5)',
+          border: '1px solid var(--border)'
+        }}>
+          <h4 style={{ fontSize: 'var(--text-sm)', fontWeight: '600', marginBottom: 'var(--space-2)' }}>
+            What's next?
+          </h4>
+          <ol style={{ 
+            listStyle: 'none', 
+            padding: '0', 
+            margin: '0',
+            display: 'grid',
+            gap: 'var(--space-2)'
+          }}>
+            <li style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+              <span style={{
+                width: '20px',
+                height: '20px',
+                background: 'rgba(99,102,241,0.12)',
+                color: 'var(--primary)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 'var(--text-xs)',
+                fontWeight: '600'
+              }}>1</span>
+              <span className="text-sm">Check your email inbox</span>
+            </li>
+            <li style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+              <span style={{
+                width: '20px',
+                height: '20px',
+                background: 'rgba(99,102,241,0.12)',
+                color: 'var(--primary)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 'var(--text-xs)',
+                fontWeight: '600'
+              }}>2</span>
+              <span className="text-sm">Click the verification link</span>
+            </li>
+            <li style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+              <span style={{
+                width: '20px',
+                height: '20px',
+                background: 'rgba(99,102,241,0.12)',
+                color: 'var(--primary)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 'var(--text-xs)',
+                fontWeight: '600'
+              }}>3</span>
+              <span className="text-sm">Return here and refresh</span>
+            </li>
+          </ol>
+        </div>
+
+        {/* Action Buttons */}
+        <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
+          <button 
+            onClick={handleResend} 
+            disabled={sending || cooldown > 0} 
+            className={cooldown > 0 ? 'btn ghost' : 'btn primary'}
+            style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)' }}
+          >
+            {sending ? (
+              <>
+                <svg className="spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 12a9 9 0 11-6.219-8.56"/>
+                </svg>
+                <span>Sending...</span>
+              </>
+            ) : cooldown > 0 ? (
+              <>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12,6 12,12 16,14"/>
+                </svg>
+                <span>Wait {cooldown}s</span>
+              </>
+            ) : (
+              <>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <line x1="22" y1="2" x2="11" y2="13"/>
+                  <polygon points="22,2 15,22 11,13 2,9 22,2"/>
+                </svg>
+                <span>Resend Email</span>
+              </>
+            )}
+          </button>
           
-          {error && (
-            <div className="form-error" role="alert">
-              <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="8" x2="12" y2="12" />
-                <line x1="12" y1="16" x2="12.01" y2="16" />
-              </svg>
-              <div>{error}</div>
-            </div>
-          )}
+          <button 
+            onClick={handleRefresh} 
+            disabled={refreshing} 
+            className="btn secondary"
+            style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)' }}
+          >
+            {refreshing ? (
+              <>
+                <svg className="spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 12a9 9 0 11-6.219-8.56"/>
+                </svg>
+                <span>Checking...</span>
+              </>
+            ) : (
+              <>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="23,4 23,10 17,10"/>
+                  <path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>
+                </svg>
+                <span>Check Status</span>
+              </>
+            )}
+          </button>
+        </div>
 
-          <div className="form-actions">
-            <button 
-              onClick={handleResend} 
-              disabled={sending || cooldown > 0} 
-              className={cooldown > 0 ? "btn small ghost" : "btn small primary"}
-            >
-              {sending ? (
-                <span className="flex items-center">
-                  <svg className="animate-spin mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Sending...
-                </span>
-              ) : cooldown > 0 ? (
-                <span className="flex items-center">
-                  <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                  Wait {cooldown}s
-                </span>
-              ) : (
-                <span className="flex items-center">
-                  <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 01-2 2H4a2 2 0 01-2-2V10a2 2 0 012-2h3.9L9 6.7A3 3 0 0111.27 5h1.46A3 3 0 0115 6.7l1.1 1.3H20a2 2 0 011.2.4" />
-                    <path d="M12 13v4" />
-                    <path d="M10 15h4" />
-                  </svg>
-                  Resend Email
-                </span>
-              )}
-            </button>
-            
-            <button 
-              onClick={handleRefresh} 
-              disabled={refreshing} 
-              className="btn small ghost"
-            >
-              {refreshing ? (
-                <span className="flex items-center">
-                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Checking...
-                </span>
-              ) : (
-                <span className="flex items-center">
-                  <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 2v4" />
-                    <path d="M3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6" />
-                    <path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
-                    <line x1="12" y1="11" x2="12" y2="17" />
-                    <line x1="9" y1="14" x2="15" y2="14" />
-                  </svg>
-                  Check verification status
-                </span>
-              )}
-            </button>
-          </div>
+        {/* Help Text */}
+        <div style={{ 
+          marginTop: 'var(--space-5)', 
+          paddingTop: 'var(--space-4)', 
+          borderTop: '1px solid var(--border)',
+          textAlign: 'center'
+        }}>
+          <p className="text-muted" style={{ fontSize: 'var(--text-xs)' }}>
+            Didn't receive the email? Check your spam folder or try resending.
+          </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }

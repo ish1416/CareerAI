@@ -49,6 +49,18 @@ model User {
   resumes       Resume[]
   coverLetters  CoverLetter[]
   jobDescriptions JobDescription[]
+  learningPaths LearningPath[]
+  courses       Course[]
+  skillTests    SkillTest[]
+  progress      UserProgress?
+  connections   NetworkConnection[] @relation("UserConnections")
+  connectedBy   NetworkConnection[] @relation("ConnectedUsers")
+  groupMembers  GroupMember[]
+  portfolio     Portfolio?
+  jobApplications JobApplication[]
+  analytics     UserAnalytics?
+  careerGoals   CareerGoal[]
+  interviewSessions InterviewSession[]
 }
 
 model Resume {
@@ -90,6 +102,221 @@ model JobDescription {
   content       String   @db.Text
   analysisResult Json
   createdAt     DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+// Learning & Development
+model LearningPath {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  title       String
+  description String
+  progress    Int      @default(0)
+  duration    String
+  skills      Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user     User            @relation(fields: [userId], references: [id])
+  courses  Course[]
+  modules  LearningModule[]
+}
+
+model Course {
+  id           Int      @id @default(autoincrement())
+  userId       Int?
+  pathId       Int?
+  title        String
+  provider     String
+  duration     String
+  level        String
+  description  String?
+  url          String?
+  progress     Int      @default(0)
+  completed    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  user User?         @relation(fields: [userId], references: [id])
+  path LearningPath? @relation(fields: [pathId], references: [id])
+}
+
+model LearningModule {
+  id          Int      @id @default(autoincrement())
+  pathId      Int
+  title       String
+  content     String   @db.Text
+  duration    Int
+  order       Int
+  completed   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  path LearningPath @relation(fields: [pathId], references: [id])
+}
+
+model SkillTest {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  title       String
+  questions   Int
+  duration    Int
+  difficulty  String
+  score       Int?
+  completed   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model UserProgress {
+  id         Int      @id @default(autoincrement())
+  userId     Int      @unique
+  totalHours Int      @default(0)
+  level      Int      @default(1)
+  xp         Int      @default(0)
+  streak     Int      @default(0)
+  badges     Json     @default("[]")
+  lastActive DateTime @default(now())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+// Networking & Community
+model NetworkConnection {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  connectedId Int
+  status      String   @default("pending")
+  message     String?
+  createdAt   DateTime @default(now())
+
+  user      User @relation("UserConnections", fields: [userId], references: [id])
+  connected User @relation("ConnectedUsers", fields: [connectedId], references: [id])
+
+  @@unique([userId, connectedId])
+}
+
+model NetworkingGroup {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  industry    String
+  memberCount Int      @default(0)
+  isPublic    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  members GroupMember[]
+}
+
+model GroupMember {
+  id      Int    @id @default(autoincrement())
+  userId  Int
+  groupId Int
+  role    String @default("member")
+  joinedAt DateTime @default(now())
+
+  user  User            @relation(fields: [userId], references: [id])
+  group NetworkingGroup @relation(fields: [groupId], references: [id])
+
+  @@unique([userId, groupId])
+}
+
+// Portfolio & Projects
+model Portfolio {
+  id          Int      @id @default(autoincrement())
+  userId      Int      @unique
+  title       String
+  description String?
+  skills      Json     @default("[]")
+  isPublic    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id])
+  projects Project[]
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  portfolioId Int
+  title       String
+  description String
+  technologies Json    @default("[]")
+  url         String?
+  githubUrl   String?
+  imageUrl    String?
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id])
+}
+
+// Job Tracking & Applications
+model JobApplication {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  company     String
+  position    String
+  status      String   @default("applied")
+  appliedDate DateTime @default(now())
+  notes       String?
+  salary      String?
+  location    String?
+  jobUrl      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+// Analytics & Insights
+model UserAnalytics {
+  id              Int      @id @default(autoincrement())
+  userId          Int      @unique
+  profileViews    Int      @default(0)
+  resumeDownloads Int      @default(0)
+  applicationsSent Int     @default(0)
+  interviewsScheduled Int  @default(0)
+  offersReceived  Int      @default(0)
+  skillsAssessed  Int      @default(0)
+  coursesCompleted Int     @default(0)
+  networksGrown   Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+// Career Goals & Planning
+model CareerGoal {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  title       String
+  description String?
+  targetDate  DateTime?
+  priority    String   @default("medium")
+  status      String   @default("active")
+  progress    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+// Interview Preparation
+model InterviewSession {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  company     String?
+  position    String?
+  questions   Json
+  responses   Json?
+  feedback    Json?
+  score       Int?
+  duration    Int?
+  createdAt   DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id])
 }

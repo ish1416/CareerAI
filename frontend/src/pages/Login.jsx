@@ -81,16 +81,32 @@ export default function Login() {
   };
 
   return (
-    <>
-      <div className="auth-wrap">
-        <form onSubmit={onSubmit} className="card auth-card form" aria-label="Login form">
-          <div className="auth-header">
-            <Logo size={56} />
-            <h2>Login</h2>
-            <p className="sub">Welcome back</p>
-          </div>
+    <div style={{ 
+      minHeight: '100vh', 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center',
+      background: 'var(--bg)',
+      padding: '16px'
+    }}>
+      <div style={{
+        width: '100%',
+        maxWidth: '380px',
+        background: 'var(--surface)',
+        borderRadius: '16px',
+        padding: '32px 24px',
+        boxShadow: 'var(--shadow-lg)',
+        border: '1px solid var(--border)'
+      }}>
+        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+          <Logo size={48} />
+          <h1 style={{ fontSize: '24px', fontWeight: '700', margin: '12px 0 4px', color: 'var(--text)' }}>Welcome Back</h1>
+          <p style={{ color: 'var(--text-soft)', margin: 0, fontSize: '14px' }}>Sign in to your account</p>
+        </div>
+        
+        <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email" style={{ display: 'block', marginBottom: '8px', fontWeight: '500', color: 'var(--text)' }}>Email</label>
             <input
               id="email"
               type="email"
@@ -104,18 +120,26 @@ export default function Login() {
                 }
               }}
               style={{
-                borderColor: validationErrors.email ? 'var(--error)' : undefined
+                width: '100%',
+                padding: '10px 14px',
+                border: `1px solid ${validationErrors.email ? 'var(--error)' : 'var(--border)'}`,
+                borderRadius: '12px',
+                fontSize: '16px',
+                background: 'var(--surface)',
+                color: 'var(--text)',
+                transition: 'all 0.2s',
+                boxSizing: 'border-box'
               }}
               required
             />
             {validationErrors.email && (
               <div style={{ 
                 color: 'var(--error)', 
-                fontSize: 'var(--text-sm)', 
-                marginTop: 'var(--space-1)',
+                fontSize: '14px', 
+                marginTop: '6px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: 'var(--space-1)'
+                gap: '6px'
               }}>
                 <AlertCircle size={14} />
                 {validationErrors.email}
@@ -124,7 +148,7 @@ export default function Login() {
           </div>
           
           <div>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password" style={{ display: 'block', marginBottom: '8px', fontWeight: '500', color: 'var(--text)' }}>Password</label>
             <div style={{ position: 'relative' }}>
               <input
                 id="password"
@@ -139,8 +163,15 @@ export default function Login() {
                   }
                 }}
                 style={{
-                  borderColor: validationErrors.password ? 'var(--error)' : undefined,
-                  paddingRight: 'var(--space-8)'
+                  width: '100%',
+                  padding: '10px 40px 10px 14px',
+                  border: `1px solid ${validationErrors.password ? 'var(--error)' : 'var(--border)'}`,
+                  borderRadius: '12px',
+                  fontSize: '16px',
+                  background: 'var(--surface)',
+                  color: 'var(--text)',
+                  transition: 'all 0.2s',
+                  boxSizing: 'border-box'
                 }}
                 required
               />
@@ -149,13 +180,14 @@ export default function Login() {
                 onClick={() => setShowPassword(!showPassword)}
                 style={{
                   position: 'absolute',
-                  right: 'var(--space-2)',
+                  right: '12px',
                   top: '50%',
                   transform: 'translateY(-50%)',
                   background: 'none',
                   border: 'none',
                   cursor: 'pointer',
-                  color: 'var(--text-muted)'
+                  color: 'var(--text-muted)',
+                  padding: '4px'
                 }}
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -164,11 +196,11 @@ export default function Login() {
             {validationErrors.password && (
               <div style={{ 
                 color: 'var(--error)', 
-                fontSize: 'var(--text-sm)', 
-                marginTop: 'var(--space-1)',
+                fontSize: '14px', 
+                marginTop: '6px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: 'var(--space-1)'
+                gap: '6px'
               }}>
                 <AlertCircle size={14} />
                 {validationErrors.password}
@@ -179,50 +211,75 @@ export default function Login() {
             <div style={{
               background: 'var(--error-bg)',
               border: '1px solid var(--error-border)',
-              borderRadius: 'var(--radius)',
-              padding: 'var(--space-3)',
+              borderRadius: '12px',
+              padding: '12px',
               display: 'flex',
               alignItems: 'center',
-              gap: 'var(--space-2)'
+              gap: '8px'
             }}>
               <AlertCircle size={16} color="var(--error)" />
-              <span style={{ color: 'var(--error)', fontSize: 'var(--text-sm)' }}>{error}</span>
+              <span style={{ color: 'var(--error)', fontSize: '14px' }}>{error}</span>
             </div>
           )}
           
-          <div className="form-actions" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-            <button 
-              type="submit" 
-              className="btn cta gradient" 
-              disabled={isSubmitting || loading}
-              style={{ width: '100%' }}
-            >
-              {isSubmitting || loading ? (
-                <SmartLoading message="Signing in..." size="small" />
-              ) : (
-                'Sign In'
-              )}
-            </button>
-            
-            <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>
-              or
-            </div>
-            
-            <button 
-              type="button" 
-              className="btn secondary" 
-              onClick={continueWithGoogle}
-              disabled={isSubmitting}
-              style={{ width: '100%' }}
-            >
-              Continue with Google
-            </button>
+          <button 
+            type="submit" 
+            disabled={isSubmitting || loading}
+            style={{
+              width: '100%',
+              padding: '14px',
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '12px',
+              fontSize: '16px',
+              fontWeight: '600',
+              cursor: isSubmitting || loading ? 'not-allowed' : 'pointer',
+              opacity: isSubmitting || loading ? 0.7 : 1,
+              transition: 'all 0.2s'
+            }}
+          >
+            {isSubmitting || loading ? (
+              <SmartLoading message="Signing in..." size="small" />
+            ) : (
+              'Sign In'
+            )}
+          </button>
+          
+          <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '14px', margin: '16px 0' }}>
+            or
           </div>
+          
+          <button 
+            type="button" 
+            onClick={continueWithGoogle}
+            disabled={isSubmitting}
+            style={{
+              width: '100%',
+              padding: '14px',
+              background: 'var(--surface)',
+              color: 'var(--text)',
+              border: '1px solid var(--border)',
+              borderRadius: '12px',
+              fontSize: '16px',
+              fontWeight: '500',
+              cursor: isSubmitting ? 'not-allowed' : 'pointer',
+              opacity: isSubmitting ? 0.7 : 1,
+              transition: 'all 0.2s'
+            }}
+          >
+            Continue with Google
+          </button>
         </form>
+        
+        <div style={{ textAlign: 'center', marginTop: '24px', fontSize: '14px', color: 'var(--text-soft)' }}>
+          Don't have an account? <Link to="/register" style={{ color: '#667eea', textDecoration: 'none', fontWeight: '500' }}>Sign up</Link>
+        </div>
+        
+        <div style={{ textAlign: 'center', marginTop: '12px', fontSize: '14px', color: 'var(--text-soft)' }}>
+          Forgot your password? <Link to="/forgot" style={{ color: '#667eea', textDecoration: 'none', fontWeight: '500' }}>Reset it</Link>
+        </div>
       </div>
-      <p className="sub auth-sub">
-        No account? <Link to="/register">Create one</Link> • Forgot your password? <Link to="/forgot">Reset it</Link>
-      </p>
-    </>
+    </div>
   );
 }

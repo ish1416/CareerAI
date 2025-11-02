@@ -3,13 +3,14 @@ import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useTheme } from '../context/ThemeContext.jsx';
 import Logo from './Logo.jsx';
-import { LayoutDashboard, FilePlus2, SearchCheck, Briefcase, Mail, User, Settings, LogOut, Sun, Moon, CreditCard, TrendingUp, History } from 'lucide-react';
+import { LayoutDashboard, FilePlus2, SearchCheck, Briefcase, Mail, User, Settings, LogOut, Sun, Moon, CreditCard, TrendingUp, History, BookOpen, Users, Globe, Calendar, Mic, Rocket, BarChart, Menu, X, Video, Shield, Headphones, DollarSign, Zap, UserCheck, MessageSquare, Briefcase as BriefcaseIcon, Bot, Target } from 'lucide-react';
 
 export default function AuthShell({ children }) {
   const { logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = React.useState(false);
-  // Add ref and outside-click close
+  const [sidebarOpen, setSidebarOpen] = React.useState(false);
+  
   const menuRef = React.useRef(null);
   React.useEffect(() => {
     function onDocClick(e) {
@@ -18,7 +19,10 @@ export default function AuthShell({ children }) {
       if (el && !el.contains(e.target)) setMenuOpen(false);
     }
     function onEsc(e) {
-      if (e.key === 'Escape') setMenuOpen(false);
+      if (e.key === 'Escape') {
+        setMenuOpen(false);
+        setSidebarOpen(false);
+      }
     }
     document.addEventListener('mousedown', onDocClick);
     document.addEventListener('keydown', onEsc);
@@ -28,77 +32,200 @@ export default function AuthShell({ children }) {
     };
   }, [menuOpen]);
 
+  const navigationItems = [
+    { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard', group: 'main' },
+    { to: '/builder', icon: FilePlus2, label: 'Resume Builder', group: 'main' },
+    { to: '/analysis', icon: SearchCheck, label: 'Analysis', group: 'main' },
+    { to: '/job-match', icon: Briefcase, label: 'Job Match', group: 'main' },
+    { to: '/cover-letters', icon: Mail, label: 'Cover Letters', group: 'main' },
+    { to: '/learning', icon: BookOpen, label: 'Learning Hub', group: 'growth' },
+    { to: '/community', icon: Users, label: 'Community', group: 'growth' },
+    { to: '/portfolio', icon: Globe, label: 'Portfolio', group: 'growth' },
+    { to: '/job-tracker', icon: Calendar, label: 'Job Tracker', group: 'tools' },
+    { to: '/interview', icon: Mic, label: 'Interview Prep', group: 'tools' },
+    { to: '/projects', icon: Rocket, label: 'Projects', group: 'tools' },
+    { to: '/career-dna', icon: TrendingUp, label: 'Career DNA', group: 'advanced' },
+    { to: '/career-twin', icon: User, label: 'Career Twin', group: 'advanced' },
+    { to: '/global-ops', icon: Globe, label: 'Global Opportunities', group: 'advanced' },
+    { to: '/video-resume', icon: Video, label: 'Video Resume', group: 'advanced' },
+    { to: '/virtual-fair', icon: Users, label: 'Virtual Career Fair', group: 'advanced' },
+    { to: '/blockchain-verify', icon: Shield, label: 'Blockchain Verify', group: 'advanced' },
+    { to: '/mentor-marketplace', icon: UserCheck, label: 'Mentor Marketplace', group: 'advanced' },
+    { to: '/auto-distribution', icon: Zap, label: 'Auto Distribution', group: 'advanced' },
+    { to: '/communication-coach', icon: MessageSquare, label: 'Communication Coach', group: 'advanced' },
+    { to: '/job-intelligence', icon: BarChart, label: 'Job Intelligence', group: 'advanced' },
+    { to: '/workspace-integration', icon: BriefcaseIcon, label: 'Workspace Integration', group: 'advanced' },
+    { to: '/digital-id', icon: Shield, label: 'Digital ID', group: 'advanced' },
+    { to: '/collaboration-tools', icon: Users, label: 'Collaboration Tools', group: 'advanced' },
+    { to: '/goal-navigator', icon: Target, label: 'Goal Navigator', group: 'advanced' },
+    { to: '/student-ecosystem', icon: BookOpen, label: 'Student Ecosystem', group: 'advanced' },
+    { to: '/voice-commands', icon: Headphones, label: 'Voice Commands', group: 'advanced' },
+    { to: '/salary-negotiation', icon: DollarSign, label: 'Salary Assistant', group: 'advanced' },
+    { to: '/ai-agents', icon: Bot, label: 'Multi-AI Agents', group: 'advanced' },
+    { to: '/career-lab', icon: Rocket, label: 'CareerAI Lab', group: 'advanced' },
+    { to: '/analytics', icon: BarChart, label: 'Analytics', group: 'insights' },
+    { to: '/history', icon: History, label: 'History', group: 'insights' }
+  ];
+
+  const groupedNav = {
+    main: navigationItems.filter(item => item.group === 'main'),
+    growth: navigationItems.filter(item => item.group === 'growth'),
+    tools: navigationItems.filter(item => item.group === 'tools'),
+    advanced: navigationItems.filter(item => item.group === 'advanced'),
+    insights: navigationItems.filter(item => item.group === 'insights')
+  };
+
   return (
-    <div className="app-shell">
-      <header className="app-header">
-        <div className="brand">
-          <Link to="/dashboard" className="brand-name" aria-label="Career AI" style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 'var(--space-3)',
-            textDecoration: 'none',
-            color: 'var(--text)',
-            fontWeight: 700,
-            fontSize: 'var(--text-xl)'
-          }}>
-            <Logo size={44} />
-            <span className="gradient-text">Career AI</span>
-          </Link>
-        </div>
-        <div className="app-header-actions" ref={menuRef} style={{ position: 'relative' }}>
-          <Link
-            to="/pricing"
-            className="btn small cta gradient"
-            aria-label="Upgrade plan"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)' }}
-          >
-            <CreditCard size={16} />
-            <span>Upgrade</span>
-          </Link>
-          <button
-            type="button"
-            className="btn small ghost"
-            aria-label="Toggle theme"
-            onClick={toggleTheme}
-            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)' }}
-          >
-            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-          </button>
-          <button type="button" className="avatar" aria-label="User menu" aria-expanded={menuOpen} onClick={() => setMenuOpen((o) => !o)}>
-            <User size={18} />
-          </button>
-          {menuOpen && (
-            <div className="menu" role="menu">
-              <Link to="/settings" className="menu-item"><Settings size={16} /> <span>Settings</span></Link>
-              <button type="button" className="menu-item" onClick={logout}><LogOut size={16} /> <span>Logout</span></button>
-            </div>
-          )}
-        </div>
+    <div className="app-shell-sidebar">
+      {/* Mobile Header */}
+      <header className="mobile-header">
+        <button 
+          className="sidebar-toggle"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          aria-label="Toggle sidebar"
+        >
+          {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+        
+        <Link to="/dashboard" className="brand-link">
+          <Logo size={32} />
+          <span className="gradient-text">CareerAI</span>
+        </Link>
       </header>
 
-      <nav className="app-topnav" aria-label="Application navigation">
-        <NavLink to="/dashboard" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
-          <LayoutDashboard size={18} /> <span>Dashboard</span>
-        </NavLink>
-        <NavLink to="/builder" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
-          <FilePlus2 size={18} /> <span>Builder</span>
-        </NavLink>
-        <NavLink to="/analysis" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
-          <SearchCheck size={18} /> <span>Analysis</span>
-        </NavLink>
-        <NavLink to="/job-match" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
-          <Briefcase size={18} /> <span>Job Match</span>
-        </NavLink>
-        <NavLink to="/cover-letters" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
-          <Mail size={18} /> <span>Cover Letters</span>
-        </NavLink>
-        <NavLink to="/history" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
-          <History size={18} /> <span>History</span>
-        </NavLink>
-      </nav>
+      {/* Sidebar */}
+      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+        <div className="sidebar-content">
+          <Link to="/" className="sidebar-brand" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Logo size={28} />
+            <span className="gradient-text">CareerAI</span>
+          </Link>
+          
+          <nav className="sidebar-nav">
+            <div className="nav-group">
+              <div className="nav-group-label">Core Features</div>
+              {groupedNav.main.map(item => {
+                const Icon = item.icon;
+                return (
+                  <NavLink 
+                    key={item.to}
+                    to={item.to} 
+                    className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+                    onClick={() => setSidebarOpen(false)}
+                  >
+                    <Icon size={18} />
+                    <span>{item.label}</span>
+                  </NavLink>
+                );
+              })}
+            </div>
+            
+            <div className="nav-group">
+              <div className="nav-group-label">Growth & Learning</div>
+              {groupedNav.growth.map(item => {
+                const Icon = item.icon;
+                return (
+                  <NavLink 
+                    key={item.to}
+                    to={item.to} 
+                    className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+                    onClick={() => setSidebarOpen(false)}
+                  >
+                    <Icon size={18} />
+                    <span>{item.label}</span>
+                  </NavLink>
+                );
+              })}
+            </div>
+            
+            <div className="nav-group">
+              <div className="nav-group-label">Tools & Tracking</div>
+              {groupedNav.tools.map(item => {
+                const Icon = item.icon;
+                return (
+                  <NavLink 
+                    key={item.to}
+                    to={item.to} 
+                    className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+                    onClick={() => setSidebarOpen(false)}
+                  >
+                    <Icon size={18} />
+                    <span>{item.label}</span>
+                  </NavLink>
+                );
+              })}
+            </div>
+            
+            <div className="nav-group">
+              <div className="nav-group-label">AI Advanced</div>
+              {groupedNav.advanced.map(item => {
+                const Icon = item.icon;
+                return (
+                  <NavLink 
+                    key={item.to}
+                    to={item.to} 
+                    className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+                    onClick={() => setSidebarOpen(false)}
+                  >
+                    <Icon size={18} />
+                    <span>{item.label}</span>
+                  </NavLink>
+                );
+              })}
+            </div>
+            
+            <div className="nav-group">
+              <div className="nav-group-label">Insights</div>
+              {groupedNav.insights.map(item => {
+                const Icon = item.icon;
+                return (
+                  <NavLink 
+                    key={item.to}
+                    to={item.to} 
+                    className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+                    onClick={() => setSidebarOpen(false)}
+                  >
+                    <Icon size={18} />
+                    <span>{item.label}</span>
+                  </NavLink>
+                );
+              })}
+            </div>
+            
+            <div className="sidebar-footer">
+              <NavLink to="/pricing" className="sidebar-action upgrade">
+                <CreditCard size={18} />
+                <span>Upgrade Plan</span>
+              </NavLink>
+              
+              <button
+                className="sidebar-action"
+                onClick={toggleTheme}
+                title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+              </button>
+              
+              <NavLink to="/settings" className="sidebar-action">
+                <Settings size={18} />
+                <span>Settings</span>
+              </NavLink>
+              
+              <button className="sidebar-action logout" onClick={logout}>
+                <LogOut size={18} />
+                <span>Logout</span>
+              </button>
+            </div>
+          </nav>
+        </div>
+      </aside>
 
-      <main className="content" role="main">
+      {/* Overlay for mobile */}
+      {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
+
+      {/* Main Content */}
+      <main className="main-content">
         {children}
       </main>
     </div>

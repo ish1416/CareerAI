@@ -8,20 +8,48 @@ import { SkeletonGrid } from '../components/Skeleton.jsx';
 import { PageLoading } from '../components/Loading.jsx';
 import PageLayout, { Section } from '../components/PageLayout.jsx';
 import ModernEmptyState from '../components/ModernEmptyState.jsx';
-import { BarChart3, FileText, Gauge, TrendingUp, Clock, CheckCircle, FilePlus2, SearchCheck, Plus, ArrowRight, Target } from 'lucide-react';
+import { BarChart3, FileText, Gauge, TrendingUp, Clock, CheckCircle, FilePlus2, SearchCheck, Plus, ArrowRight, Target, Users, Briefcase, Award, Calendar, Eye, Download, Share2, Star, Zap, Activity } from 'lucide-react';
 import { useToast } from '../components/Toast.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 
 export default function Dashboard() {
-  const [stats, setStats] = useState({ resumesCount: 0, averageATSScore: 0, lastAnalysisDate: null });
+  const [stats, setStats] = useState({ 
+    resumesCount: 0, 
+    averageATSScore: 0, 
+    lastAnalysisDate: null,
+    totalAnalyses: 0,
+    jobApplications: 0,
+    profileViews: 0,
+    downloadsCount: 0,
+    sharesCount: 0,
+    improvementRate: 0,
+    weeklyProgress: 0,
+    skillsAssessed: 0,
+    certificationsEarned: 0,
+    interviewSessions: 0,
+    networkConnections: 0,
+    learningHours: 0,
+    coverLetters: 0,
+    jobMatches: 0,
+    portfolioItems: 0,
+    feedbackCount: 0,
+    templatesUsed: 0,
+    aiSuggestions: 0,
+    careerScore: 0,
+    activeStreak: 0
+  });
   const [resumes, setResumes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const { showToast } = useToast();
   const { user } = useAuth();
   
-  // Ensure user is available before rendering
+  // Enhanced state for comprehensive dashboard
   const [userLoaded, setUserLoaded] = useState(false);
+  const [weeklyStats, setWeeklyStats] = useState([]);
+  const [topSkills, setTopSkills] = useState([]);
+  const [recentAchievements, setRecentAchievements] = useState([]);
+  const [careerGoals, setCareerGoals] = useState([]);
   
   useEffect(() => {
     // Wait a bit for user context to load
@@ -41,24 +69,103 @@ export default function Dashboard() {
         setError('');
         
         // Always set default values first
-        const defaultStats = { resumesCount: 0, averageATSScore: 0, lastAnalysisDate: null };
+        const defaultStats = { 
+          resumesCount: 0, 
+          averageATSScore: 0, 
+          lastAnalysisDate: null,
+          totalAnalyses: 0,
+          jobApplications: 0,
+          profileViews: 0,
+          downloadsCount: 0,
+          sharesCount: 0,
+          improvementRate: 0,
+          weeklyProgress: 0,
+          skillsAssessed: 0,
+          certificationsEarned: 0,
+          interviewSessions: 0,
+          networkConnections: 0,
+          learningHours: 0,
+          coverLetters: 0,
+          jobMatches: 0,
+          portfolioItems: 0,
+          feedbackCount: 0,
+          templatesUsed: 0,
+          aiSuggestions: 0,
+          careerScore: 0,
+          activeStreak: 0
+        };
         const defaultResumes = [];
         
         setStats(defaultStats);
         setResumes(defaultResumes);
         
-        // Try to load real data
-        const [statsRes, resumesRes] = await Promise.allSettled([
+        // Try to load comprehensive data
+        const [statsRes, resumesRes, analyticsRes, learningRes, networkRes, jobsRes] = await Promise.allSettled([
           api.get('/user/dashboard'),
-          api.get('/resume/list')
+          api.get('/resume/list'),
+          api.get('/analytics/dashboard'),
+          api.get('/learning/progress'),
+          api.get('/network/connections'),
+          api.get('/job-tracker/analytics')
         ]);
         
         if (statsRes.status === 'fulfilled' && statsRes.value?.data) {
-          setStats(statsRes.value.data);
+          setStats(prev => ({ ...prev, ...statsRes.value.data }));
         }
         
         if (resumesRes.status === 'fulfilled' && resumesRes.value?.data?.resumes) {
           setResumes(resumesRes.value.data.resumes);
+        }
+        
+        if (analyticsRes.status === 'fulfilled' && analyticsRes.value?.data?.analytics) {
+          const analytics = analyticsRes.value.data.analytics;
+          setStats(prev => ({
+            ...prev,
+            profileViews: analytics.profileViews || 0,
+            resumeDownloads: analytics.resumeDownloads || 0,
+            applicationsSent: analytics.applicationsSent || 0,
+            interviewsScheduled: analytics.interviewsScheduled || 0,
+            offersReceived: analytics.offersReceived || 0,
+            skillsAssessed: analytics.skillsAssessed || 0,
+            coursesCompleted: analytics.coursesCompleted || 0,
+            networksGrown: analytics.networksGrown || 0
+          }));
+        }
+        
+        if (learningRes.status === 'fulfilled' && learningRes.value?.data) {
+          const learning = learningRes.value.data;
+          setStats(prev => ({
+            ...prev,
+            learningHours: learning.totalHours || 0,
+            certificationsEarned: learning.badges?.length || 0,
+            activeStreak: learning.streak || 0
+          }));
+        }
+        
+        if (networkRes.status === 'fulfilled' && networkRes.value?.data?.connections) {
+          setStats(prev => ({
+            ...prev,
+            networkConnections: networkRes.value.data.connections.length || 0
+          }));
+        }
+        
+        if (jobsRes.status === 'fulfilled' && jobsRes.value?.data?.analytics) {
+          const jobAnalytics = jobsRes.value.data.analytics;
+          setStats(prev => ({
+            ...prev,
+            jobApplications: jobAnalytics.overview?.totalApplications || 0,
+            interviewSessions: jobAnalytics.overview?.interviews || 0
+          }));
+        }
+        
+        // Load career goals separately
+        try {
+          const goalsRes = await api.get('/career-goals');
+          if (goalsRes.data?.goals) {
+            setCareerGoals(goalsRes.data.goals);
+          }
+        } catch (error) {
+          console.warn('Failed to load career goals:', error);
         }
         
       } catch (e) {
@@ -199,10 +306,12 @@ export default function Dashboard() {
 
       <section className="section">
         <div className="section-intro" style={{ marginBottom: 'var(--space-5)' }}>
-          <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, marginBottom: 'var(--space-2)' }}>Your Progress</h2>
-          <p className="muted" style={{ fontSize: 'var(--text-base)' }}>Track your resume optimization journey</p>
+          <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, marginBottom: 'var(--space-2)' }}>Career Analytics</h2>
+          <p className="muted" style={{ fontSize: 'var(--text-base)' }}>Comprehensive insights into your career development progress</p>
         </div>
-        <div className="grid stats" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 'var(--space-4)' }}>
+        
+        {/* Primary Stats */}
+        <div className="grid stats" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }}>
           <StatCard 
             title="Resumes" 
             value={stats.resumesCount ?? 0} 
@@ -218,102 +327,471 @@ export default function Dashboard() {
             accent="#10b981" 
           />
           <StatCard 
-            title="Last Activity" 
-            value={stats.lastAnalysisDate ? 'Recent' : 'None'} 
-            subtext={fmtDate(stats.lastAnalysisDate) || 'Start analyzing'} 
-            icon={Clock}
+            title="Analyses" 
+            value={stats.totalAnalyses ?? 0} 
+            subtext="AI reviews completed" 
+            icon={SearchCheck}
+            accent="#8b5cf6" 
+          />
+          <StatCard 
+            title="Applications" 
+            value={stats.jobApplications ?? 0} 
+            subtext="Jobs applied to" 
+            icon={Briefcase}
             accent="#f59e0b" 
+          />
+          <StatCard 
+            title="Interview Prep" 
+            value={stats.interviewSessions ?? 0} 
+            subtext="Practice sessions" 
+            icon={Users}
+            accent="#ec4899" 
+          />
+        </div>
+        
+        {/* Secondary Stats */}
+        <div className="grid stats" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 'var(--space-3)', marginBottom: 'var(--space-4)' }}>
+          <StatCard 
+            title="Profile Views" 
+            value={stats.profileViews ?? 0} 
+            subtext="This month" 
+            icon={Eye}
+            accent="#06b6d4" 
+          />
+          <StatCard 
+            title="Downloads" 
+            value={stats.downloadsCount ?? 0} 
+            subtext="Resume downloads" 
+            icon={Download}
+            accent="#84cc16" 
+          />
+          <StatCard 
+            title="Shares" 
+            value={stats.sharesCount ?? 0} 
+            subtext="Profile shares" 
+            icon={Share2}
+            accent="#f97316" 
+          />
+          <StatCard 
+            title="Improvement" 
+            value={stats.improvementRate ? `+${stats.improvementRate}%` : 'N/A'} 
+            subtext="Score increase" 
+            icon={TrendingUp}
+            accent="#22c55e" 
+          />
+          <StatCard 
+            title="Skills Assessed" 
+            value={stats.skillsAssessed ?? 0} 
+            subtext="Competencies evaluated" 
+            icon={Star}
+            accent="#eab308" 
+          />
+          <StatCard 
+            title="Certifications" 
+            value={stats.certificationsEarned ?? 0} 
+            subtext="Badges earned" 
+            icon={Award}
+            accent="#dc2626" 
+          />
+          <StatCard 
+            title="Network Connections" 
+            value={stats.networkConnections ?? 0} 
+            subtext="Professional contacts" 
+            icon={Users}
+            accent="#8b5cf6" 
+          />
+          <StatCard 
+            title="Learning Hours" 
+            value={stats.learningHours ?? 0} 
+            subtext="Skill development" 
+            icon={Clock}
+            accent="#06b6d4" 
+          />
+        </div>
+        
+        {/* Tertiary Stats */}
+        <div className="grid stats" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 'var(--space-2)' }}>
+          <StatCard 
+            title="Cover Letters" 
+            value={stats.coverLetters ?? 0} 
+            subtext="Generated" 
+            icon={FileText}
+            accent="#f59e0b" 
+          />
+          <StatCard 
+            title="Job Matches" 
+            value={stats.jobMatches ?? 0} 
+            subtext="Compatibility checks" 
+            icon={Target}
+            accent="#10b981" 
+          />
+          <StatCard 
+            title="Portfolio Items" 
+            value={stats.portfolioItems ?? 0} 
+            subtext="Showcase projects" 
+            icon={Star}
+            accent="#8b5cf6" 
+          />
+          <StatCard 
+            title="Feedback Received" 
+            value={stats.feedbackCount ?? 0} 
+            subtext="Community reviews" 
+            icon={Users}
+            accent="#06b6d4" 
+          />
+          <StatCard 
+            title="Templates Used" 
+            value={stats.templatesUsed ?? 0} 
+            subtext="Design variations" 
+            icon={FileText}
+            accent="#84cc16" 
+          />
+          <StatCard 
+            title="AI Suggestions" 
+            value={stats.aiSuggestions ?? 0} 
+            subtext="Recommendations applied" 
+            icon={Zap}
+            accent="#f97316" 
+          />
+          <StatCard 
+            title="Career Score" 
+            value={stats.careerScore ?? 0} 
+            subtext="Overall rating" 
+            icon={Award}
+            accent="#dc2626" 
+          />
+          <StatCard 
+            title="Active Streak" 
+            value={stats.activeStreak ?? 0} 
+            subtext="Days consecutive" 
+            icon={Activity}
+            accent="#22c55e" 
           />
         </div>
       </section>
 
-      {/* Latest ATS across resumes */}
-      <section className="section">
-        <h2>Latest ATS Across Resumes</h2>
-        <div className="section-intro">
-          <h3 className="section-title">Performance Snapshot</h3>
-          <p className="muted">Quickly see how your resumes compare by their latest ATS scores.</p>
-        </div>
-        {loading ? (
-          <div className="card">Loading…</div>
-        ) : latestATS.length < 2 ? (
-          <div className="card">Run analyses to populate this chart.</div>
-        ) : (
-          <div className="card" style={{ paddingBottom: 16 }}>
-            <Sparkline data={latestATS} height={64} />
-            <div className="muted" style={{ marginTop: 6 }}>
-              Best: {Math.max(...latestATS)} • Worst: {Math.min(...latestATS)} • Avg: {Math.round(latestATS.reduce((a, b) => a + b, 0) / latestATS.length)}
-            </div>
+      {/* Performance Analytics */}
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 'var(--space-6)', marginBottom: 'var(--space-6)' }}>
+        <section className="section">
+          <h2>Performance Analytics</h2>
+          <div className="section-intro">
+            <h3 className="section-title">ATS Score Distribution</h3>
+            <p className="muted">Track your resume optimization progress across all documents.</p>
           </div>
-        )}
-      </section>
+          {loading ? (
+            <div className="card">Loading analytics…</div>
+          ) : latestATS.length < 2 ? (
+            <div className="card">
+              <div style={{ textAlign: 'center', padding: 'var(--space-6)' }}>
+                <Activity size={48} color="var(--text-soft)" style={{ marginBottom: 'var(--space-3)' }} />
+                <h4>No Data Yet</h4>
+                <p className="muted">Run analyses to see performance trends</p>
+                <Link to="/analysis" className="btn primary small" style={{ marginTop: 'var(--space-3)' }}>
+                  Start Analysis
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <div className="card" style={{ padding: 'var(--space-5)' }}>
+              <Sparkline data={latestATS} height={80} />
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--space-4)', marginTop: 'var(--space-4)', padding: 'var(--space-3)', background: 'var(--muted)', borderRadius: 'var(--radius)' }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: 'var(--text-lg)', fontWeight: 'bold', color: 'var(--success)' }}>{Math.max(...latestATS)}%</div>
+                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-soft)' }}>Best Score</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: 'var(--text-lg)', fontWeight: 'bold', color: 'var(--primary)' }}>{Math.round(latestATS.reduce((a, b) => a + b, 0) / latestATS.length)}%</div>
+                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-soft)' }}>Average</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: 'var(--text-lg)', fontWeight: 'bold', color: 'var(--warning)' }}>{Math.min(...latestATS)}%</div>
+                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-soft)' }}>Lowest Score</div>
+                </div>
+              </div>
+            </div>
+          )}
+        </section>
+        
+        <section className="section">
+          <h2>Weekly Progress</h2>
+          <div className="section-intro">
+            <h3 className="section-title">This Week</h3>
+            <p className="muted">Your activity summary</p>
+          </div>
+          <div className="card" style={{ padding: 'var(--space-4)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-soft)' }}>Analyses Run</span>
+                <span style={{ fontWeight: 'bold' }}>{weeklyStats.analyses || 0}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-soft)' }}>Resumes Updated</span>
+                <span style={{ fontWeight: 'bold' }}>{weeklyStats.updates || 0}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-soft)' }}>Applications</span>
+                <span style={{ fontWeight: 'bold' }}>{weeklyStats.applications || 0}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-soft)' }}>Profile Views</span>
+                <span style={{ fontWeight: 'bold' }}>{weeklyStats.views || 0}</span>
+              </div>
+            </div>
+            {stats.weeklyProgress > 0 && (
+              <div style={{ marginTop: 'var(--space-3)', padding: 'var(--space-2)', background: 'var(--success-bg)', borderRadius: 'var(--radius)', textAlign: 'center' }}>
+                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--success)' }}>+{stats.weeklyProgress}% vs last week</span>
+              </div>
+            )}
+          </div>
+        </section>
+      </div>
 
+      {/* Skills & Goals Section */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-6)', marginBottom: 'var(--space-6)' }}>
+        <section className="section">
+          <h2>Top Skills</h2>
+          <div className="section-intro">
+            <h3 className="section-title">Skill Assessment</h3>
+            <p className="muted">Your strongest competencies based on resume analysis</p>
+          </div>
+          <div className="card" style={{ padding: 'var(--space-4)' }}>
+            {topSkills.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: 'var(--space-4)' }}>
+                <Star size={32} color="var(--text-soft)" style={{ marginBottom: 'var(--space-2)' }} />
+                <p className="muted">No skills assessed yet</p>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+                {topSkills.slice(0, 5).map((skill, idx) => (
+                  <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: 'var(--text-sm)' }}>{skill.name}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+                      <div style={{ width: '60px', height: '6px', background: 'var(--muted)', borderRadius: '3px' }}>
+                        <div style={{ width: `${skill.proficiency}%`, height: '100%', background: 'var(--primary)', borderRadius: '3px' }} />
+                      </div>
+                      <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-soft)', minWidth: '30px' }}>{skill.proficiency}%</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+        
+        <section className="section">
+          <h2>Career Goals</h2>
+          <div className="section-intro">
+            <h3 className="section-title">Active Objectives</h3>
+            <p className="muted">Track your career development milestones</p>
+          </div>
+          <div className="card" style={{ padding: 'var(--space-4)' }}>
+            {careerGoals.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: 'var(--space-4)' }}>
+                <Target size={32} color="var(--text-soft)" style={{ marginBottom: 'var(--space-2)' }} />
+                <p className="muted">Set your first career goal</p>
+                <Link to="/goals" className="btn primary small" style={{ marginTop: 'var(--space-2)' }}>Add Goal</Link>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+                {careerGoals.slice(0, 3).map((goal, idx) => (
+                  <div key={idx} className="card" style={{ padding: 'var(--space-3)', background: 'var(--muted)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--space-2)' }}>
+                      <h4 style={{ margin: 0, fontSize: 'var(--text-sm)', fontWeight: 600 }}>{goal.title}</h4>
+                      <span style={{ 
+                        fontSize: 'var(--text-xs)', 
+                        padding: 'var(--space-1)', 
+                        borderRadius: 'var(--radius)', 
+                        background: goal.status === 'completed' ? 'var(--success-bg)' : 'var(--warning-bg)',
+                        color: goal.status === 'completed' ? 'var(--success)' : 'var(--warning)'
+                      }}>
+                        {goal.status}
+                      </span>
+                    </div>
+                    <div style={{ background: 'var(--surface)', borderRadius: 'var(--radius)', height: '4px', marginBottom: 'var(--space-1)' }}>
+                      <div style={{ background: 'var(--primary)', height: '100%', borderRadius: 'var(--radius)', width: `${goal.progress}%` }} />
+                    </div>
+                    <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-soft)' }}>{goal.progress}% complete • Due {new Date(goal.deadline).toLocaleDateString()}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      </div>
+      
+      {/* ATS Trend Analysis */}
       <section className="section">
-        <h2>ATS Trend</h2>
+        <h2>Performance Trends</h2>
         <div className="section-intro">
-          <h3 className="section-title">ATS Over Time</h3>
-          <p className="muted">Average ATS across recent analyses. Choose a window.</p>
+          <h3 className="section-title">ATS Score Evolution</h3>
+          <p className="muted">Track your improvement over time with detailed analytics</p>
         </div>
         {trendLoading ? (
-          <div className="card">Loading…</div>
+          <div className="card">Loading trend analysis…</div>
         ) : trendData.length < 2 ? (
-          <div className="card">Not enough data yet. Run analyses to build trends.</div>
+          <div className="card" style={{ padding: 'var(--space-6)', textAlign: 'center' }}>
+            <BarChart3 size={48} color="var(--text-soft)" style={{ marginBottom: 'var(--space-3)' }} />
+            <h4>Build Your Trend</h4>
+            <p className="muted">Run multiple analyses to see your improvement over time</p>
+            <Link to="/analysis" className="btn primary" style={{ marginTop: 'var(--space-3)' }}>Analyze Resume</Link>
+          </div>
         ) : (
-          <div className="card" style={{ paddingBottom: 16 }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-              <label className="muted">
-                Window
-                <select value={trendWindow} onChange={(e) => setTrendWindow(parseInt(e.target.value, 10))} style={{ marginLeft: 8 }}>
-                  <option value={7}>7 days</option>
-                  <option value={30}>30 days</option>
-                  <option value={90}>90 days</option>
-                </select>
-              </label>
+          <div className="card" style={{ padding: 'var(--space-5)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-4)' }}>
+              <div>
+                <h4 style={{ margin: 0, marginBottom: 'var(--space-1)' }}>Improvement Trajectory</h4>
+                <p className="muted" style={{ margin: 0, fontSize: 'var(--text-sm)' }}>Your ATS scores across {trendData.length} analyses</p>
+              </div>
+              <select 
+                value={trendWindow} 
+                onChange={(e) => setTrendWindow(parseInt(e.target.value, 10))} 
+                style={{ 
+                  padding: 'var(--space-2)', 
+                  borderRadius: 'var(--radius)', 
+                  border: '1px solid var(--border)',
+                  background: 'var(--surface)'
+                }}
+              >
+                <option value={7}>Last 7 days</option>
+                <option value={30}>Last 30 days</option>
+                <option value={90}>Last 90 days</option>
+              </select>
             </div>
-            <Sparkline data={trendData} height={72} />
-            <div className="muted" style={{ marginTop: 6 }}>
-              Points: {trendData.length} • Avg: {Math.round(trendData.reduce((a, b) => a + b, 0) / trendData.length)}
+            <Sparkline data={trendData} height={100} />
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--space-4)', marginTop: 'var(--space-4)', padding: 'var(--space-3)', background: 'var(--muted)', borderRadius: 'var(--radius)' }}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 'var(--text-lg)', fontWeight: 'bold' }}>{trendData.length}</div>
+                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-soft)' }}>Data Points</div>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 'var(--text-lg)', fontWeight: 'bold', color: 'var(--primary)' }}>{Math.round(trendData.reduce((a, b) => a + b, 0) / trendData.length)}%</div>
+                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-soft)' }}>Average Score</div>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 'var(--text-lg)', fontWeight: 'bold', color: trendData[trendData.length - 1] > trendData[0] ? 'var(--success)' : 'var(--error)' }}>
+                  {trendData.length > 1 ? (trendData[trendData.length - 1] > trendData[0] ? '+' : '') + Math.round(trendData[trendData.length - 1] - trendData[0]) : '0'}%
+                </div>
+                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-soft)' }}>Net Change</div>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 'var(--text-lg)', fontWeight: 'bold', color: 'var(--success)' }}>{Math.max(...trendData)}%</div>
+                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-soft)' }}>Peak Score</div>
+              </div>
             </div>
           </div>
         )}
       </section>
 
-      <section className="section">
-        <h2>Recent Activity</h2>
-        <div className="section-intro">
-          <h3 className="section-title">Latest Analyses</h3>
-          <p className="muted">Recent updates across your resumes with ATS deltas.</p>
-        </div>
-        {trendLoading ? (
-          <div className="card">Loading…</div>
-        ) : recentActivity.length === 0 ? (
-          <div className="card">No recent analyses yet.</div>
-        ) : (
-          <div className="card">
-            <ul className="resume-list">
-              {recentActivity.slice(0, 5).map((rep) => {
-                const delta = deltaFor(rep);
-                return (
-                  <li key={`${rep.resumeId}-${rep.id}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-                    <div>
-                      <strong>{rep.resumeTitle || `Resume #${rep.resumeId}`}</strong>
-                      <span className="muted" style={{ marginLeft: 8 }}>ATS {rep.atsScore} • {fmtDate(rep.date)}</span>
-                      {delta !== null && (
-                        <span className="badge outline" style={{ marginLeft: 8, color: delta >= 0 ? 'green' : 'crimson' }}>
-                          {delta >= 0 ? `+${delta}` : `${delta}`}
-                        </span>
-                      )}
-                    </div>
-                    <div>
-                      <Link to={`/history?resumeId=${rep.resumeId}`} className="btn small ghost">View History</Link>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
+      {/* Recent Activity & Achievements */}
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 'var(--space-6)', marginBottom: 'var(--space-6)' }}>
+        <section className="section">
+          <h2>Recent Activity</h2>
+          <div className="section-intro">
+            <h3 className="section-title">Latest Updates</h3>
+            <p className="muted">Your recent analyses and improvements with performance deltas</p>
           </div>
-        )}
-      </section>
+          {trendLoading ? (
+            <div className="card">Loading activity…</div>
+          ) : recentActivity.length === 0 ? (
+            <div className="card" style={{ padding: 'var(--space-6)', textAlign: 'center' }}>
+              <Clock size={48} color="var(--text-soft)" style={{ marginBottom: 'var(--space-3)' }} />
+              <h4>No Recent Activity</h4>
+              <p className="muted">Start analyzing your resumes to see activity here</p>
+            </div>
+          ) : (
+            <div className="card" style={{ padding: 'var(--space-4)' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+                {recentActivity.slice(0, 5).map((rep) => {
+                  const delta = deltaFor(rep);
+                  return (
+                    <div key={`${rep.resumeId}-${rep.id}`} style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'space-between', 
+                      padding: 'var(--space-3)', 
+                      background: 'var(--muted)', 
+                      borderRadius: 'var(--radius)',
+                      border: '1px solid var(--border)'
+                    }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-1)' }}>
+                          <h4 style={{ margin: 0, fontSize: 'var(--text-sm)', fontWeight: 600 }}>{rep.resumeTitle || `Resume #${rep.resumeId}`}</h4>
+                          <div style={{
+                            background: rep.atsScore >= 80 ? 'var(--success-bg)' : rep.atsScore >= 60 ? 'var(--warning-bg)' : 'var(--error-bg)',
+                            color: rep.atsScore >= 80 ? 'var(--success)' : rep.atsScore >= 60 ? 'var(--warning)' : 'var(--error)',
+                            padding: 'var(--space-1) var(--space-2)',
+                            borderRadius: 'var(--radius)',
+                            fontSize: 'var(--text-xs)',
+                            fontWeight: 600
+                          }}>
+                            {rep.atsScore}% ATS
+                          </div>
+                          {delta !== null && (
+                            <div style={{
+                              background: delta >= 0 ? 'var(--success-bg)' : 'var(--error-bg)',
+                              color: delta >= 0 ? 'var(--success)' : 'var(--error)',
+                              padding: 'var(--space-1) var(--space-2)',
+                              borderRadius: 'var(--radius)',
+                              fontSize: 'var(--text-xs)',
+                              fontWeight: 600
+                            }}>
+                              {delta >= 0 ? `+${delta}` : `${delta}`}
+                            </div>
+                          )}
+                        </div>
+                        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-soft)' }}>
+                          Analyzed {fmtDate(rep.date)}
+                        </div>
+                      </div>
+                      <Link to={`/history?resumeId=${rep.resumeId}`} className="btn small ghost">
+                        View Details
+                      </Link>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </section>
+        
+        <section className="section">
+          <h2>Achievements</h2>
+          <div className="section-intro">
+            <h3 className="section-title">Recent Milestones</h3>
+            <p className="muted">Your latest accomplishments</p>
+          </div>
+          <div className="card" style={{ padding: 'var(--space-4)' }}>
+            {recentAchievements.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: 'var(--space-4)' }}>
+                <Award size={32} color="var(--text-soft)" style={{ marginBottom: 'var(--space-2)' }} />
+                <p className="muted">Complete actions to earn achievements</p>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+                {recentAchievements.slice(0, 4).map((achievement, idx) => (
+                  <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      background: 'var(--gradient-primary)',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      <Award size={20} color="white" />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, marginBottom: 'var(--space-1)' }}>{achievement.title}</div>
+                      <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-soft)' }}>{achievement.description}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      </div>
 
       <Section title="Your Resumes" subtitle="Manage and optimize your career documents">
         {resumes.length === 0 ? (
@@ -377,71 +855,107 @@ export default function Dashboard() {
       <section className="section">
         <div className="section-intro" style={{ marginBottom: 'var(--space-5)' }}>
           <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, marginBottom: 'var(--space-2)' }}>Quick Actions</h2>
-          <p className="muted" style={{ fontSize: 'var(--text-base)' }}>Everything you need to optimize your career documents</p>
+          <p className="muted" style={{ fontSize: 'var(--text-base)' }}>Accelerate your career development with AI-powered tools</p>
         </div>
-        <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--space-4)' }}>
-          <Link to="/builder" className="card elevated interactive" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-3)' }}>
-              <div style={{
-                width: '48px',
-                height: '48px',
-                background: 'var(--gradient-primary)',
-                borderRadius: 'var(--radius-md)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                <Plus size={24} color="white" />
+        <div className="grid" style={{ 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
+          gap: 'var(--space-4)',
+          alignItems: 'stretch'
+        }}>
+          {[
+            { to: '/builder', icon: Plus, title: 'Build Resume', desc: 'Create professional resumes with AI assistance', gradient: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)' },
+            { to: '/analysis', icon: SearchCheck, title: 'AI Analysis', desc: 'Get detailed ATS scores and improvement suggestions', gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)' },
+            { to: '/job-match', icon: Target, title: 'Job Matching', desc: 'Compare resumes with job descriptions', gradient: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)' },
+            { to: '/learning', icon: Zap, title: 'Skill Development', desc: 'Learn new skills and earn certifications', gradient: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)' },
+            { to: '/community', icon: Users, title: 'Community', desc: 'Connect with professionals and get advice', gradient: 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)' },
+            { to: '/job-tracker', icon: Calendar, title: 'Job Tracker', desc: 'Manage applications and follow-ups', gradient: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)' }
+          ].map((action, idx) => {
+            const Icon = action.icon;
+            return (
+              <div className="card elevated" style={{ padding: 'var(--space-4)' }}>
+                <Link 
+                  key={idx}
+                  to={action.to} 
+                  className="card interactive" 
+                  style={{ 
+                    textDecoration: 'none', 
+                    color: 'inherit',
+                    padding: 'var(--space-4)',
+                    minHeight: '100px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 'var(--space-4)',
+                    transition: 'all 0.2s ease',
+                    border: '1px solid var(--border)',
+                    borderRadius: 'var(--radius-lg)',
+                    background: 'var(--surface)',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}
+                >
+                  <div style={{
+                    width: '56px',
+                    height: '56px',
+                    background: action.gradient,
+                    borderRadius: 'var(--radius-lg)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                    position: 'relative',
+                    zIndex: 1
+                  }}>
+                    <Icon size={28} color="white" />
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0, zIndex: 1 }}>
+                    <h3 style={{ 
+                      margin: 0, 
+                      fontSize: 'var(--text-lg)', 
+                      fontWeight: 600, 
+                      marginBottom: 'var(--space-1)',
+                      color: 'var(--text)',
+                      lineHeight: 1.3
+                    }}>
+                      {action.title}
+                    </h3>
+                    <p style={{ 
+                      margin: 0, 
+                      color: 'var(--text-soft)', 
+                      fontSize: 'var(--text-sm)',
+                      lineHeight: 1.4,
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden'
+                    }}>
+                      {action.desc}
+                    </p>
+                  </div>
+                  <ArrowRight 
+                    size={20} 
+                    color="var(--text-soft)" 
+                    style={{ 
+                      flexShrink: 0,
+                      opacity: 0.5,
+                      transition: 'all 0.2s ease',
+                      zIndex: 1
+                    }} 
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    right: 0,
+                    width: '100px',
+                    height: '100%',
+                    background: `linear-gradient(90deg, transparent 0%, ${action.gradient.split(' ')[1].split(' ')[0]}10 100%)`,
+                    opacity: 0.05,
+                    pointerEvents: 'none'
+                  }} />
+                </Link>
               </div>
-              <div>
-                <h3 style={{ margin: 0, fontSize: 'var(--text-lg)', fontWeight: 600 }}>Build Resume</h3>
-                <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>Create from scratch</p>
-              </div>
-              <ArrowRight size={20} color="var(--text-muted)" style={{ marginLeft: 'auto' }} />
-            </div>
-          </Link>
-          
-          <Link to="/analysis" className="card elevated interactive" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-3)' }}>
-              <div style={{
-                width: '48px',
-                height: '48px',
-                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                borderRadius: 'var(--radius-md)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                <SearchCheck size={24} color="white" />
-              </div>
-              <div>
-                <h3 style={{ margin: 0, fontSize: 'var(--text-lg)', fontWeight: 600 }}>Analyze Resume</h3>
-                <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>Get AI feedback</p>
-              </div>
-              <ArrowRight size={20} color="var(--text-muted)" style={{ marginLeft: 'auto' }} />
-            </div>
-          </Link>
-          
-          <Link to="/job-match" className="card elevated interactive" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-3)' }}>
-              <div style={{
-                width: '48px',
-                height: '48px',
-                background: 'var(--gradient-secondary)',
-                borderRadius: 'var(--radius-md)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                <Target size={24} color="white" />
-              </div>
-              <div>
-                <h3 style={{ margin: 0, fontSize: 'var(--text-lg)', fontWeight: 600 }}>Job Match</h3>
-                <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>Compare with JD</p>
-              </div>
-              <ArrowRight size={20} color="var(--text-muted)" style={{ marginLeft: 'auto' }} />
-            </div>
-          </Link>
+            );
+          })}
         </div>
       </section>
 

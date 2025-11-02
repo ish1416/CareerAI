@@ -48,57 +48,163 @@ export default function Register() {
   };
 
   return (
-    <> 
-      <div className="auth-wrap">
-        <form onSubmit={onSubmit} className="card auth-card form" aria-label="Register form">
-          <div className="auth-header">
-            <Logo size={56} />
-            <h2>Create Account</h2>
-            <p className="sub">Let’s get you started</p>
+    <div style={{ 
+      minHeight: '100vh', 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center',
+      background: 'var(--bg)',
+      padding: '16px'
+    }}>
+      <div style={{
+        width: '100%',
+        maxWidth: '380px',
+        background: 'var(--surface)',
+        borderRadius: '16px',
+        padding: '32px 24px',
+        boxShadow: 'var(--shadow-lg)',
+        border: '1px solid var(--border)'
+      }}>
+        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+          <Logo size={48} />
+          <h1 style={{ fontSize: '24px', fontWeight: '700', margin: '12px 0 4px', color: 'var(--text)' }}>Create Account</h1>
+          <p style={{ color: 'var(--text-soft)', margin: 0, fontSize: '14px' }}>Join CareerAI today</p>
+        </div>
+        
+        <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div>
+            <label htmlFor="name" style={{ display: 'block', marginBottom: '6px', fontWeight: '500', color: 'var(--text)', fontSize: '14px' }}>Full Name</label>
+            <input
+              id="name"
+              type="text"
+              placeholder="Your full name"
+              autoComplete="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '10px 14px',
+                border: '1px solid var(--border)',
+                borderRadius: '8px',
+                fontSize: '14px',
+                background: 'var(--surface)',
+                color: 'var(--text)',
+                transition: 'all 0.2s',
+                boxSizing: 'border-box'
+              }}
+              required
+            />
           </div>
-          <label htmlFor="name">Name</label>
-          <input
-            id="name"
-            type="text"
-            placeholder="Your full name"
-            autoComplete="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            placeholder="you@example.com"
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            placeholder="Create a strong password"
-            autoComplete="new-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          {error && <p className="form-error" role="alert">{error}</p>}
-          <div className="form-actions" style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-            <button type="submit" className="btn cta gradient" disabled={loading}>
-              {loading ? 'Creating…' : 'Create Account'}
-            </button>
-            {/* Google OAuth */}
-            <button type="button" className="btn small ghost" onClick={continueWithGoogle}>Continue with Google</button>
+          
+          <div>
+            <label htmlFor="email" style={{ display: 'block', marginBottom: '6px', fontWeight: '500', color: 'var(--text)', fontSize: '14px' }}>Email</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '10px 14px',
+                border: '1px solid var(--border)',
+                borderRadius: '8px',
+                fontSize: '14px',
+                background: 'var(--surface)',
+                color: 'var(--text)',
+                transition: 'all 0.2s',
+                boxSizing: 'border-box'
+              }}
+              required
+            />
           </div>
+          
+          <div>
+            <label htmlFor="password" style={{ display: 'block', marginBottom: '6px', fontWeight: '500', color: 'var(--text)', fontSize: '14px' }}>Password</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Create a strong password"
+              autoComplete="new-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '10px 14px',
+                border: '1px solid var(--border)',
+                borderRadius: '8px',
+                fontSize: '14px',
+                background: 'var(--surface)',
+                color: 'var(--text)',
+                transition: 'all 0.2s',
+                boxSizing: 'border-box'
+              }}
+              required
+            />
+          </div>
+          
+          {error && (
+            <div style={{
+              background: 'var(--error-bg)',
+              border: '1px solid var(--error-border)',
+              borderRadius: '8px',
+              padding: '10px',
+              color: 'var(--error)',
+              fontSize: '13px'
+            }}>
+              {error}
+            </div>
+          )}
+          
+          <button 
+            type="submit" 
+            disabled={loading}
+            style={{
+              width: '100%',
+              padding: '12px',
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '14px',
+              fontWeight: '600',
+              cursor: loading ? 'not-allowed' : 'pointer',
+              opacity: loading ? 0.7 : 1,
+              transition: 'all 0.2s'
+            }}
+          >
+            {loading ? 'Creating Account...' : 'Create Account'}
+          </button>
+          
+          <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', margin: '8px 0' }}>
+            or
+          </div>
+          
+          <button 
+            type="button" 
+            onClick={continueWithGoogle}
+            style={{
+              width: '100%',
+              padding: '12px',
+              background: 'var(--surface)',
+              color: 'var(--text)',
+              border: '1px solid var(--border)',
+              borderRadius: '8px',
+              fontSize: '14px',
+              fontWeight: '500',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}
+          >
+            Continue with Google
+          </button>
         </form>
+        
+        <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '13px', color: 'var(--text-soft)' }}>
+          Already have an account? <Link to="/login" style={{ color: '#667eea', textDecoration: 'none', fontWeight: '500' }}>Sign in</Link>
+        </div>
       </div>
-      <p className="sub auth-sub">
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
-    </>
+    </div>
   );
 }

@@ -1,32 +1,25 @@
 import React from 'react';
+import { Brain } from 'lucide-react';
 
 export default function Logo({ size = 28, pulse = false, gradient = false }) {
-  const sources = ['/brand.png'];
-  const handleError = (e) => {
-    e.target.onerror = null;
-    const current = e.target.getAttribute('data-src-index') || '0';
-    const nextIndex = parseInt(current, 10) + 1;
-    if (nextIndex < sources.length) {
-      e.target.setAttribute('data-src-index', String(nextIndex));
-      e.target.src = sources[nextIndex];
-    } else {
-      e.target.src = sources[sources.length - 1];
-    }
-  };
   return (
-    <span
-      className={`logo-wrap${pulse ? ' pulse' : ''}${gradient ? ' gradient' : ''}`}
-      style={{ display: 'inline-grid', placeItems: 'center', width: size, height: size }}
+    <div
+      style={{ 
+        display: 'inline-flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        width: size, 
+        height: size,
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        color: '#ffffff',
+        fontWeight: 'bold',
+        fontSize: size * 0.4,
+        borderRadius: '8px',
+        boxShadow: '0 4px 12px rgba(102, 126, 234, 0.3)',
+        animation: pulse ? 'pulse 2s infinite' : 'none'
+      }}
     >
-      <img
-        src={sources[0]}
-        alt="Career AI logo"
-        width={size}
-        height={size}
-        onError={handleError}
-        data-src-index="0"
-        style={{ display: 'inline-block', borderRadius: 12 }}
-      />
-    </span>
+      <Brain size={size * 0.6} color="white" />
+    </div>
   );
 }

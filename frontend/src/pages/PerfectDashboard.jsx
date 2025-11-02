@@ -418,11 +418,13 @@ function RemoveDuplicatesButton({ onSuccess }) {
 function QuickActions() {
   const actions = [
     { title: 'Build Resume', desc: 'Create from scratch', link: '/builder', color: 'var(--primary)' },
-    { title: 'Resume Templates', desc: 'Professional designs', link: '/templates', color: 'var(--success)' },
-    { title: 'Job Matcher', desc: 'Find matching jobs', link: '/jobs', color: 'var(--warning)' },
-    { title: 'Interview Prep', desc: 'Practice questions', link: '/interview', color: 'var(--info)' },
-    { title: 'Career Insights', desc: 'Industry analytics', link: '/insights', color: 'var(--purple)' },
-    { title: 'Cover Letter', desc: 'Generate letter', link: '/cover-letters', color: 'var(--teal)' }
+    { title: 'Career Goals', desc: 'Set & track objectives', link: '/goals', color: 'var(--success)' },
+    { title: 'Skill Development', desc: 'Gap analysis & learning', link: '/skills', color: 'var(--warning)' },
+    { title: 'Resume Templates', desc: 'Professional designs', link: '/templates', color: 'var(--info)' },
+    { title: 'Job Matcher', desc: 'Find matching jobs', link: '/jobs', color: 'var(--purple)' },
+    { title: 'Interview Prep', desc: 'Practice questions', link: '/interview', color: 'var(--teal)' },
+    { title: 'Career Insights', desc: 'Industry analytics', link: '/insights', color: 'var(--orange)' },
+    { title: 'Cover Letter', desc: 'Generate letter', link: '/cover-letters', color: 'var(--pink)' }
   ];
   
   return (
