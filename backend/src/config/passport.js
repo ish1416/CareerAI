@@ -7,7 +7,9 @@ const clientID = process.env.GOOGLE_CLIENT_ID || '';
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET || '';
 const callbackURL = process.env.GOOGLE_CALLBACK_URL || 'http://localhost:5001/api/auth/google/callback';
 
-passport.use(new GoogleStrategy({
+// Only configure Google OAuth if credentials are provided
+if (clientID && clientSecret) {
+  passport.use(new GoogleStrategy({
   clientID,
   clientSecret,
   callbackURL,
@@ -45,4 +47,7 @@ passport.use(new GoogleStrategy({
   } catch (e) {
     return done(e);
   }
-}));
+  }));
+} else {
+  console.log('Google OAuth not configured - skipping Google strategy setup');
+}

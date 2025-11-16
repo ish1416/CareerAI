@@ -210,6 +210,13 @@ export default function Analysis() {
     if (file) await processFile(file);
   };
 
+  const onUploadBoxKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      triggerFilePicker();
+    }
+  };
+
   useEffect(() => {
     if (uploadComplete && !autoAnalyzed && !loading) {
       setAutoAnalyzed(true);
@@ -505,14 +512,14 @@ export default function Analysis() {
 
   return (
     <div className="page analysis">
-      <div className="page-header">
-        <h1>Analyze Resume</h1>
-        <p className="muted">Upload or paste your resume; extract sections, and export PDF.</p>
+      <div className="page-header" style={{ textAlign: 'left' }}>
+        <h1 style={{ textAlign: 'left' }}>Analyze Resume</h1>
+        <p className="muted" style={{ textAlign: 'left' }}>Upload or paste your resume; extract sections, and export PDF.</p>
       </div>
-      <div className="section-intro">
-        <h3 className="section-title">What This Section Does</h3>
-        <p className="muted">Analyze your resume content and structure, then export polished output.</p>
-        <ol className="step-list">
+      <div className="section-intro" style={{ textAlign: 'left' }}>
+        <h3 className="section-title" style={{ textAlign: 'left' }}>What This Section Does</h3>
+        <p className="muted" style={{ textAlign: 'left' }}>Analyze your resume content and structure, then export polished output.</p>
+        <ol className="step-list" style={{ textAlign: 'left' }}>
           <li>Upload or paste your resume to parse content.</li>
           <li>Edit detected sections and improve ATS readiness.</li>
           <li>Export PDF or copy text for job tailoring.</li>
@@ -546,13 +553,17 @@ export default function Analysis() {
           onDrop={onDrop}
           onClick={triggerFilePicker}
           role="button"
+          tabIndex={0}
+          onKeyDown={onUploadBoxKeyDown}
+          aria-label="Upload resume"
+          aria-describedby="upload-instructions"
         >
           {!uploadComplete ? (
             <div className="upload-content">
               <UploadCloud size={32} color="var(--accent-blue)" />
               <div>
                 <strong>Drag & drop PDF/DOCX here</strong>
-                <div className="muted">or click to select a file</div>
+                <div className="muted" id="upload-instructions">or click to select a file</div>
               </div>
               {uploading && (
                 <div className="progress-circle" style={{ background: `conic-gradient(var(--accent-blue) ${uploadProgress}%, transparent 0)` }}>

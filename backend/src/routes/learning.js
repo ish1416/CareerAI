@@ -2,9 +2,11 @@ import express from 'express';
 import { requireAuth } from '../middleware/auth.js';
 import { groqChat } from '../utils/groqClient.js';
 import { PrismaClient } from '@prisma/client';
+import CourseService from '../services/courseService.js';
 
 const router = express.Router();
 const prisma = new PrismaClient();
+const courseService = new CourseService();
 
 // Test endpoints (no auth)
 router.get('/test-progress', async (req, res) => {
@@ -37,31 +39,97 @@ router.get('/test-tests', async (req, res) => {
   }
 });
 
+// Get learning dashboard data
+router.get('/dashboard', requireAuth, async (req, res) => {
+  try {
+    const userProgress = await prisma.userProgress.findUnique({
+      where: { userId: req.user.id }
+    });
+
+    const enrolledCourses = await prisma.course.findMany({
+      where: { userId: req.user.id },
+      orderBy: { createdAt: 'desc' }
+    });
+
+    const userSkills = ['JavaScript', 'React', 'Node.js'];
+    const recommendedCourses = await courseService.getRecommendedCourses(userSkills);
+
+    const dashboardData = {
+      overview: {
+        coursesEnrolled: enrolledCourses.length,
+        coursesCompleted: enrolledCourses.filter(c => c.completed).length,
+        hoursLearned: userProgress?.totalHours || 0,
+        certificatesEarned: userProgress?.badges ? JSON.parse(userProgress.badges).length : 0,
+        currentStreak: userProgress?.streak || 0,
+        level: userProgress?.level || 1,
+        xp: userProgress?.xp || 0,
+        nextLevelXP: (userProgress?.level || 1) * 1000
+      },
+      currentCourses: enrolledCourses.filter(c => !c.completed).map(course => ({
+        id: course.id,
+        title: course.title,
+        provider: course.provider,
+        progress: course.progress,
+        difficulty: course.level,
+        url: course.url
+      })),
+      recommendedCourses: recommendedCourses.slice(0, 6),
+      recentActivity: [],
+      skillProgress: [],
+      upcomingDeadlines: [],
+      achievements: userProgress?.badges ? JSON.parse(userProgress.badges) : []
+    };
+    
+    res.json(dashboardData);
+  } catch (error) {
+    console.error('Learning dashboard error:', error);
+    res.status(500).json({ error: 'Failed to load learning dashboard' });
+  }
+});
+
+// Get available courses
+router.get('/courses', requireAuth, async (req, res) => {
+  try {
+    const { category, level, search, page = 1 } = req.query;
+    
+    let courses;
+    
+    if (search) {
+      courses = await courseService.getCoursesBySkill(search, 20);
+    } else {
+      courses = await courseService.getFreeCourses(parseInt(page) - 1);
+    }
+    
+    if (level) {
+      courses = courses.filter(course => 
+        course.level.toLowerCase() === level.toLowerCase()
+      );
+    }
+    
+    const categories = await courseService.getCategories();
+    
+    res.json({
+      courses,
+      totalCourses: courses.length,
+      currentPage: parseInt(page),
+      totalPages: Math.ceil(courses.length / 20),
+      categories: categories.map(cat => cat.name),
+      levels: ['Beginner', 'Intermediate', 'Advanced']
+    });
+  } catch (error) {
+    console.error('Courses error:', error);
+    res.status(500).json({ error: 'Failed to load courses' });
+  }
+});
+
 // Course Recommendations
 router.post('/courses/recommend', requireAuth, async (req, res) => {
   try {
     const { skills, careerGoal, experience } = req.body;
     
-    const prompt = `Recommend 5 online courses for someone with ${experience} experience wanting to learn ${skills} for ${careerGoal}. Return JSON: [{"title":"","provider":"","duration":"","level":"","url":""}]`;
+    const recommendedCourses = await courseService.getRecommendedCourses(skills || ['JavaScript']);
     
-    const messages = [
-      { role: 'system', content: 'You are a career learning advisor. Return only valid JSON.' },
-      { role: 'user', content: prompt }
-    ];
-
-    const aiResponse = await groqChat(messages, { maxTokens: 500 });
-    
-    let courses;
-    try {
-      courses = JSON.parse(aiResponse);
-    } catch {
-      courses = [
-        { title: "JavaScript Fundamentals", provider: "Coursera", duration: "4 weeks", level: "Beginner", url: "#" },
-        { title: "React Development", provider: "Udemy", duration: "6 weeks", level: "Intermediate", url: "#" }
-      ];
-    }
-
-    res.json({ courses });
+    res.json({ courses: recommendedCourses });
   } catch (error) {
     console.error('Course recommendation error:', error);
     res.status(500).json({ error: 'Failed to get recommendations' });

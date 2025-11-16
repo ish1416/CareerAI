@@ -1,0 +1,1739 @@
+/* Ocean Theme Component Styles */
+
+/* Dashboard Components */
+[data-theme="ocean"] .dashboard-card,
+[data-theme="ocean"] .stat-card,
+[data-theme="ocean"] .analytics-card {
+  background: rgba(0, 51, 102, 0.7) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 255, 0.15) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+[data-theme="ocean"] .dashboard-card:hover,
+[data-theme="ocean"] .stat-card:hover,
+[data-theme="ocean"] .analytics-card:hover {
+  background: rgba(0, 68, 136, 0.8) !important;
+  border-color: rgba(0, 255, 255, 0.5) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 255, 255, 0.25) !important;
+  transform: translateY(-4px) scale(1.01) !important;
+}
+
+/* Form Components */
+[data-theme="ocean"] .form-container,
+[data-theme="ocean"] .auth-form,
+[data-theme="ocean"] .login-form,
+[data-theme="ocean"] .register-form {
+  background: rgba(0, 51, 102, 0.8) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+  border-radius: 24px !important;
+  backdrop-filter: blur(20px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(0, 255, 255, 0.2) !important;
+}
+
+[data-theme="ocean"] .form-field,
+[data-theme="ocean"] .input-group {
+  margin-bottom: 20px !important;
+}
+
+[data-theme="ocean"] input,
+[data-theme="ocean"] textarea,
+[data-theme="ocean"] select {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: #001122 !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 10px !important;
+}
+
+[data-theme="ocean"] label {
+  color: #ffffff !important;
+  font-weight: 500 !important;
+  margin-bottom: 8px !important;
+  display: block !important;
+}
+
+/* Pricing Components */
+[data-theme="ocean"] .pricing-card {
+  background: rgba(0, 51, 102, 0.7) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 24px !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 255, 0.15) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+[data-theme="ocean"] .pricing-card:hover {
+  background: rgba(0, 68, 136, 0.8) !important;
+  border-color: rgba(0, 255, 255, 0.5) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 255, 255, 0.25) !important;
+  transform: translateY(-6px) scale(1.02) !important;
+}
+
+[data-theme="ocean"] .pricing-card-popular {
+  background: rgba(0, 68, 136, 0.8) !important;
+  border: 2px solid rgba(0, 255, 255, 0.5) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(0, 255, 255, 0.2) !important;
+}
+
+/* Resume Builder Components */
+[data-theme="ocean"] .resume-section,
+[data-theme="ocean"] .template-card,
+[data-theme="ocean"] .builder-panel {
+  background: rgba(0, 51, 102, 0.7) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 255, 0.15) !important;
+}
+
+[data-theme="ocean"] .resume-preview {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 2px solid rgba(0, 255, 255, 0.4) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 255, 255, 0.2) !important;
+}
+
+/* Analysis Components */
+[data-theme="ocean"] .analysis-result,
+[data-theme="ocean"] .score-card,
+[data-theme="ocean"] .suggestion-card {
+  background: rgba(0, 51, 102, 0.7) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 255, 0.15) !important;
+}
+
+[data-theme="ocean"] .progress-bar {
+  background: rgba(0, 255, 255, 0.2) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+[data-theme="ocean"] .progress-fill {
+  background: linear-gradient(90deg, rgba(0, 255, 255, 0.8) 0%, rgba(64, 224, 208, 0.6) 100%) !important;
+  border-radius: 12px !important;
+  transition: width 0.6s ease !important;
+}
+
+/* Settings Components */
+[data-theme="ocean"] .settings-panel,
+[data-theme="ocean"] .profile-card,
+[data-theme="ocean"] .preference-card {
+  background: rgba(0, 51, 102, 0.7) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 255, 0.15) !important;
+}
+
+/* Modal Components */
+[data-theme="ocean"] .modal,
+[data-theme="ocean"] .dialog,
+[data-theme="ocean"] .popup {
+  background: rgba(0, 51, 102, 0.9) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+  border-radius: 24px !important;
+  backdrop-filter: blur(24px) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 255, 255, 0.3) !important;
+}
+
+[data-theme="ocean"] .modal-backdrop {
+  background: rgba(0, 17, 34, 0.8) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* Sidebar Components */
+[data-theme="ocean"] .sidebar,
+[data-theme="ocean"] .navigation-panel {
+  background: rgba(0, 34, 68, 0.9) !important;
+  border-right: 1px solid rgba(0, 255, 255, 0.3) !important;
+  backdrop-filter: blur(20px) !important;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 255, 0.1) !important;
+}
+
+[data-theme="ocean"] .sidebar-item,
+[data-theme="ocean"] .nav-item {
+  border-radius: 12px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+[data-theme="ocean"] .sidebar-item:hover,
+[data-theme="ocean"] .nav-item:hover {
+  background: rgba(0, 255, 255, 0.1) !important;
+  box-shadow: 0 4px 16px rgba(0, 255, 255, 0.2) !important;
+}
+
+[data-theme="ocean"] .sidebar-item.active,
+[data-theme="ocean"] .nav-item.active {
+  background: rgba(0, 255, 255, 0.2) !important;
+  border-left: 3px solid rgba(0, 255, 255, 0.8) !important;
+  box-shadow: 0 4px 16px rgba(0, 255, 255, 0.3) !important;
+}
+
+/* Table Components */
+[data-theme="ocean"] .table,
+[data-theme="ocean"] .data-table {
+  background: rgba(0, 51, 102, 0.7) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 16px !important;
+  backdrop-filter: blur(16px) !important;
+  overflow: hidden !important;
+}
+
+[data-theme="ocean"] .table th,
+[data-theme="ocean"] .data-table th {
+  background: rgba(0, 68, 136, 0.8) !important;
+  border-bottom: 1px solid rgba(0, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="ocean"] .table td,
+[data-theme="ocean"] .data-table td {
+  border-bottom: 1px solid rgba(0, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="ocean"] .table tr:hover,
+[data-theme="ocean"] .data-table tr:hover {
+  background: rgba(0, 255, 255, 0.1) !important;
+}
+
+/* Badge Components */
+[data-theme="ocean"] .badge,
+[data-theme="ocean"] .tag,
+[data-theme="ocean"] .chip {
+  background: rgba(0, 255, 255, 0.2) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+  border-radius: 20px !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+[data-theme="ocean"] .badge.success {
+  background: rgba(76, 175, 80, 0.3) !important;
+  border-color: rgba(76, 175, 80, 0.5) !important;
+}
+
+[data-theme="ocean"] .badge.warning {
+  background: rgba(255, 193, 7, 0.3) !important;
+  border-color: rgba(255, 193, 7, 0.5) !important;
+}
+
+[data-theme="ocean"] .badge.error {
+  background: rgba(244, 67, 54, 0.3) !important;
+  border-color: rgba(244, 67, 54, 0.5) !important;
+}
+
+/* Loading Components */
+[data-theme="ocean"] .loading-spinner {
+  border: 3px solid rgba(0, 255, 255, 0.3) !important;
+  border-top: 3px solid rgba(0, 255, 255, 0.8) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.4) !important;
+}
+
+[data-theme="ocean"] .skeleton {
+  background: linear-gradient(
+    90deg, 
+    rgba(0, 51, 102, 0.6) 0%, 
+    rgba(0, 255, 255, 0.2) 50%, 
+    rgba(0, 51, 102, 0.6) 100%
+  ) !important;
+  border-radius: 12px !important;
+}
+
+/* Tooltip Components */
+[data-theme="ocean"] .tooltip {
+  background: rgba(0, 34, 68, 0.95) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+  border-radius: 8px !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(0, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+
+/* Dropdown Components */
+[data-theme="ocean"] .dropdown,
+[data-theme="ocean"] .select-menu {
+  background: rgba(0, 51, 102, 0.9) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(20px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(0, 255, 255, 0.2) !important;
+}
+
+[data-theme="ocean"] .dropdown-item:hover {
+  background: rgba(0, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+}
+
+/* Alert Components */
+[data-theme="ocean"] .alert {
+  border-radius: 16px !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+[data-theme="ocean"] .alert.success {
+  background: rgba(76, 175, 80, 0.2) !important;
+  border: 1px solid rgba(76, 175, 80, 0.4) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="ocean"] .alert.warning {
+  background: rgba(255, 193, 7, 0.2) !important;
+  border: 1px solid rgba(255, 193, 7, 0.4) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="ocean"] .alert.error {
+  background: rgba(244, 67, 54, 0.2) !important;
+  border: 1px solid rgba(244, 67, 54, 0.4) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="ocean"] .alert.info {
+  background: rgba(0, 255, 255, 0.2) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+}
+/* Ocean Theme Global Overrides */
+[data-theme="ocean"] .hero-section,
+[data-theme="ocean"] .stats-section,
+[data-theme="ocean"] .landing-section {
+  background: transparent !important;
+}
+
+[data-theme="ocean"] .hero-preview-card {
+  background: rgba(0, 51, 102, 0.7) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 255, 0.15) !important;
+}
+
+[data-theme="ocean"] .stat-item {
+  background: rgba(0, 51, 102, 0.6) !important;
+  border: 1px solid rgba(0, 255, 255, 0.2) !important;
+  border-radius: 16px !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 255, 255, 0.1) !important;
+}
+
+[data-theme="ocean"] .testimonials-grid .card {
+  background: rgba(0, 51, 102, 0.7) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 20px !important;
+}
+
+[data-theme="ocean"] .faq-item {
+  background: rgba(0, 51, 102, 0.7) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 16px !important;
+  margin-bottom: 12px !important;
+}
+
+[data-theme="ocean"] .contact-form {
+  background: rgba(0, 51, 102, 0.8) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+  border-radius: 24px !important;
+}
+
+[data-theme="ocean"] .contact-visual {
+  background: rgba(0, 51, 102, 0.6) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 24px !important;
+}
+
+/* Feature Cards */
+[data-theme="ocean"] .feature-card {
+  background: rgba(0, 51, 102, 0.7) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 255, 0.15) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+[data-theme="ocean"] .feature-card:hover {
+  background: rgba(0, 68, 136, 0.8) !important;
+  border-color: rgba(0, 255, 255, 0.5) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 255, 255, 0.25) !important;
+  transform: translateY(-4px) scale(1.01) !important;
+}
+
+/* Step Items */
+[data-theme="ocean"] .step-item {
+  background: rgba(0, 51, 102, 0.6) !important;
+  border: 1px solid rgba(0, 255, 255, 0.2) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(12px) !important;
+  padding: 24px !important;
+  margin-bottom: 20px !important;
+}
+
+[data-theme="ocean"] .step-icon {
+  border-radius: 16px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 255, 0.2) !important;
+}
+
+/* How It Works Section */
+[data-theme="ocean"] .how-it-works {
+  background: transparent !important;
+}
+
+[data-theme="ocean"] .how-it-works .card {
+  background: rgba(0, 51, 102, 0.7) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 20px !important;
+}
+
+/* All Text Elements */
+[data-theme="ocean"] h1,
+[data-theme="ocean"] h2,
+[data-theme="ocean"] h3,
+[data-theme="ocean"] h4,
+[data-theme="ocean"] h5,
+[data-theme="ocean"] h6,
+[data-theme="ocean"] p,
+[data-theme="ocean"] span,
+[data-theme="ocean"] div,
+[data-theme="ocean"] a,
+[data-theme="ocean"] li,
+[data-theme="ocean"] td,
+[data-theme="ocean"] th {
+  color: #ffffff !important;
+}
+
+[data-theme="ocean"] .text-muted,
+[data-theme="ocean"] .text-secondary,
+[data-theme="ocean"] .muted {
+  color: #b3e5fc !important;
+}
+
+/* Button Variants */
+[data-theme="ocean"] .btn-ghost {
+  background: rgba(0, 255, 255, 0.08) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+}
+
+[data-theme="ocean"] .btn-ghost:hover {
+  background: rgba(0, 255, 255, 0.2) !important;
+  border-color: rgba(0, 255, 255, 0.5) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 0 16px rgba(0, 255, 255, 0.4) !important;
+}
+
+[data-theme="ocean"] .btn-secondary {
+  background: rgba(64, 224, 208, 0.2) !important;
+  border: 1px solid rgba(64, 224, 208, 0.4) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+}
+
+[data-theme="ocean"] .btn-secondary:hover {
+  background: rgba(64, 224, 208, 0.3) !important;
+  border-color: rgba(64, 224, 208, 0.6) !important;
+}
+
+/* Input Focus States */
+[data-theme="ocean"] input:focus,
+[data-theme="ocean"] textarea:focus,
+[data-theme="ocean"] select:focus {
+  outline: none !important;
+  border-color: rgba(0, 255, 255, 0.6) !important;
+  box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.2) !important;
+}
+
+/* Checkbox and Radio */
+[data-theme="ocean"] input[type="checkbox"],
+[data-theme="ocean"] input[type="radio"] {
+  accent-color: #00ffff !important;
+}
+
+/* Links */
+[data-theme="ocean"] a {
+  color: #00ffff !important;
+  transition: color 0.3s ease !important;
+}
+
+[data-theme="ocean"] a:hover {
+  color: #40e0d0 !important;
+}
+
+/* Dividers */
+[data-theme="ocean"] hr,
+[data-theme="ocean"] .divider {
+  border-color: rgba(0, 255, 255, 0.3) !important;
+}
+
+/* Code Blocks */
+[data-theme="ocean"] code,
+[data-theme="ocean"] pre {
+  background: rgba(0, 34, 68, 0.8) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 8px !important;
+  color: #ffffff !important;
+}
+
+/* Scrollbar for Ocean Theme */
+[data-theme="ocean"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(0, 255, 255, 0.6) 0%, rgba(64, 224, 208, 0.4) 100%) !important;
+  border-radius: 4px !important;
+}
+
+[data-theme="ocean"] ::-webkit-scrollbar-track {
+  background: rgba(0, 51, 102, 0.3) !important;
+}
+/* Dashboard Component Ocean/Dark Theme Fix */
+
+/* Dashboard Page Layout */
+[data-theme="ocean"] .page.dashboard,
+[data-theme="dark"] .page.dashboard {
+  background: transparent !important;
+}
+
+/* Dashboard Cards */
+[data-theme="ocean"] .dashboard-card,
+[data-theme="ocean"] .stat-card,
+[data-theme="ocean"] .analytics-card,
+[data-theme="ocean"] .card.elevated {
+  background: rgba(0, 51, 102, 0.7) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 255, 0.15) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+[data-theme="dark"] .dashboard-card,
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .analytics-card,
+[data-theme="dark"] .card.elevated {
+  background: rgba(51, 65, 85, 0.8) !important;
+  border: 1px solid rgba(71, 85, 105, 0.6) !important;
+  border-radius: 16px !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Dashboard Card Hover States */
+[data-theme="ocean"] .card.elevated:hover,
+[data-theme="ocean"] .card.interactive:hover {
+  background: rgba(0, 68, 136, 0.8) !important;
+  border-color: rgba(0, 255, 255, 0.5) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 255, 255, 0.25) !important;
+  transform: translateY(-4px) scale(1.01) !important;
+}
+
+[data-theme="dark"] .card.elevated:hover,
+[data-theme="dark"] .card.interactive:hover {
+  background: rgba(71, 85, 105, 0.9) !important;
+  border-color: rgba(100, 116, 139, 0.8) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Stats Grid */
+[data-theme="ocean"] .grid.stats .card,
+[data-theme="dark"] .grid.stats .card {
+  padding: 20px !important;
+  text-align: center !important;
+}
+
+/* Section Headers */
+[data-theme="ocean"] .section-intro h2,
+[data-theme="ocean"] .section-intro h3,
+[data-theme="dark"] .section-intro h2,
+[data-theme="dark"] .section-intro h3 {
+  color: var(--text) !important;
+}
+
+[data-theme="ocean"] .section-intro .muted,
+[data-theme="dark"] .section-intro .muted {
+  color: var(--text-muted) !important;
+}
+
+/* Quick Actions Grid */
+[data-theme="ocean"] .card.interactive {
+  background: rgba(0, 51, 102, 0.7) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 20px !important;
+}
+
+[data-theme="dark"] .card.interactive {
+  background: rgba(51, 65, 85, 0.8) !important;
+  border: 1px solid rgba(71, 85, 105, 0.6) !important;
+  border-radius: 16px !important;
+}
+
+/* Progress Bars */
+[data-theme="ocean"] .progress-bar {
+  background: rgba(0, 255, 255, 0.2) !important;
+  border-radius: 12px !important;
+}
+
+[data-theme="dark"] .progress-bar {
+  background: rgba(71, 85, 105, 0.6) !important;
+  border-radius: 8px !important;
+}
+
+[data-theme="ocean"] .progress-fill {
+  background: linear-gradient(90deg, rgba(0, 255, 255, 0.8) 0%, rgba(64, 224, 208, 0.6) 100%) !important;
+}
+
+[data-theme="dark"] .progress-fill {
+  background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%) !important;
+}
+
+/* Sparkline Container */
+[data-theme="ocean"] .card svg,
+[data-theme="dark"] .card svg {
+  border-radius: 8px !important;
+}
+
+/* Step List */
+[data-theme="ocean"] .step-list,
+[data-theme="dark"] .step-list {
+  color: var(--text-secondary) !important;
+  padding-left: 20px !important;
+}
+
+/* Welcome Banner */
+[data-theme="ocean"] .welcome-banner,
+[data-theme="dark"] .welcome-banner {
+  background: rgba(0, 51, 102, 0.6) !important;
+  border: 1px solid rgba(0, 255, 255, 0.2) !important;
+  border-radius: 16px !important;
+}
+
+[data-theme="dark"] .welcome-banner {
+  background: rgba(51, 65, 85, 0.7) !important;
+  border: 1px solid rgba(71, 85, 105, 0.5) !important;
+}
+
+/* Status Badges */
+[data-theme="ocean"] .badge,
+[data-theme="ocean"] .status-badge {
+  border-radius: 12px !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+[data-theme="dark"] .badge,
+[data-theme="dark"] .status-badge {
+  border-radius: 8px !important;
+}
+
+/* Empty State */
+[data-theme="ocean"] .empty-state,
+[data-theme="dark"] .empty-state {
+  background: transparent !important;
+  text-align: center !important;
+  padding: 40px !important;
+}
+
+/* Page Layout */
+[data-theme="ocean"] .page-header,
+[data-theme="dark"] .page-header {
+  background: transparent !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding-bottom: 20px !important;
+  margin-bottom: 30px !important;
+}
+
+/* Grid Layouts */
+[data-theme="ocean"] .grid,
+[data-theme="dark"] .grid {
+  gap: 20px !important;
+}
+
+/* Text Colors */
+[data-theme="ocean"] h1,
+[data-theme="ocean"] h2,
+[data-theme="ocean"] h3,
+[data-theme="ocean"] h4,
+[data-theme="ocean"] p,
+[data-theme="ocean"] span,
+[data-theme="ocean"] div {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] div {
+  color: var(--text) !important;
+}
+
+[data-theme="ocean"] .muted,
+[data-theme="ocean"] .text-soft {
+  color: #b3e5fc !important;
+}
+
+[data-theme="dark"] .muted,
+[data-theme="dark"] .text-soft {
+  color: var(--text-muted) !important;
+}
+/* Login Component Ocean/Dark Theme Fix */
+
+/* Login Page Container */
+[data-theme="ocean"] .login-container,
+[data-theme="dark"] .login-container {
+  background: transparent !important;
+}
+
+/* Login Form Container */
+[data-theme="ocean"] .login-form,
+[data-theme="ocean"] form {
+  background: rgba(0, 51, 102, 0.8) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+  border-radius: 24px !important;
+  backdrop-filter: blur(20px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(0, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] .login-form,
+[data-theme="dark"] form {
+  background: rgba(51, 65, 85, 0.9) !important;
+  border: 1px solid rgba(71, 85, 105, 0.6) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Input Fields */
+[data-theme="ocean"] input[type="email"],
+[data-theme="ocean"] input[type="password"],
+[data-theme="ocean"] input[type="text"] {
+  background: rgba(0, 51, 102, 0.6) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+[data-theme="dark"] input[type="email"],
+[data-theme="dark"] input[type="password"],
+[data-theme="dark"] input[type="text"] {
+  background: rgba(71, 85, 105, 0.7) !important;
+  border: 1px solid rgba(100, 116, 139, 0.5) !important;
+  border-radius: 10px !important;
+  color: var(--text) !important;
+}
+
+/* Input Focus States */
+[data-theme="ocean"] input:focus {
+  border-color: rgba(0, 255, 255, 0.6) !important;
+  box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.2) !important;
+  outline: none !important;
+}
+
+[data-theme="dark"] input:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
+  outline: none !important;
+}
+
+/* Input Placeholders */
+[data-theme="ocean"] input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+[data-theme="dark"] input::placeholder {
+  color: var(--text-muted) !important;
+}
+
+/* Labels */
+[data-theme="ocean"] label {
+  color: #ffffff !important;
+  font-weight: 500 !important;
+}
+
+[data-theme="dark"] label {
+  color: var(--text) !important;
+  font-weight: 500 !important;
+}
+
+/* Primary Button */
+[data-theme="ocean"] button[type="submit"] {
+  background: rgba(0, 102, 204, 0.8) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), 0 0 12px rgba(0, 255, 255, 0.2) !important;
+  transition: all 0.3s ease !important;
+}
+
+[data-theme="dark"] button[type="submit"] {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+  border: 1px solid #3b82f6 !important;
+  border-radius: 10px !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Primary Button Hover */
+[data-theme="ocean"] button[type="submit"]:hover:not(:disabled) {
+  background: rgba(0, 153, 255, 0.9) !important;
+  border-color: rgba(0, 255, 255, 0.6) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 255, 0.3) !important;
+  transform: translateY(-2px) !important;
+}
+
+[data-theme="dark"] button[type="submit"]:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Secondary Button (Google) */
+[data-theme="ocean"] button[type="button"] {
+  background: rgba(0, 255, 255, 0.08) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+[data-theme="dark"] button[type="button"] {
+  background: rgba(71, 85, 105, 0.7) !important;
+  border: 1px solid rgba(100, 116, 139, 0.5) !important;
+  border-radius: 10px !important;
+  color: var(--text) !important;
+}
+
+/* Secondary Button Hover */
+[data-theme="ocean"] button[type="button"]:hover:not(:disabled) {
+  background: rgba(0, 255, 255, 0.2) !important;
+  border-color: rgba(0, 255, 255, 0.5) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 0 16px rgba(0, 255, 255, 0.4) !important;
+}
+
+[data-theme="dark"] button[type="button"]:hover:not(:disabled) {
+  background: rgba(100, 116, 139, 0.8) !important;
+  border-color: rgba(148, 163, 184, 0.6) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Error Messages */
+[data-theme="ocean"] .error-message,
+[data-theme="ocean"] .validation-error {
+  background: rgba(244, 67, 54, 0.2) !important;
+  border: 1px solid rgba(244, 67, 54, 0.4) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+[data-theme="dark"] .error-message,
+[data-theme="dark"] .validation-error {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+  border-radius: 10px !important;
+  color: #fca5a5 !important;
+}
+
+/* Links */
+[data-theme="ocean"] a {
+  color: #00ffff !important;
+  transition: color 0.3s ease !important;
+}
+
+[data-theme="ocean"] a:hover {
+  color: #40e0d0 !important;
+}
+
+[data-theme="dark"] a {
+  color: #60a5fa !important;
+}
+
+[data-theme="dark"] a:hover {
+  color: #93c5fd !important;
+}
+
+/* Text Colors */
+[data-theme="ocean"] h1,
+[data-theme="ocean"] p,
+[data-theme="ocean"] span,
+[data-theme="ocean"] div {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] div {
+  color: var(--text) !important;
+}
+
+[data-theme="ocean"] .text-soft,
+[data-theme="ocean"] .text-muted {
+  color: #b3e5fc !important;
+}
+
+[data-theme="dark"] .text-soft,
+[data-theme="dark"] .text-muted {
+  color: var(--text-muted) !important;
+}
+
+/* Password Toggle Button */
+[data-theme="ocean"] button[type="button"]:not([disabled]) {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+[data-theme="ocean"] button[type="button"]:hover {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] button[type="button"]:not([disabled]) {
+  color: var(--text-muted) !important;
+}
+
+[data-theme="dark"] button[type="button"]:hover {
+  color: var(--text) !important;
+}
+
+/* Loading States */
+[data-theme="ocean"] button:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
+[data-theme="dark"] button:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+/* Form Container Specific Styling */
+[data-theme="ocean"] div[style*="maxWidth: '380px'"] {
+  background: rgba(0, 51, 102, 0.8) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+  border-radius: 24px !important;
+  backdrop-filter: blur(20px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(0, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] div[style*="maxWidth: '380px'"] {
+  background: rgba(51, 65, 85, 0.9) !important;
+  border: 1px solid rgba(71, 85, 105, 0.6) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5) !important;
+}
+/* Register Component Ocean/Dark Theme Fix */
+
+/* Register Form Container */
+[data-theme="ocean"] .register-form,
+[data-theme="ocean"] div[style*="maxWidth: '380px'"] {
+  background: rgba(0, 51, 102, 0.8) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+  border-radius: 24px !important;
+  backdrop-filter: blur(20px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(0, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] .register-form,
+[data-theme="dark"] div[style*="maxWidth: '380px'"] {
+  background: rgba(51, 65, 85, 0.9) !important;
+  border: 1px solid rgba(71, 85, 105, 0.6) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Register Input Fields */
+[data-theme="ocean"] input[type="text"],
+[data-theme="ocean"] input[type="email"],
+[data-theme="ocean"] input[type="password"] {
+  background: rgba(0, 51, 102, 0.6) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="email"],
+[data-theme="dark"] input[type="password"] {
+  background: rgba(71, 85, 105, 0.7) !important;
+  border: 1px solid rgba(100, 116, 139, 0.5) !important;
+  border-radius: 10px !important;
+  color: var(--text) !important;
+}
+
+/* Register Input Focus States */
+[data-theme="ocean"] input:focus {
+  border-color: rgba(0, 255, 255, 0.6) !important;
+  box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.2) !important;
+  outline: none !important;
+}
+
+[data-theme="dark"] input:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
+  outline: none !important;
+}
+
+/* Register Placeholders */
+[data-theme="ocean"] input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+[data-theme="dark"] input::placeholder {
+  color: var(--text-muted) !important;
+}
+
+/* Register Labels */
+[data-theme="ocean"] label {
+  color: #ffffff !important;
+  font-weight: 500 !important;
+}
+
+[data-theme="dark"] label {
+  color: var(--text) !important;
+  font-weight: 500 !important;
+}
+
+/* Register Primary Button */
+[data-theme="ocean"] button[type="submit"] {
+  background: rgba(0, 102, 204, 0.8) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), 0 0 12px rgba(0, 255, 255, 0.2) !important;
+  transition: all 0.3s ease !important;
+}
+
+[data-theme="dark"] button[type="submit"] {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+  border: 1px solid #3b82f6 !important;
+  border-radius: 10px !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Register Primary Button Hover */
+[data-theme="ocean"] button[type="submit"]:hover:not(:disabled) {
+  background: rgba(0, 153, 255, 0.9) !important;
+  border-color: rgba(0, 255, 255, 0.6) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 255, 0.3) !important;
+  transform: translateY(-2px) !important;
+}
+
+[data-theme="dark"] button[type="submit"]:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Register Secondary Button (Google) */
+[data-theme="ocean"] button[type="button"] {
+  background: rgba(0, 255, 255, 0.08) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+[data-theme="dark"] button[type="button"] {
+  background: rgba(71, 85, 105, 0.7) !important;
+  border: 1px solid rgba(100, 116, 139, 0.5) !important;
+  border-radius: 10px !important;
+  color: var(--text) !important;
+}
+
+/* Register Secondary Button Hover */
+[data-theme="ocean"] button[type="button"]:hover:not(:disabled) {
+  background: rgba(0, 255, 255, 0.2) !important;
+  border-color: rgba(0, 255, 255, 0.5) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 0 16px rgba(0, 255, 255, 0.4) !important;
+}
+
+[data-theme="dark"] button[type="button"]:hover:not(:disabled) {
+  background: rgba(100, 116, 139, 0.8) !important;
+  border-color: rgba(148, 163, 184, 0.6) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Register Error Messages */
+[data-theme="ocean"] .error-message {
+  background: rgba(244, 67, 54, 0.2) !important;
+  border: 1px solid rgba(244, 67, 54, 0.4) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+[data-theme="dark"] .error-message {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+  border-radius: 10px !important;
+  color: #fca5a5 !important;
+}
+
+/* Register Links */
+[data-theme="ocean"] a {
+  color: #00ffff !important;
+  transition: color 0.3s ease !important;
+}
+
+[data-theme="ocean"] a:hover {
+  color: #40e0d0 !important;
+}
+
+[data-theme="dark"] a {
+  color: #60a5fa !important;
+}
+
+[data-theme="dark"] a:hover {
+  color: #93c5fd !important;
+}
+
+/* Register Text Colors */
+[data-theme="ocean"] h1,
+[data-theme="ocean"] p,
+[data-theme="ocean"] span,
+[data-theme="ocean"] div {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] div {
+  color: var(--text) !important;
+}
+
+[data-theme="ocean"] .text-soft,
+[data-theme="ocean"] .text-muted {
+  color: #b3e5fc !important;
+}
+
+[data-theme="dark"] .text-soft,
+[data-theme="dark"] .text-muted {
+  color: var(--text-muted) !important;
+}
+
+/* Register Loading States */
+[data-theme="ocean"] button:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
+[data-theme="dark"] button:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+/* Pricing Component Ocean/Dark Theme Fix */
+
+/* Pricing Page Container */
+[data-theme="ocean"] .pricing-container,
+[data-theme="dark"] .pricing-container {
+  background: transparent !important;
+}
+
+/* Pricing Cards */
+[data-theme="ocean"] .pricing-card {
+  background: rgba(0, 51, 102, 0.7) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 24px !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 255, 0.15) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+[data-theme="dark"] .pricing-card {
+  background: rgba(51, 65, 85, 0.8) !important;
+  border: 1px solid rgba(71, 85, 105, 0.6) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Pro Plan Special Styling */
+[data-theme="ocean"] .pricing-card-popular {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.3) 0%, rgba(0, 191, 255, 0.25) 100%), rgba(0, 68, 136, 0.8) !important;
+  border: 2px solid rgba(0, 255, 255, 0.6) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 255, 255, 0.3) !important;
+  transform: scale(1.05) !important;
+}
+
+[data-theme="dark"] .pricing-card-popular {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+  border: 2px solid #3b82f6 !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(59, 130, 246, 0.3) !important;
+  transform: scale(1.05) !important;
+}
+
+/* Pricing Card Hover States */
+[data-theme="ocean"] .pricing-card:hover {
+  background: rgba(0, 68, 136, 0.8) !important;
+  border-color: rgba(0, 255, 255, 0.5) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 255, 255, 0.25) !important;
+  transform: translateY(-6px) scale(1.02) !important;
+}
+
+[data-theme="dark"] .pricing-card:hover {
+  background: rgba(71, 85, 105, 0.9) !important;
+  border-color: rgba(100, 116, 139, 0.8) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5) !important;
+  transform: translateY(-4px) scale(1.01) !important;
+}
+
+/* Pricing Buttons */
+[data-theme="ocean"] .pricing-button {
+  background: rgba(0, 102, 204, 0.8) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), 0 0 12px rgba(0, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] .pricing-button {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+  border: 1px solid #3b82f6 !important;
+  border-radius: 10px !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Pricing Button Hover */
+[data-theme="ocean"] .pricing-button:hover:not(:disabled) {
+  background: rgba(0, 153, 255, 0.9) !important;
+  border-color: rgba(0, 255, 255, 0.6) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 255, 0.3) !important;
+  transform: translateY(-2px) !important;
+}
+
+[data-theme="dark"] .pricing-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Feature Cards */
+[data-theme="ocean"] .feature-benefit-card {
+  background: rgba(0, 51, 102, 0.6) !important;
+  border: 1px solid rgba(0, 255, 255, 0.2) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] .feature-benefit-card {
+  background: rgba(51, 65, 85, 0.7) !important;
+  border: 1px solid rgba(71, 85, 105, 0.5) !important;
+  border-radius: 16px !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Info Banners */
+[data-theme="ocean"] .info-banner {
+  background: rgba(0, 255, 255, 0.2) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+  border-radius: 16px !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+[data-theme="dark"] .info-banner {
+  background: rgba(59, 130, 246, 0.1) !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  border-radius: 12px !important;
+  color: #93c5fd !important;
+}
+
+/* Popular Badge */
+[data-theme="ocean"] .popular-badge {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: #0066cc !important;
+  border-radius: 20px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+[data-theme="dark"] .popular-badge {
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #1d4ed8 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Icon Containers */
+[data-theme="ocean"] .pricing-icon {
+  background: rgba(0, 255, 255, 0.2) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 24px rgba(0, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] .pricing-icon {
+  background: rgba(59, 130, 246, 0.2) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2) !important;
+}
+
+/* Text Colors */
+[data-theme="ocean"] h1,
+[data-theme="ocean"] h2,
+[data-theme="ocean"] h3,
+[data-theme="ocean"] h4,
+[data-theme="ocean"] p,
+[data-theme="ocean"] span,
+[data-theme="ocean"] div {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] div {
+  color: var(--text) !important;
+}
+
+[data-theme="ocean"] .text-soft,
+[data-theme="ocean"] .text-muted {
+  color: #b3e5fc !important;
+}
+
+[data-theme="dark"] .text-soft,
+[data-theme="dark"] .text-muted {
+  color: var(--text-muted) !important;
+}
+
+/* Check Icons */
+[data-theme="ocean"] .check-icon {
+  color: #00ffff !important;
+}
+
+[data-theme="dark"] .check-icon {
+  color: #10b981 !important;
+}
+
+/* Price Display */
+[data-theme="ocean"] .price-display {
+  color: #ffffff !important;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.3) !important;
+}
+
+[data-theme="dark"] .price-display {
+  color: var(--text) !important;
+}
+
+/* Section Backgrounds */
+[data-theme="ocean"] .pricing-section {
+  background: transparent !important;
+}
+
+[data-theme="dark"] .pricing-section {
+  background: transparent !important;
+}
+
+/* Disabled States */
+[data-theme="ocean"] button:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  background: rgba(0, 51, 102, 0.4) !important;
+}
+
+[data-theme="dark"] button:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  background: rgba(71, 85, 105, 0.4) !important;
+}
+/* Analysis Component Ocean/Dark Theme Fix */
+
+/* Analysis Page Container */
+[data-theme="ocean"] .page.analysis,
+[data-theme="dark"] .page.analysis {
+  background: transparent !important;
+}
+
+/* Analysis Cards */
+[data-theme="ocean"] .analysis-card,
+[data-theme="ocean"] .card {
+  background: rgba(0, 51, 102, 0.7) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 255, 0.15) !important;
+}
+
+[data-theme="dark"] .analysis-card,
+[data-theme="dark"] .card {
+  background: rgba(51, 65, 85, 0.8) !important;
+  border: 1px solid rgba(71, 85, 105, 0.6) !important;
+  border-radius: 16px !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Upload Box */
+[data-theme="ocean"] .upload-box {
+  background: rgba(0, 51, 102, 0.5) !important;
+  border: 2px dashed rgba(0, 255, 255, 0.4) !important;
+  border-radius: 16px !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+[data-theme="dark"] .upload-box {
+  background: rgba(71, 85, 105, 0.6) !important;
+  border: 2px dashed rgba(100, 116, 139, 0.5) !important;
+  border-radius: 12px !important;
+}
+
+[data-theme="ocean"] .upload-box.drag {
+  border-color: rgba(0, 255, 255, 0.8) !important;
+  background: rgba(0, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] .upload-box.drag {
+  border-color: #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Upload Complete State */
+[data-theme="ocean"] .upload-complete {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .upload-complete {
+  color: var(--text) !important;
+}
+
+/* Progress Elements */
+[data-theme="ocean"] .progress-bar {
+  background: rgba(0, 255, 255, 0.2) !important;
+  border-radius: 12px !important;
+}
+
+[data-theme="dark"] .progress-bar {
+  background: rgba(71, 85, 105, 0.6) !important;
+  border-radius: 8px !important;
+}
+
+[data-theme="ocean"] .progress-fill {
+  background: linear-gradient(90deg, rgba(0, 255, 255, 0.8) 0%, rgba(64, 224, 208, 0.6) 100%) !important;
+  border-radius: 12px !important;
+}
+
+[data-theme="dark"] .progress-fill {
+  background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%) !important;
+  border-radius: 8px !important;
+}
+
+[data-theme="ocean"] .progress-circle {
+  border: 3px solid rgba(0, 255, 255, 0.3) !important;
+  background: conic-gradient(rgba(0, 255, 255, 0.8) var(--progress, 0%), transparent 0) !important;
+}
+
+[data-theme="dark"] .progress-circle {
+  border: 3px solid rgba(59, 130, 246, 0.3) !important;
+  background: conic-gradient(#3b82f6 var(--progress, 0%), transparent 0) !important;
+}
+
+/* Textareas */
+[data-theme="ocean"] textarea {
+  background: rgba(0, 51, 102, 0.6) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+[data-theme="dark"] textarea {
+  background: rgba(71, 85, 105, 0.7) !important;
+  border: 1px solid rgba(100, 116, 139, 0.5) !important;
+  border-radius: 10px !important;
+  color: var(--text) !important;
+}
+
+[data-theme="ocean"] textarea:focus {
+  border-color: rgba(0, 255, 255, 0.6) !important;
+  box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] textarea:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
+}
+
+/* Input Fields */
+[data-theme="ocean"] input {
+  background: rgba(0, 51, 102, 0.6) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] input {
+  background: rgba(71, 85, 105, 0.7) !important;
+  border: 1px solid rgba(100, 116, 139, 0.5) !important;
+  border-radius: 10px !important;
+  color: var(--text) !important;
+}
+
+/* Buttons */
+[data-theme="ocean"] .btn.primary {
+  background: rgba(0, 102, 204, 0.8) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), 0 0 12px rgba(0, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] .btn.primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+  border: 1px solid #3b82f6 !important;
+  border-radius: 10px !important;
+  color: #ffffff !important;
+}
+
+[data-theme="ocean"] .btn.ghost {
+  background: rgba(0, 255, 255, 0.08) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .btn.ghost {
+  background: rgba(71, 85, 105, 0.7) !important;
+  border: 1px solid rgba(100, 116, 139, 0.5) !important;
+  border-radius: 10px !important;
+  color: var(--text) !important;
+}
+
+/* AI Enhance Button */
+[data-theme="ocean"] .ai-enhance {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.3) 0%, rgba(64, 224, 208, 0.25) 100%) !important;
+  border: 1px solid rgba(0, 255, 255, 0.5) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+[data-theme="dark"] .ai-enhance {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+  border: 1px solid #8b5cf6 !important;
+  border-radius: 10px !important;
+  color: #ffffff !important;
+}
+
+/* Badges */
+[data-theme="ocean"] .badge {
+  background: rgba(0, 255, 255, 0.2) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+[data-theme="dark"] .badge {
+  background: rgba(59, 130, 246, 0.2) !important;
+  border: 1px solid rgba(59, 130, 246, 0.4) !important;
+  border-radius: 8px !important;
+  color: #93c5fd !important;
+}
+
+[data-theme="ocean"] .badge.success {
+  background: rgba(76, 175, 80, 0.3) !important;
+  border-color: rgba(76, 175, 80, 0.5) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .badge.success {
+  background: rgba(34, 197, 94, 0.2) !important;
+  border-color: rgba(34, 197, 94, 0.4) !important;
+  color: #86efac !important;
+}
+
+[data-theme="ocean"] .badge.outline {
+  background: transparent !important;
+  border: 1px solid rgba(0, 255, 255, 0.5) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .badge.outline {
+  background: transparent !important;
+  border: 1px solid rgba(100, 116, 139, 0.5) !important;
+  color: var(--text-muted) !important;
+}
+
+/* Builder Grid Layout */
+[data-theme="ocean"] .builder-grid .left,
+[data-theme="ocean"] .builder-grid .right {
+  background: transparent !important;
+}
+
+[data-theme="dark"] .builder-grid .left,
+[data-theme="dark"] .builder-grid .right {
+  background: transparent !important;
+}
+
+/* Section Headers */
+[data-theme="ocean"] .section-header {
+  background: rgba(0, 68, 136, 0.8) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+}
+
+[data-theme="dark"] .section-header {
+  background: rgba(71, 85, 105, 0.9) !important;
+  border: 1px solid rgba(100, 116, 139, 0.6) !important;
+}
+
+/* Keywords Display */
+[data-theme="ocean"] .keywords {
+  background: transparent !important;
+}
+
+[data-theme="dark"] .keywords {
+  background: transparent !important;
+}
+
+/* Status Messages */
+[data-theme="ocean"] .good {
+  color: #4ade80 !important;
+}
+
+[data-theme="dark"] .good {
+  color: #86efac !important;
+}
+
+[data-theme="ocean"] .muted {
+  color: #b3e5fc !important;
+}
+
+[data-theme="dark"] .muted {
+  color: var(--text-muted) !important;
+}
+
+/* Party Popup */
+[data-theme="ocean"] .party-popup {
+  background: rgba(0, 17, 34, 0.9) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+[data-theme="dark"] .party-popup {
+  background: rgba(15, 23, 42, 0.9) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+[data-theme="ocean"] .party-popup .panel {
+  background: rgba(0, 51, 102, 0.9) !important;
+  border: 1px solid rgba(0, 255, 255, 0.4) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 255, 255, 0.3) !important;
+}
+
+[data-theme="dark"] .party-popup .panel {
+  background: rgba(51, 65, 85, 0.9) !important;
+  border: 1px solid rgba(71, 85, 105, 0.6) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Text Colors */
+[data-theme="ocean"] h1,
+[data-theme="ocean"] h2,
+[data-theme="ocean"] h3,
+[data-theme="ocean"] h4,
+[data-theme="ocean"] p,
+[data-theme="ocean"] span,
+[data-theme="ocean"] div,
+[data-theme="ocean"] li,
+[data-theme="ocean"] label {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] div,
+[data-theme="dark"] li,
+[data-theme="dark"] label {
+  color: var(--text) !important;
+}
+
+/* Print Area (Hidden) */
+[data-theme="ocean"] .print-area,
+[data-theme="dark"] .print-area {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* Step List */
+[data-theme="ocean"] .step-list,
+[data-theme="dark"] .step-list {
+  color: var(--text-secondary) !important;
+  padding-left: 20px !important;
+}
+
+/* No Print Elements */
+[data-theme="ocean"] .no-print,
+[data-theme="dark"] .no-print {
+  /* Maintain theme styling for screen view */
+}
+
+/* Disabled States */
+[data-theme="ocean"] button:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
+[data-theme="dark"] button:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+[data-theme="ocean"] .btn,
+[data-theme="ocean"] .btn.cta,
+[data-theme="ocean"] .btn.gradient {
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+[data-theme="ocean"] .btn.cta,
+[data-theme="ocean"] .btn.gradient {
+  background: linear-gradient(135deg, #00ffff 0%, #3b82f6 100%) !important;
+  color: #001122 !important;
+  border: none !important;
+  box-shadow: 0 8px 24px rgba(0, 191, 255, 0.35) !important;
+}
+
+[data-theme="ocean"] .btn.cta:hover,
+[data-theme="ocean"] .btn.gradient:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 32px rgba(0, 191, 255, 0.45) !important;
+}
+
+[data-theme="ocean"] .btn.success {
+  background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%) !important;
+  color: #001122 !important;
+  border: none !important;
+}
+
+[data-theme="ocean"] .btn.success:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 28px rgba(16, 185, 129, 0.35) !important;
+}
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+  border: 1px solid #334155 !important;
+  border-radius: 8px !important;
+}

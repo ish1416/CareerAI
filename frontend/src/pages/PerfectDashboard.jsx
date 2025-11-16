@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import apiEnhanced from '../utils/apiEnhanced.js';
 import { SmartLoading, SkeletonLoader, ConnectionStatus } from '../components/LoadingSystem.jsx';
-import { FileText, TrendingUp, Clock, Plus, Search, Filter, RefreshCw, Trash2 } from 'lucide-react';
+import { FileText, TrendingUp, Clock, Plus, Search, Filter, RefreshCw, Trash2, Code } from 'lucide-react';
 import { useToast } from '../components/Toast.jsx';
 
 export default function PerfectDashboard() {
@@ -11,7 +11,8 @@ export default function PerfectDashboard() {
   const [data, setData] = useState({
     stats: { resumesCount: 0, averageATSScore: 0, lastAnalysisDate: null },
     resumes: [],
-    recentActivity: []
+    recentActivity: [],
+    codingProgress: null
   });
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -26,9 +27,10 @@ export default function PerfectDashboard() {
       
       setError(null);
       
-      const [statsRes, resumesRes] = await Promise.allSettled([
+      const [statsRes, resumesRes, codingRes] = await Promise.allSettled([
         apiEnhanced.get('/user/dashboard'),
-        apiEnhanced.get('/resume/list')
+        apiEnhanced.get('/resume/list'),
+        apiEnhanced.get('/coding-questions/progress')
       ]);
       
       const newData = {
@@ -38,7 +40,10 @@ export default function PerfectDashboard() {
         resumes: resumesRes.status === 'fulfilled' 
           ? resumesRes.value.data?.resumes || [] 
           : [],
-        recentActivity: []
+        recentActivity: [],
+        codingProgress: codingRes.status === 'fulfilled'
+          ? codingRes.value.data?.progress
+          : null
       };
       
       setData(newData);
@@ -193,6 +198,14 @@ export default function PerfectDashboard() {
           color="var(--success)"
         />
         <StatCard
+          icon={Code}
+          title="Problems Solved"
+          value={data.codingProgress?.totalSolved || 0}
+          subtitle={data.codingProgress?.streak ? `${data.codingProgress.streak} day streak` : 'Start practicing'}
+          color="var(--info)"
+          link="/coding-questions"
+        />
+        <StatCard
           icon={Clock}
           title="Last Analysis"
           value={data.stats.lastAnalysisDate ? 'Recent' : 'None'}
@@ -270,9 +283,9 @@ export default function PerfectDashboard() {
   );
 }
 
-function StatCard({ icon: Icon, title, value, subtitle, color }) {
-  return (
-    <div className="card elevated" style={{ padding: 'var(--space-5)' }}>
+function StatCard({ icon: Icon, title, value, subtitle, color, link }) {
+  const content = (
+    <>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-3)' }}>
         <h3 style={{ margin: 0, fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-soft)' }}>
           {title}
@@ -295,6 +308,20 @@ function StatCard({ icon: Icon, title, value, subtitle, color }) {
       <p style={{ margin: 0, fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
         {subtitle}
       </p>
+    </>
+  );
+
+  if (link) {
+    return (
+      <Link to={link} className="card elevated interactive" style={{ padding: 'var(--space-5)', textDecoration: 'none', color: 'inherit' }}>
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <div className="card elevated" style={{ padding: 'var(--space-5)' }}>
+      {content}
     </div>
   );
 }
@@ -418,12 +445,12 @@ function RemoveDuplicatesButton({ onSuccess }) {
 function QuickActions() {
   const actions = [
     { title: 'Build Resume', desc: 'Create from scratch', link: '/builder', color: 'var(--primary)' },
+    { title: 'Coding Practice', desc: 'Solve interview problems', link: '/coding-questions', color: 'var(--info)' },
     { title: 'Career Goals', desc: 'Set & track objectives', link: '/goals', color: 'var(--success)' },
     { title: 'Skill Development', desc: 'Gap analysis & learning', link: '/skills', color: 'var(--warning)' },
-    { title: 'Resume Templates', desc: 'Professional designs', link: '/templates', color: 'var(--info)' },
-    { title: 'Job Matcher', desc: 'Find matching jobs', link: '/jobs', color: 'var(--purple)' },
-    { title: 'Interview Prep', desc: 'Practice questions', link: '/interview', color: 'var(--teal)' },
-    { title: 'Career Insights', desc: 'Industry analytics', link: '/insights', color: 'var(--orange)' },
+    { title: 'Resume Templates', desc: 'Professional designs', link: '/templates', color: 'var(--purple)' },
+    { title: 'Job Matcher', desc: 'Find matching jobs', link: '/jobs', color: 'var(--teal)' },
+    { title: 'Interview Prep', desc: 'Practice questions', link: '/interview', color: 'var(--orange)' },
     { title: 'Cover Letter', desc: 'Generate letter', link: '/cover-letters', color: 'var(--pink)' }
   ];
   

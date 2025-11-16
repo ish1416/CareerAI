@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Calendar, Bell, FileText, BarChart3, ExternalLink, Clock, CheckCircle, AlertCircle } from 'lucide-react';
 import api from '../utils/api.js';
 import { useToast } from './Toast.jsx';
+import GoogleLoginButton from './GoogleLoginButton.jsx';
 
 export default function JobTracker() {
   const [applications, setApplications] = useState([]);
@@ -10,10 +11,12 @@ export default function JobTracker() {
   const [analytics, setAnalytics] = useState(null);
   const [activeTab, setActiveTab] = useState('applications');
   const [showApplicationForm, setShowApplicationForm] = useState(false);
+  const [googleConnected, setGoogleConnected] = useState(false);
   const { showToast } = useToast();
 
   useEffect(() => {
     loadData();
+    checkGoogleConnection();
   }, []);
 
   const loadData = async () => {
@@ -25,12 +28,17 @@ export default function JobTracker() {
         api.get('/job-tracker/analytics').catch(() => ({ data: { analytics: null } }))
       ]);
       
-      setApplications(appsRes.data.applications);
-      setReminders(remindersRes.data.reminders);
-      setDocuments(docsRes.data.documents);
+      setApplications(appsRes.data.applications || []);
+      setReminders(remindersRes.data.reminders || []);
+      setDocuments(docsRes.data.documents || []);
       setAnalytics(analyticsRes.data.analytics);
-    } catch (error) {
-      console.error('Failed to load job tracker data:', error);
+    } catch (err) {
+      console.error('Failed to load job tracker data:', err);
+      // Set fallback data
+      setApplications([]);
+      setReminders([]);
+      setDocuments([]);
+      setAnalytics(null);
     }
   };
 
@@ -40,7 +48,7 @@ export default function JobTracker() {
       setApplications([...applications, data.application]);
       setShowApplicationForm(false);
       showToast('Application added successfully!', 'success');
-    } catch (error) {
+    } catch {
       showToast('Failed to add application', 'error');
     }
   };
@@ -52,16 +60,52 @@ export default function JobTracker() {
         app.id === id ? { ...app, status, stage } : app
       ));
       showToast('Application updated!', 'success');
-    } catch (error) {
+    } catch {
       showToast('Failed to update application', 'error');
     }
   };
 
+  const checkGoogleConnection = async () => {
+    try {
+      console.log('Checking Google connection status...');
+      const { data } = await api.get('/job-tracker/google/status');
+      console.log('Google connection status:', data);
+      setGoogleConnected(data.connected);
+    } catch (err) {
+      console.error('Failed to check Google connection:', err);
+      setGoogleConnected(false);
+    }
+  };
+
+  const connectGoogleCalendar = async () => {
+    try {
+      console.log('Attempting to get Google auth URL...');
+      const { data } = await api.get('/job-tracker/google/auth-url');
+      console.log('Got auth URL:', data.authUrl);
+      
+      // Store current page to return after auth
+      localStorage.setItem('google_auth_return', window.location.pathname);
+      
+      // Redirect to Google OAuth
+      window.location.href = data.authUrl;
+      
+    } catch (err) {
+      console.error('Google auth error:', err);
+      showToast(`Failed to connect Google Calendar: ${err.response?.data?.error || err.message}`, 'error');
+    }
+  };
+
   const syncCalendar = async () => {
+    if (!googleConnected) {
+      showToast('Please connect Google Calendar first', 'warning');
+      return;
+    }
+    
     try {
       const { data } = await api.post('/job-tracker/calendar/sync');
       showToast(`Calendar synced! ${data.synced} events added.`, 'success');
-    } catch (error) {
+      loadData(); // Reload to show updated data
+    } catch {
       showToast('Failed to sync calendar', 'error');
     }
   };
@@ -151,10 +195,14 @@ export default function JobTracker() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-6)' }}>
         <h1>Job Application Tracker</h1>
         <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
-          <button className="btn ghost" onClick={syncCalendar}>
-            <Calendar size={16} />
-            Sync Calendar
-          </button>
+          {!googleConnected ? (
+            <GoogleLoginButton onClick={connectGoogleCalendar} connected={googleConnected} />
+          ) : (
+            <button className="btn ghost" onClick={syncCalendar}>
+              <Calendar size={16} />
+              Sync Calendar
+            </button>
+          )}
           <button className="btn primary" onClick={() => setShowApplicationForm(true)}>
             <Plus size={16} />
             Add Application
@@ -233,9 +281,22 @@ export default function JobTracker() {
         <div>
           {showApplicationForm && <ApplicationForm />}
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-            {applications.map(app => (
-              <div key={app.id} className="card">
+          {applications.length === 0 ? (
+            <div className="card" style={{ textAlign: 'center', padding: 'var(--space-8)' }}>
+              <FileText size={64} style={{ color: 'var(--text-soft)', opacity: 0.5, marginBottom: 'var(--space-4)' }} />
+              <h3 style={{ color: 'var(--text-soft)', marginBottom: 'var(--space-2)' }}>No Applications Yet</h3>
+              <p style={{ color: 'var(--text-soft)', marginBottom: 'var(--space-4)', maxWidth: '400px', margin: '0 auto var(--space-4)' }}>
+                Start tracking your job applications to stay organized and increase your chances of landing your dream job.
+              </p>
+              <button className="btn primary" onClick={() => setShowApplicationForm(true)}>
+                <Plus size={16} />
+                Add Your First Application
+              </button>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+              {applications.map(app => (
+                <div key={app.id} className="card">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 'var(--space-3)' }}>
                   <div>
                     <h3 style={{ margin: '0 0 var(--space-1)' }}>{app.position}</h3>
@@ -305,7 +366,8 @@ export default function JobTracker() {
                 </div>
               </div>
             ))}
-          </div>
+            </div>
+          )}
         </div>
       )}
 

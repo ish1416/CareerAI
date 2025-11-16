@@ -46,6 +46,10 @@ model User {
   stripeSubscriptionId String?
   updatedAt           DateTime @updatedAt @default(now())
 
+  // Google Integration
+  googleTokens        String?
+  googleConnected     Boolean  @default(false)
+
   resumes       Resume[]
   coverLetters  CoverLetter[]
   jobDescriptions JobDescription[]
@@ -61,6 +65,8 @@ model User {
   analytics     UserAnalytics?
   careerGoals   CareerGoal[]
   interviewSessions InterviewSession[]
+  codingSubmissions CodingSubmission[]
+  codingProgress CodingProgress?
 }
 
 model Resume {
@@ -265,6 +271,11 @@ model JobApplication {
   salary      String?
   location    String?
   jobUrl      String?
+  interviewDate DateTime?
+  interviewLocation String?
+  calendarEventId String?
+  stage       String   @default("applied")
+  nextAction  String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -317,6 +328,64 @@ model InterviewSession {
   score       Int?
   duration    Int?
   createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+// Coding Questions Platform
+model CodingQuestion {
+  id          Int      @id @default(autoincrement())
+  title       String
+  slug        String   @unique
+  description String   @db.Text
+  difficulty  String   // Easy, Medium, Hard
+  topic       String
+  company     String
+  platform    String
+  examples    Json
+  constraints Json
+  hints       Json
+  solution    Json     // Solutions in multiple languages
+  tags        Json
+  frequency   Int      @default(0)
+  acceptance  Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  submissions CodingSubmission[]
+}
+
+model CodingSubmission {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  questionId  Int
+  code        String   @db.Text
+  language    String
+  status      String   // Accepted, Wrong Answer, Time Limit Exceeded, etc.
+  runtime     String?
+  memory      String?
+  testResults Json?
+  submittedAt DateTime @default(now())
+
+  user     User           @relation(fields: [userId], references: [id])
+  question CodingQuestion @relation(fields: [questionId], references: [id])
+
+  @@index([userId, questionId])
+}
+
+model CodingProgress {
+  id              Int      @id @default(autoincrement())
+  userId          Int      @unique
+  totalSolved     Int      @default(0)
+  easySolved      Int      @default(0)
+  mediumSolved    Int      @default(0)
+  hardSolved      Int      @default(0)
+  streak          Int      @default(0)
+  lastSolvedDate  DateTime?
+  solvedQuestions Json     @default("[]") // Array of question IDs
+  favoriteTopics  Json     @default("[]")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id])
 }

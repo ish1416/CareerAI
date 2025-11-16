@@ -35,7 +35,7 @@ export async function register(req, res) {
       email,
       password: hashed,
       role: role === 'admin' ? 'admin' : 'user',
-      emailVerified: false,
+      emailVerified: false, // Require email verification
       verificationToken,
       verificationTokenExpires,
     },
@@ -48,15 +48,19 @@ export async function register(req, res) {
   // Send verification email
   const frontend = process.env.FRONTEND_URL || 'http://localhost:5174';
   const verifyUrl = `${frontend}/verify?token=${verificationToken}`;
+  console.log('🔄 Attempting to send verification email to:', email);
+  console.log('🔗 Verification URL:', verifyUrl);
   try {
-    await sendMail({
+    const result = await sendMail({
       to: email,
       subject: '✨ Welcome to CareerAI - Verify Your Email',
       html: emailTemplates.verification(verifyUrl, name),
       text: textTemplates.verification(verifyUrl, name),
     });
+    console.log('✅ Verification email sent successfully:', result.messageId);
   } catch (e) {
-    console.warn('Email send failed (verification):', e.message);
+    console.error('❌ Email send failed (verification):', e.message);
+    console.error('Full error:', e);
   }
 
   res.json({ token, user: publicUser(user) });
@@ -92,13 +96,33 @@ export async function refresh(req, res) {
 export async function verifyEmail(req, res) {
   const token = req.query?.token;
   if (!token) return res.status(400).json({ error: 'Missing token' });
-  const user = await prisma.user.findFirst({ where: { verificationToken: token } });
-  if (!user) return res.status(400).json({ error: 'Invalid token' });
+  
+  // First check if user exists with this token
+  let user = await prisma.user.findFirst({ where: { verificationToken: token } });
+  
+  if (!user) {
+    // Token might be already used, check if any user had this token recently
+    // For now, just return a more helpful error
+    return res.status(400).json({ error: 'Invalid or already used verification token' });
+  }
+  
   if (user.verificationTokenExpires && user.verificationTokenExpires.getTime() < Date.now()) {
     return res.status(400).json({ error: 'Token expired' });
   }
   
-  await prisma.user.update({ where: { id: user.id }, data: { emailVerified: true, verificationToken: null, verificationTokenExpires: null } });
+  // Check if already verified
+  if (user.emailVerified) {
+    return res.json({ message: 'Email already verified' });
+  }
+  
+  await prisma.user.update({ 
+    where: { id: user.id }, 
+    data: { 
+      emailVerified: true, 
+      verificationToken: null, 
+      verificationTokenExpires: null 
+    } 
+  });
   
   // Send welcome email
   try {
@@ -112,7 +136,7 @@ export async function verifyEmail(req, res) {
     console.warn('Welcome email send failed:', e.message);
   }
   
-  res.json({ message: 'Email verified' });
+  res.json({ message: 'Email verified successfully' });
 }
 
 export async function forgotPassword(req, res) {
@@ -182,15 +206,19 @@ export async function resendVerification(req, res) {
     // Send verification email
     const frontend = process.env.FRONTEND_URL || 'http://localhost:5174';
     const verifyUrl = `${frontend}/verify?token=${verificationToken}`;
+    console.log('🔄 Resending verification email to:', user.email);
+    console.log('🔗 Verification URL:', verifyUrl);
     try {
-      await sendMail({
+      const result = await sendMail({
         to: user.email,
         subject: '✨ CareerAI Email Verification',
         html: emailTemplates.verification(verifyUrl, user.name),
         text: textTemplates.verification(verifyUrl, user.name),
       });
+      console.log('✅ Resend verification email sent successfully:', result.messageId);
     } catch (e) {
-      console.warn('Email send failed (resend verification):', e.message);
+      console.error('❌ Email send failed (resend verification):', e.message);
+      console.error('Full error:', e);
     }
 
     return res.json({ message: 'Verification email sent' });

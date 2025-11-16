@@ -980,8 +980,27 @@ export default function Dashboard() {
           <div className="card">
             Track applications and manage your documents.
           </div>
-          <div className="card">
-            Upgrade to unlock advanced features and templates.
+          <div className="card" style={{ position: 'relative', overflow: 'hidden' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div>
+                <h4 style={{ margin: 0, marginBottom: 'var(--space-1)' }}>Upgrade to Pro</h4>
+                <p style={{ margin: 0, color: 'var(--text-soft)', fontSize: 'var(--text-sm)' }}>Unlock advanced features and premium templates</p>
+              </div>
+              <Link to="/pricing" className="btn primary">
+                <Sparkles size={16} />
+                View Plans
+              </Link>
+            </div>
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              width: '100px',
+              height: '100%',
+              background: 'linear-gradient(90deg, transparent 0%, var(--primary)10 100%)',
+              opacity: 0.05,
+              pointerEvents: 'none'
+            }} />
           </div>
         </div>
       </section>

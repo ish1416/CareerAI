@@ -42,26 +42,23 @@ export default function VerifyEmail() {
   };
 
   const handleRefresh = async () => {
+    if (refreshing) return; // Prevent multiple calls
     setError('');
     setMessage('');
     setRefreshing(true);
     try {
-      if (typeof reloadUser === 'function') {
-        await reloadUser();
-      } else {
-        const { data } = await api.get('/user/profile');
-        if (data?.user) {
-          localStorage.setItem('user', JSON.stringify(data.user));
+      const { data } = await api.get('/user/profile');
+      if (data?.user) {
+        localStorage.setItem('user', JSON.stringify(data.user));
+        if (data.user.emailVerified) {
+          setMessage('Email verified! Redirecting to dashboard…');
+          setTimeout(() => navigate('/dashboard', { replace: true }), 1000);
+          return;
         }
       }
-      const u = JSON.parse(localStorage.getItem('user') || 'null');
-      if (u?.emailVerified) {
-        setMessage('Email verified. Redirecting to dashboard…');
-        setTimeout(() => navigate('/dashboard', { replace: true }), 700);
-      } else {
-        setMessage('Still unverified. Please check your email link.');
-      }
+      setMessage('Still unverified. Please check your email and click the verification link.');
     } catch (e) {
+      console.error('Refresh error:', e);
       setError(e?.response?.data?.error || 'Unable to refresh verification status');
     } finally {
       setRefreshing(false);
@@ -88,7 +85,7 @@ export default function VerifyEmail() {
               <polyline points="22,6 12,13 2,6"/>
             </svg>
           </div>
-          <Logo size={48} />
+          <Logo size={48} variant="accent" />
           <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: '700', margin: 'var(--space-2) 0' }}>
             Verify Your Email
           </h2>

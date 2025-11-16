@@ -184,7 +184,22 @@ export default function PortfolioBuilder() {
     );
   };
 
-  if (!portfolio) return <div>Loading...</div>;
+  if (!portfolio) {
+    // Create default portfolio structure if none exists
+    const defaultPortfolio = {
+      domain: 'yourname.portfolio.com',
+      template: 'modern',
+      theme: 'light',
+      isPublished: false,
+      analytics: {
+        views: 0,
+        clicks: 0,
+        recruiterViews: 0
+      }
+    };
+    setPortfolio(defaultPortfolio);
+    return <div>Loading...</div>;
+  }
 
   return (
     <div style={{ padding: 'var(--space-6)' }}>
@@ -218,7 +233,7 @@ export default function PortfolioBuilder() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
             <Eye size={20} color="var(--success)" />
             <div>
-              <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 'bold' }}>{portfolio.analytics.views}</div>
+              <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 'bold' }}>{portfolio.analytics?.views || 0}</div>
               <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-soft)' }}>Total Views</div>
             </div>
           </div>
@@ -228,7 +243,7 @@ export default function PortfolioBuilder() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
             <BarChart3 size={20} color="var(--warning)" />
             <div>
-              <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 'bold' }}>{portfolio.analytics.clicks}</div>
+              <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 'bold' }}>{portfolio.analytics?.clicks || 0}</div>
               <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-soft)' }}>Project Clicks</div>
             </div>
           </div>
@@ -238,7 +253,7 @@ export default function PortfolioBuilder() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
             <Star size={20} color="var(--error)" />
             <div>
-              <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 'bold' }}>{portfolio.analytics.recruiterViews}</div>
+              <div style={{ fontSize: 'var(--text-2xl)', fontWeight: 'bold' }}>{portfolio.analytics?.recruiterViews || 0}</div>
               <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-soft)' }}>Recruiter Views</div>
             </div>
           </div>
@@ -521,22 +536,22 @@ export default function PortfolioBuilder() {
             
             <div className="card">
               <h4>Traffic Sources</h4>
-              {analytics.sources.map(source => (
+              {analytics?.sources?.map(source => (
                 <div key={source.source} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--space-2)' }}>
                   <span>{source.source}</span>
                   <span style={{ fontWeight: 'bold' }}>{source.visits} ({source.percentage}%)</span>
                 </div>
-              ))}
+              )) || <div>No data available</div>}
             </div>
             
             <div className="card">
               <h4>Top Projects</h4>
-              {analytics.topProjects.map(project => (
+              {analytics?.topProjects?.map(project => (
                 <div key={project.name} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--space-2)' }}>
                   <span>{project.name}</span>
                   <span style={{ fontWeight: 'bold' }}>{project.clicks} clicks</span>
                 </div>
-              ))}
+              )) || <div>No data available</div>}
             </div>
           </div>
         </div>

@@ -79,8 +79,8 @@ export default function Pricing() {
   return (
     <div style={{ marginTop: '60px', padding: '0 24px', maxWidth: '100%', boxSizing: 'border-box' }}>
       {/* Hero Section */}
-      <div style={{ textAlign: 'center', padding: 'var(--space-8) 0', background: 'var(--bg)' }}>
-        <h1 style={{ fontSize: 'var(--text-5xl)', fontWeight: '800', marginBottom: 'var(--space-3)' }}>Choose Your Plan</h1>
+      <div style={{ textAlign: 'center', padding: 'var(--space-8) 0', background: 'var(--background)', minHeight: '40vh' }}>
+        <h1 style={{ fontSize: 'var(--text-5xl)', fontWeight: '800', marginBottom: 'var(--space-3)', color: 'var(--text)' }}>Choose Your Plan</h1>
         <p style={{ fontSize: 'var(--text-xl)', color: 'var(--text-soft)', maxWidth: '600px', margin: '0 auto var(--space-6)' }}>
           Unlock the full power of AI-driven career tools with flexible pricing designed for every stage of your journey
         </p>
@@ -104,7 +104,7 @@ export default function Pricing() {
         <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--space-6)', maxWidth: '1200px', margin: '0 auto', flexWrap: 'wrap' }}>
           {tiers.map((t) => (
             <div key={t.name} style={{
-              background: t.plan === 'pro' ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'var(--surface)',
+              background: t.plan === 'pro' ? 'var(--gradient-primary)' : 'var(--surface)',
               border: t.plan === 'pro' ? 'none' : '1px solid var(--border)',
               borderRadius: '20px',
               padding: 'var(--space-6)',
@@ -113,7 +113,7 @@ export default function Pricing() {
               color: t.plan === 'pro' ? 'white' : 'var(--text)',
               position: 'relative',
               transform: t.plan === 'pro' ? 'scale(1.05)' : 'scale(1)',
-              boxShadow: t.plan === 'pro' ? '0 20px 40px rgba(102, 126, 234, 0.3)' : 'var(--shadow)',
+              boxShadow: t.plan === 'pro' ? 'var(--shadow-xl)' : 'var(--shadow)',
               transition: 'all 0.3s ease'
             }}>
               {t.plan === 'pro' && (
@@ -122,13 +122,13 @@ export default function Pricing() {
                   top: '-12px',
                   left: '50%',
                   transform: 'translateX(-50%)',
-                  background: 'white',
-                  color: '#667eea',
+                  background: 'var(--warning)',
+                  color: 'var(--background)',
                   padding: '6px 20px',
                   borderRadius: '20px',
                   fontSize: '12px',
                   fontWeight: 'bold',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                  boxShadow: 'var(--shadow-lg)'
                 }}>MOST POPULAR</div>
               )}
               
@@ -141,7 +141,7 @@ export default function Pricing() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 margin: '0 auto var(--space-4)',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
+                boxShadow: 'var(--shadow-lg)'
               }}>
                 {t.plan === 'free' && <Sparkles size={28} color={t.plan === 'pro' ? 'white' : '#10b981'} />}
                 {t.plan === 'pro' && <Zap size={28} color="white" />}
@@ -178,9 +178,9 @@ export default function Pricing() {
                 <button style={{
                   width: '100%',
                   padding: '14px 28px',
-                  background: t.plan === 'pro' ? 'white' : 'var(--primary)',
-                  color: t.plan === 'pro' ? '#667eea' : 'white',
-                  border: 'none',
+                  background: t.plan === 'pro' ? 'var(--surface)' : 'var(--primary)',
+                  color: t.plan === 'pro' ? 'var(--primary)' : 'white',
+                  border: t.plan === 'pro' ? '1px solid var(--border)' : 'none',
                   borderRadius: '12px',
                   fontSize: 'var(--text-base)',
                   fontWeight: '600',
@@ -196,9 +196,9 @@ export default function Pricing() {
       </div>
 
       {/* Why Upgrade Section */}
-      <div style={{ padding: 'var(--space-8) 0', background: 'var(--bg-subtle)' }}>
+      <div style={{ padding: 'var(--space-8) 0', background: 'var(--background)' }}>
         <div style={{ textAlign: 'center', marginBottom: 'var(--space-8)' }}>
-          <h2 style={{ fontSize: 'var(--text-4xl)', fontWeight: '800', marginBottom: 'var(--space-3)' }}>Why Upgrade?</h2>
+          <h2 style={{ fontSize: 'var(--text-4xl)', fontWeight: '800', marginBottom: 'var(--space-3)', color: 'var(--text)' }}>Why Upgrade?</h2>
           <p style={{ fontSize: 'var(--text-lg)', color: 'var(--text-soft)', maxWidth: '600px', margin: '0 auto' }}>
             Unlock advanced features that give you a competitive edge in your job search
           </p>
@@ -210,7 +210,8 @@ export default function Pricing() {
             padding: 'var(--space-6)',
             borderRadius: '16px',
             textAlign: 'center',
-            border: '1px solid var(--border)'
+            border: '1px solid var(--border)',
+            boxShadow: 'var(--shadow)'
           }}>
             <div style={{
               width: '48px',
@@ -224,7 +225,7 @@ export default function Pricing() {
             }}>
               <Sparkles size={24} color="white" />
             </div>
-            <h4 style={{ fontSize: 'var(--text-xl)', fontWeight: '700', marginBottom: 'var(--space-2)' }}>Advanced AI Analysis</h4>
+            <h4 style={{ fontSize: 'var(--text-xl)', fontWeight: '700', marginBottom: 'var(--space-2)', color: 'var(--text)' }}>Advanced AI Analysis</h4>
             <p style={{ color: 'var(--text-soft)', lineHeight: 1.6 }}>Get comprehensive ATS reports, keyword optimization, and tailored recommendations for every job application.</p>
           </div>
           
@@ -233,7 +234,8 @@ export default function Pricing() {
             padding: 'var(--space-6)',
             borderRadius: '16px',
             textAlign: 'center',
-            border: '1px solid var(--border)'
+            border: '1px solid var(--border)',
+            boxShadow: 'var(--shadow)'
           }}>
             <div style={{
               width: '48px',
@@ -247,7 +249,7 @@ export default function Pricing() {
             }}>
               <Zap size={24} color="white" />
             </div>
-            <h4 style={{ fontSize: 'var(--text-xl)', fontWeight: '700', marginBottom: 'var(--space-2)' }}>AI-Powered Builder</h4>
+            <h4 style={{ fontSize: 'var(--text-xl)', fontWeight: '700', marginBottom: 'var(--space-2)', color: 'var(--text)' }}>AI-Powered Builder</h4>
             <p style={{ color: 'var(--text-soft)', lineHeight: 1.6 }}>Use AI to refine tone, clarity, and impact across all resume sections with intelligent suggestions.</p>
           </div>
           
@@ -256,7 +258,8 @@ export default function Pricing() {
             padding: 'var(--space-6)',
             borderRadius: '16px',
             textAlign: 'center',
-            border: '1px solid var(--border)'
+            border: '1px solid var(--border)',
+            boxShadow: 'var(--shadow)'
           }}>
             <div style={{
               width: '48px',
@@ -270,7 +273,7 @@ export default function Pricing() {
             }}>
               <Crown size={24} color="white" />
             </div>
-            <h4 style={{ fontSize: 'var(--text-xl)', fontWeight: '700', marginBottom: 'var(--space-2)' }}>Priority Support</h4>
+            <h4 style={{ fontSize: 'var(--text-xl)', fontWeight: '700', marginBottom: 'var(--space-2)', color: 'var(--text)' }}>Priority Support</h4>
             <p style={{ color: 'var(--text-soft)', lineHeight: 1.6 }}>Get faster responses and dedicated assistance from our expert team for all your career needs.</p>
           </div>
         </div>

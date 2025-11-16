@@ -254,6 +254,7 @@ export default function ResumeBuilder() {
   };
 
   const triggerFilePicker = () => fileInputRef.current?.click();
+  const onUploadBoxKeyDown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerFilePicker(); } };
   const onDrop = (e) => { e.preventDefault(); setDragActive(false); const file = e.dataTransfer.files?.[0]; processFile(file); };
   const onDragOver = (e) => { e.preventDefault(); setDragActive(true); };
   const onDragLeave = () => setDragActive(false);
@@ -324,14 +325,14 @@ export default function ResumeBuilder() {
 
   return (
     <div className="page builder">
-      <div className="page-header">
-        <h1>Resume Builder</h1>
-        <p className="muted">Create and refine your resume; upload, edit, and preview.</p>
+      <div className="page-header" style={{ textAlign: 'left' }}>
+        <h1 style={{ textAlign: 'left' }}>Resume Builder</h1>
+        <p className="muted" style={{ textAlign: 'left' }}>Create and refine your resume; upload, edit, and preview.</p>
       </div>
-      <div className="section-intro">
-        <h3 className="section-title">What This Section Does</h3>
-        <p className="muted">Build or import a resume, then customize sections and preview.</p>
-        <ol className="step-list">
+      <div className="section-intro" style={{ textAlign: 'left' }}>
+        <h3 className="section-title" style={{ textAlign: 'left' }}>What This Section Does</h3>
+        <p className="muted" style={{ textAlign: 'left' }}>Build or import a resume, then customize sections and preview.</p>
+        <ol className="step-list" style={{ textAlign: 'left' }}>
           <li>Set a title and upload or paste an existing resume.</li>
           <li>Edit each section for clarity, keywords, and impact.</li>
           <li>Preview with templates and save your latest version.</li>
@@ -349,13 +350,17 @@ export default function ResumeBuilder() {
           onDrop={onDrop}
           onClick={triggerFilePicker}
           role="button"
+          tabIndex={0}
+          onKeyDown={onUploadBoxKeyDown}
+          aria-label="Upload resume"
+          aria-describedby="builder-upload-instructions"
         >
           {!uploadComplete ? (
             <div className="upload-content">
               <UploadCloud size={32} color="var(--accent-blue)" />
               <div>
                 <strong>Drag & drop PDF/DOCX here</strong>
-                <div className="muted">or click to select a file</div>
+                <div className="muted" id="builder-upload-instructions">or click to select a file</div>
               </div>
               {uploading && (
                 <div className="progress-circle" style={{ background: `conic-gradient(var(--accent-blue) ${uploadProgress}%, transparent 0)` }}>

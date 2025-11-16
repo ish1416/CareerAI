@@ -8,6 +8,7 @@ export default function LearningDashboard() {
   const [tests, setTests] = useState([]);
   const [paths, setPaths] = useState([]);
   const [activeTab, setActiveTab] = useState('overview');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -15,33 +16,43 @@ export default function LearningDashboard() {
 
   const loadData = async () => {
     try {
-      // Set default data first to prevent infinite loading
-      setProgress({ totalHours: 0, level: 1, xp: 0, streak: 0, badges: [] });
-      setTests([]);
-      setPaths([]);
+      setLoading(true);
       
-      const [progressRes, testsRes, pathsRes] = await Promise.all([
-        api.get('/learning/progress').catch(() => ({ data: { totalHours: 0, level: 1, xp: 0, streak: 0, badges: [] } })),
+      const [dashboardRes, coursesRes, testsRes, pathsRes] = await Promise.all([
+        api.get('/learning/dashboard').catch(() => ({ data: { overview: { totalHours: 0, level: 1, xp: 0, streak: 0 }, achievements: [] } })),
+        api.get('/learning/courses').catch(() => ({ data: { courses: [] } })),
         api.get('/learning/tests').catch(() => ({ data: { tests: [] } })),
         api.get('/learning/paths').catch(() => ({ data: { paths: [] } }))
       ]);
       
-      setProgress(progressRes.data || { totalHours: 0, level: 1, xp: 0, streak: 0, badges: [] });
-      setTests(testsRes.data.tests || testsRes.data || []);
-      setPaths(pathsRes.data.paths || pathsRes.data || []);
+      const dashboardData = dashboardRes.data;
+      setProgress({
+        totalHours: dashboardData.overview?.hoursLearned || 0,
+        level: dashboardData.overview?.level || 1,
+        xp: dashboardData.overview?.xp || 0,
+        streak: dashboardData.overview?.currentStreak || 0,
+        badges: dashboardData.achievements || []
+      });
+      
+      setCourses(coursesRes.data.courses || []);
+      setTests(testsRes.data.tests || []);
+      setPaths(pathsRes.data.paths || []);
     } catch (error) {
       console.error('Failed to load learning data:', error);
-      // Ensure we always have data to prevent infinite loading
       setProgress({ totalHours: 0, level: 1, xp: 0, streak: 0, badges: [] });
+      setCourses([]);
       setTests([]);
       setPaths([]);
+    } finally {
+      setLoading(false);
     }
   };
 
   const recommendCourses = async () => {
     try {
+      setLoading(true);
       const { data } = await api.post('/learning/courses/recommend', {
-        skills: 'JavaScript, React',
+        skills: ['JavaScript', 'React', 'Node.js'],
         careerGoal: 'Frontend Developer',
         experience: 'Beginner'
       });
@@ -49,24 +60,8 @@ export default function LearningDashboard() {
     } catch (error) {
       console.error('Failed to get recommendations:', error);
       setCourses([]);
-    }
-  };
-
-  const updateProgress = async (courseId, progress, completed = false) => {
-    try {
-      await api.put(`/learning/courses/${courseId}/progress`, { progress, completed });
-      loadData();
-    } catch (error) {
-      console.error('Failed to update progress:', error);
-    }
-  };
-
-  const startTest = async (testId) => {
-    try {
-      const { data } = await api.post(`/learning/tests/${testId}/start`);
-      return data;
-    } catch (error) {
-      console.error('Failed to start test:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -191,20 +186,53 @@ export default function LearningDashboard() {
           </div>
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 'var(--space-4)' }}>
-            {courses.map((course, idx) => (
-              <div key={idx} className="card">
-                <h4>{course.title}</h4>
-                <p style={{ color: 'var(--text-soft)', marginBottom: 'var(--space-2)' }}>{course.provider}</p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--space-3)' }}>
-                  <span style={{ fontSize: 'var(--text-sm)' }}>{course.duration}</span>
-                  <span style={{ fontSize: 'var(--text-sm)', color: 'var(--primary)' }}>{course.level}</span>
-                </div>
-                <button className="btn ghost small">
-                  <Play size={14} />
-                  Start Course
-                </button>
+            {loading ? (
+              <div className="card" style={{ padding: 'var(--space-4)', textAlign: 'center' }}>
+                <div>Loading courses...</div>
               </div>
-            ))}
+            ) : courses.length > 0 ? (
+              courses.map((course, idx) => (
+                <div key={idx} className="card">
+                  {course.imageUrl && (
+                    <img src={course.imageUrl} alt={course.title} style={{ width: '100%', height: '150px', objectFit: 'cover', borderRadius: 'var(--radius)', marginBottom: 'var(--space-2)' }} />
+                  )}
+                  <h4>{course.title}</h4>
+                  <p style={{ color: 'var(--text-soft)', marginBottom: 'var(--space-2)', fontSize: 'var(--text-sm)' }}>{course.instructor} • {course.provider}</p>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--space-2)' }}>
+                    <span style={{ fontSize: 'var(--text-sm)' }}>{course.duration}</span>
+                    <span style={{ fontSize: 'var(--text-sm)', color: 'var(--primary)' }}>{course.level}</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-3)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
+                      <Star size={14} color="var(--warning)" />
+                      <span style={{ fontSize: 'var(--text-sm)' }}>{course.rating}</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
+                      <Users size={14} color="var(--text-soft)" />
+                      <span style={{ fontSize: 'var(--text-sm)' }}>{course.students}</span>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <span style={{ fontSize: 'var(--text-lg)', fontWeight: 'bold', color: 'var(--success)' }}>{course.price}</span>
+                      {course.originalPrice && course.originalPrice !== course.price && (
+                        <span style={{ fontSize: 'var(--text-sm)', textDecoration: 'line-through', color: 'var(--text-soft)', marginLeft: 'var(--space-1)' }}>{course.originalPrice}</span>
+                      )}
+                    </div>
+                    <button className="btn primary small" onClick={() => window.open(course.url, '_blank')}>
+                      <Play size={14} />
+                      Start Course
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="card" style={{ padding: 'var(--space-4)', textAlign: 'center' }}>
+                <BookOpen size={48} color="var(--text-soft)" style={{ marginBottom: 'var(--space-3)' }} />
+                <h4>No Courses Found</h4>
+                <p className="muted">Click "Get Recommendations" to discover courses</p>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -219,19 +247,6 @@ export default function LearningDashboard() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--space-3)' }}>
                   <span style={{ fontSize: 'var(--text-sm)' }}>{test.questions} questions</span>
                   <span style={{ fontSize: 'var(--text-sm)' }}>{test.duration} min</span>
-                </div>
-                <div style={{ marginBottom: 'var(--space-3)' }}>
-                  <span style={{ 
-                    padding: 'var(--space-1) var(--space-2)', 
-                    borderRadius: 'var(--radius)', 
-                    fontSize: 'var(--text-xs)',
-                    background: test.difficulty === 'Easy' ? 'var(--success-light)' : 
-                               test.difficulty === 'Medium' ? 'var(--warning-light)' : 'var(--error-light)',
-                    color: test.difficulty === 'Easy' ? 'var(--success)' : 
-                           test.difficulty === 'Medium' ? 'var(--warning)' : 'var(--error)'
-                  }}>
-                    {test.difficulty}
-                  </span>
                 </div>
                 <button className="btn primary small">
                   <Play size={14} />
@@ -248,79 +263,16 @@ export default function LearningDashboard() {
           <h3>Learning Paths</h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))', gap: 'var(--space-4)' }}>
             {paths.map(path => (
-              <div key={path.id} className="card" style={{ padding: 'var(--space-5)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--space-3)' }}>
-                  <h4 style={{ margin: 0, fontSize: 'var(--text-lg)', fontWeight: 600 }}>{path.title}</h4>
-                  <span style={{
-                    padding: 'var(--space-1) var(--space-2)',
-                    borderRadius: 'var(--radius)',
-                    fontSize: 'var(--text-xs)',
-                    fontWeight: 600,
-                    background: path.difficulty === 'Beginner' ? 'var(--success-bg)' : 
-                               path.difficulty === 'Intermediate' ? 'var(--warning-bg)' : 'var(--error-bg)',
-                    color: path.difficulty === 'Beginner' ? 'var(--success)' : 
-                           path.difficulty === 'Intermediate' ? 'var(--warning)' : 'var(--error)'
-                  }}>
-                    {path.difficulty}
-                  </span>
+              <div key={path.id} className="card">
+                <h4>{path.title}</h4>
+                <p style={{ color: 'var(--text-soft)', marginBottom: 'var(--space-3)' }}>{path.description}</p>
+                <div style={{ background: 'var(--muted)', borderRadius: 'var(--radius)', height: '8px', marginBottom: 'var(--space-2)' }}>
+                  <div style={{ background: 'var(--primary)', height: '100%', borderRadius: 'var(--radius)', width: `${path.progress}%` }} />
                 </div>
-                <p style={{ color: 'var(--text-soft)', marginBottom: 'var(--space-3)', fontSize: 'var(--text-sm)' }}>{path.description}</p>
-                
-                <div style={{ marginBottom: 'var(--space-3)' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--space-1)' }}>
-                    <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>Progress</span>
-                    <span style={{ fontSize: 'var(--text-sm)', color: 'var(--primary)' }}>{path.progress}%</span>
-                  </div>
-                  <div style={{ background: 'var(--muted)', borderRadius: 'var(--radius)', height: '8px' }}>
-                    <div style={{ 
-                      background: 'var(--gradient-primary)', 
-                      height: '100%', 
-                      borderRadius: 'var(--radius)', 
-                      width: `${path.progress}%`,
-                      transition: 'width 0.3s ease'
-                    }} />
-                  </div>
-                </div>
-                
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-4)' }}>
-                  <div style={{ display: 'flex', gap: 'var(--space-4)' }}>
-                    <div>
-                      <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-soft)' }}>Duration</div>
-                      <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{path.duration}</div>
-                    </div>
-                    <div>
-                      <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-soft)' }}>Modules</div>
-                      <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{path.modules || 0}</div>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
-                    <Star size={14} color="var(--warning)" />
-                    <span style={{ fontSize: 'var(--text-sm)' }}>{path.rating || 4.5}</span>
-                  </div>
-                </div>
-                
-                <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
-                  <button className="btn primary" style={{ flex: 1 }}>
-                    {path.progress > 0 ? 'Continue' : 'Start Path'}
-                  </button>
-                  <button className="btn ghost">
-                    <BookOpen size={16} />
-                  </button>
-                </div>
+                <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-soft)' }}>{path.progress}% complete • {path.duration}</div>
               </div>
             ))}
           </div>
-          
-          {paths.length === 0 && (
-            <div className="card" style={{ padding: 'var(--space-6)', textAlign: 'center' }}>
-              <Target size={48} color="var(--text-soft)" style={{ marginBottom: 'var(--space-3)' }} />
-              <h4>No Learning Paths Yet</h4>
-              <p className="muted">Discover structured learning paths to advance your career</p>
-              <button className="btn primary" style={{ marginTop: 'var(--space-3)' }}>
-                Explore Paths
-              </button>
-            </div>
-          )}
         </div>
       )}
     </div>

@@ -1,3 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Premium Fonts */
+@import './styles/fonts.css';
+
+/* Premium Components */
+@import './styles/premium-components.css';
+
+/* Landing Page */
+@import './styles/landing.css';
+
+/* Ocean Components */
+@import './styles/ocean-components.css';
+
 /* Global app resets */
 :root { 
   color-scheme: light dark; 

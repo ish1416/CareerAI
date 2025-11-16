@@ -1,66 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import { Search, MapPin, DollarSign, Clock, ExternalLink, Star, Filter } from 'lucide-react';
+import api from '../utils/api.js';
+import { useToast } from './Toast.jsx';
 
 const JobMatcher = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [filters, setFilters] = useState({
-    location: '',
-    salary: '',
-    type: '',
-    experience: ''
-  });
+  const [searchQuery, setSearchQuery] = useState('software engineer');
+  const [location, setLocation] = useState('us');
+  const [categories, setCategories] = useState([]);
+  const { showToast } = useToast();
 
-  // Mock job data - in production, this would come from job APIs
-  const mockJobs = [
-    {
-      id: 1,
-      title: 'Senior Software Engineer',
-      company: 'TechCorp Inc.',
-      location: 'San Francisco, CA',
-      salary: '$120k - $180k',
-      type: 'Full-time',
-      experience: 'Senior',
-      match: 95,
-      description: 'Join our team building next-generation web applications...',
-      skills: ['React', 'Node.js', 'TypeScript', 'AWS'],
-      posted: '2 days ago'
-    },
-    {
-      id: 2,
-      title: 'Frontend Developer',
-      company: 'StartupXYZ',
-      location: 'Remote',
-      salary: '$80k - $120k',
-      type: 'Full-time',
-      experience: 'Mid-level',
-      match: 88,
-      description: 'Build beautiful user interfaces for our SaaS platform...',
-      skills: ['React', 'CSS', 'JavaScript', 'Figma'],
-      posted: '1 week ago'
-    },
-    {
-      id: 3,
-      title: 'Full Stack Developer',
-      company: 'InnovateLab',
-      location: 'New York, NY',
-      salary: '$90k - $140k',
-      type: 'Contract',
-      experience: 'Mid-level',
-      match: 82,
-      description: 'Work on cutting-edge fintech applications...',
-      skills: ['Python', 'React', 'PostgreSQL', 'Docker'],
-      posted: '3 days ago'
+  const searchJobs = async (query = searchQuery, loc = location) => {
+    try {
+      setLoading(true);
+      const { data } = await api.get('/job/search', {
+        params: { query, location: loc, limit: 20 }
+      });
+      setJobs(data.jobs || []);
+    } catch (error) {
+      console.error('Job search error:', error);
+      showToast('Failed to search jobs', 'error');
+      setJobs([]);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
+
+  const loadCategories = async () => {
+    try {
+      const { data } = await api.get('/job/categories');
+      setCategories(data.categories || []);
+    } catch (error) {
+      console.error('Categories error:', error);
+    }
+  };
 
   useEffect(() => {
-    setLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      setJobs(mockJobs);
-      setLoading(false);
-    }, 1000);
+    searchJobs();
+    loadCategories();
   }, []);
 
   const getMatchColor = (match) => {
@@ -81,72 +59,35 @@ const JobMatcher = () => {
         </p>
       </div>
 
-      {/* Filters */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      {/* Search */}
+      <div className="card" style={{ marginBottom: 'var(--space-4)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr auto', gap: 'var(--space-3)' }}>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Location
-            </label>
-            <div className="relative">
-              <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input
-                type="text"
-                placeholder="City, State or Remote"
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                value={filters.location}
-                onChange={(e) => setFilters({...filters, location: e.target.value})}
-              />
-            </div>
+            <input
+              type="text"
+              placeholder="Job title, skills, or company"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{ width: '100%' }}
+            />
           </div>
-
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Salary Range
-            </label>
-            <select 
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-              value={filters.salary}
-              onChange={(e) => setFilters({...filters, salary: e.target.value})}
-            >
-              <option value="">Any Salary</option>
-              <option value="50k-80k">$50k - $80k</option>
-              <option value="80k-120k">$80k - $120k</option>
-              <option value="120k+">$120k+</option>
-            </select>
+            <input
+              type="text"
+              placeholder="Location (us, uk, etc.)"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              style={{ width: '100%' }}
+            />
           </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Job Type
-            </label>
-            <select 
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-              value={filters.type}
-              onChange={(e) => setFilters({...filters, type: e.target.value})}
-            >
-              <option value="">Any Type</option>
-              <option value="full-time">Full-time</option>
-              <option value="contract">Contract</option>
-              <option value="part-time">Part-time</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Experience
-            </label>
-            <select 
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-              value={filters.experience}
-              onChange={(e) => setFilters({...filters, experience: e.target.value})}
-            >
-              <option value="">Any Level</option>
-              <option value="entry">Entry Level</option>
-              <option value="mid">Mid Level</option>
-              <option value="senior">Senior Level</option>
-            </select>
-          </div>
+          <button 
+            className="btn primary" 
+            onClick={() => searchJobs(searchQuery, location)}
+            disabled={loading}
+          >
+            <Search size={16} />
+            Search
+          </button>
         </div>
       </div>
 
@@ -159,52 +100,58 @@ const JobMatcher = () => {
       ) : (
         <div className="space-y-4">
           {jobs.map(job => (
-            <div key={job.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-              <div className="flex justify-between items-start mb-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{job.title}</h3>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getMatchColor(job.match)}`}>
-                      {job.match}% Match
-                    </span>
-                  </div>
-                  <p className="text-lg text-gray-700 dark:text-gray-300 mb-2">{job.company}</p>
-                  <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400">
-                    <span className="flex items-center gap-1">
-                      <MapPin className="w-4 h-4" />
+            <div key={job.id} className="card">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 'var(--space-3)' }}>
+                <div style={{ flex: 1 }}>
+                  <h3 style={{ margin: '0 0 var(--space-1)', fontSize: 'var(--text-xl)', fontWeight: 'bold' }}>{job.title}</h3>
+                  <p style={{ margin: '0 0 var(--space-2)', fontSize: 'var(--text-lg)', color: 'var(--text-soft)' }}>{job.company}</p>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', fontSize: 'var(--text-sm)', color: 'var(--text-soft)' }}>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
+                      <MapPin size={14} />
                       {job.location}
                     </span>
-                    <span className="flex items-center gap-1">
-                      <DollarSign className="w-4 h-4" />
+                    <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
+                      <DollarSign size={14} />
                       {job.salary}
                     </span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
-                      {job.type}
+                    <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
+                      <Clock size={14} />
+                      {job.contractType}
                     </span>
                   </div>
                 </div>
-                <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                <button 
+                  className="btn primary" 
+                  onClick={() => window.open(job.url, '_blank')}
+                  style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}
+                >
                   Apply Now
-                  <ExternalLink className="w-4 h-4" />
+                  <ExternalLink size={14} />
                 </button>
               </div>
 
-              <p className="text-gray-600 dark:text-gray-400 mb-4">{job.description}</p>
+              <p style={{ color: 'var(--text-soft)', marginBottom: 'var(--space-3)', fontSize: 'var(--text-sm)' }}>
+                {job.description?.substring(0, 200)}...
+              </p>
 
-              <div className="flex flex-wrap gap-2 mb-4">
-                {job.skills.map(skill => (
-                  <span key={skill} className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-sm">
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-1)', marginBottom: 'var(--space-3)' }}>
+                {job.skills?.slice(0, 5).map(skill => (
+                  <span key={skill} style={{ 
+                    padding: 'var(--space-1) var(--space-2)', 
+                    background: 'var(--muted)', 
+                    borderRadius: 'var(--radius)', 
+                    fontSize: 'var(--text-xs)' 
+                  }}>
                     {skill}
                   </span>
                 ))}
               </div>
 
-              <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-500">
-                <span>Posted {job.posted}</span>
-                <div className="flex items-center gap-4">
-                  <button className="text-blue-600 hover:text-blue-700">Save Job</button>
-                  <button className="text-blue-600 hover:text-blue-700">View Details</button>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 'var(--text-sm)', color: 'var(--text-soft)' }}>
+                <span>Posted {new Date(job.postedDate).toLocaleDateString()}</span>
+                <div style={{ display: 'flex', gap: 'var(--space-3)' }}>
+                  <span style={{ color: 'var(--primary)' }}>{job.category}</span>
+                  {job.remote && <span style={{ color: 'var(--success)' }}>Remote</span>}
                 </div>
               </div>
             </div>

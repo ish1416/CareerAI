@@ -8,7 +8,13 @@ const from = process.env.EMAIL_FROM || 'no-reply@careerai.local';
 
 let transporter;
 if (host && port && user && pass) {
-  transporter = nodemailer.createTransport({ host, port, auth: { user, pass } });
+  transporter = nodemailer.createTransport({
+    host,
+    port,
+    secure: false,
+    auth: { user, pass },
+    tls: { rejectUnauthorized: false }
+  });
 } else {
   // Fallback: log emails to console for dev
   transporter = nodemailer.createTransport({ jsonTransport: true });

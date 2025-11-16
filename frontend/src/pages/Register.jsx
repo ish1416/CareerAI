@@ -66,7 +66,7 @@ export default function Register() {
         border: '1px solid var(--border)'
       }}>
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-          <Logo size={48} />
+          <Logo size={48} variant="accent" />
           <h1 style={{ fontSize: '24px', fontWeight: '700', margin: '12px 0 4px', color: 'var(--text)' }}>Create Account</h1>
           <p style={{ color: 'var(--text-soft)', margin: 0, fontSize: '14px' }}>Join CareerAI today</p>
         </div>
@@ -163,7 +163,7 @@ export default function Register() {
             style={{
               width: '100%',
               padding: '12px',
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)',
               color: 'white',
               border: 'none',
               borderRadius: '8px',
@@ -202,7 +202,7 @@ export default function Register() {
         </form>
         
         <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '13px', color: 'var(--text-soft)' }}>
-          Already have an account? <Link to="/login" style={{ color: '#667eea', textDecoration: 'none', fontWeight: '500' }}>Sign in</Link>
+          Already have an account? <Link to="/login" style={{ color: '#06b6d4', textDecoration: 'none', fontWeight: '500' }}>Sign in</Link>
         </div>
       </div>
     </div>

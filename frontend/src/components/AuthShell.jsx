@@ -3,13 +3,14 @@ import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useTheme } from '../context/ThemeContext.jsx';
 import Logo from './Logo.jsx';
-import { LayoutDashboard, FilePlus2, SearchCheck, Briefcase, Mail, User, Settings, LogOut, Sun, Moon, CreditCard, TrendingUp, History, BookOpen, Users, Globe, Calendar, Mic, Rocket, BarChart, Menu, X, Video, Shield, Headphones, DollarSign, Zap, UserCheck, MessageSquare, Briefcase as BriefcaseIcon, Bot, Target } from 'lucide-react';
+import { LayoutDashboard, FilePlus2, SearchCheck, Briefcase, Mail, User, Settings, LogOut, Sun, Moon, CreditCard, TrendingUp, History, BookOpen, Users, Globe, Calendar, Mic, Rocket, BarChart, Menu, X, Video, Shield, Headphones, DollarSign, Zap, UserCheck, MessageSquare, Briefcase as BriefcaseIcon, Bot, Target, Search, BarChart3, Code } from 'lucide-react';
 
 export default function AuthShell({ children }) {
   const { logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
+  const sidebarRef = React.useRef(null);
   
   const menuRef = React.useRef(null);
   React.useEffect(() => {
@@ -32,6 +33,12 @@ export default function AuthShell({ children }) {
     };
   }, [menuOpen]);
 
+  React.useEffect(() => {
+    if (sidebarOpen) {
+      sidebarRef.current?.focus();
+    }
+  }, [sidebarOpen]);
+
   const navigationItems = [
     { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard', group: 'main' },
     { to: '/builder', icon: FilePlus2, label: 'Resume Builder', group: 'main' },
@@ -39,30 +46,15 @@ export default function AuthShell({ children }) {
     { to: '/job-match', icon: Briefcase, label: 'Job Match', group: 'main' },
     { to: '/cover-letters', icon: Mail, label: 'Cover Letters', group: 'main' },
     { to: '/learning', icon: BookOpen, label: 'Learning Hub', group: 'growth' },
+    { to: '/coding-questions', icon: Code, label: 'Coding Practice', group: 'growth' },
     { to: '/community', icon: Users, label: 'Community', group: 'growth' },
     { to: '/portfolio', icon: Globe, label: 'Portfolio', group: 'growth' },
     { to: '/job-tracker', icon: Calendar, label: 'Job Tracker', group: 'tools' },
     { to: '/interview', icon: Mic, label: 'Interview Prep', group: 'tools' },
     { to: '/projects', icon: Rocket, label: 'Projects', group: 'tools' },
-    { to: '/career-dna', icon: TrendingUp, label: 'Career DNA', group: 'advanced' },
-    { to: '/career-twin', icon: User, label: 'Career Twin', group: 'advanced' },
-    { to: '/global-ops', icon: Globe, label: 'Global Opportunities', group: 'advanced' },
-    { to: '/video-resume', icon: Video, label: 'Video Resume', group: 'advanced' },
-    { to: '/virtual-fair', icon: Users, label: 'Virtual Career Fair', group: 'advanced' },
-    { to: '/blockchain-verify', icon: Shield, label: 'Blockchain Verify', group: 'advanced' },
-    { to: '/mentor-marketplace', icon: UserCheck, label: 'Mentor Marketplace', group: 'advanced' },
-    { to: '/auto-distribution', icon: Zap, label: 'Auto Distribution', group: 'advanced' },
-    { to: '/communication-coach', icon: MessageSquare, label: 'Communication Coach', group: 'advanced' },
-    { to: '/job-intelligence', icon: BarChart, label: 'Job Intelligence', group: 'advanced' },
-    { to: '/workspace-integration', icon: BriefcaseIcon, label: 'Workspace Integration', group: 'advanced' },
-    { to: '/digital-id', icon: Shield, label: 'Digital ID', group: 'advanced' },
-    { to: '/collaboration-tools', icon: Users, label: 'Collaboration Tools', group: 'advanced' },
-    { to: '/goal-navigator', icon: Target, label: 'Goal Navigator', group: 'advanced' },
-    { to: '/student-ecosystem', icon: BookOpen, label: 'Student Ecosystem', group: 'advanced' },
-    { to: '/voice-commands', icon: Headphones, label: 'Voice Commands', group: 'advanced' },
-    { to: '/salary-negotiation', icon: DollarSign, label: 'Salary Assistant', group: 'advanced' },
-    { to: '/ai-agents', icon: Bot, label: 'Multi-AI Agents', group: 'advanced' },
-    { to: '/career-lab', icon: Rocket, label: 'CareerAI Lab', group: 'advanced' },
+    { to: '/web-scraper', icon: Search, label: 'Web Scraper', group: 'tools' },
+    { to: '/seo-tools', icon: BarChart3, label: 'SEO Tools', group: 'tools' },
+    { to: '/ai-advanced', icon: Bot, label: 'AI Advanced Hub', group: 'advanced' },
     { to: '/analytics', icon: BarChart, label: 'Analytics', group: 'insights' },
     { to: '/history', icon: History, label: 'History', group: 'insights' }
   ];
@@ -77,6 +69,7 @@ export default function AuthShell({ children }) {
 
   return (
     <div className="app-shell-sidebar">
+      <a href="#main" className="skip-link">Skip to main content</a>
       {/* Mobile Header */}
       <header className="mobile-header">
         <button 
@@ -88,16 +81,16 @@ export default function AuthShell({ children }) {
         </button>
         
         <Link to="/dashboard" className="brand-link">
-          <Logo size={32} />
+          <Logo size={32} variant="accent" />
           <span className="gradient-text">CareerAI</span>
         </Link>
       </header>
 
       {/* Sidebar */}
-      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`} role="dialog" aria-modal={sidebarOpen} tabIndex={-1} ref={sidebarRef}>
         <div className="sidebar-content">
           <Link to="/" className="sidebar-brand" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <Logo size={28} />
+            <Logo size={28} variant="accent" />
             <span className="gradient-text">CareerAI</span>
           </Link>
           
@@ -201,10 +194,10 @@ export default function AuthShell({ children }) {
               <button
                 className="sidebar-action"
                 onClick={toggleTheme}
-                title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                title={theme === 'light' ? 'Switch to dark mode' : theme === 'dark' ? 'Switch to ocean mode' : 'Switch to light mode'}
               >
                 {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-                <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+                <span>{theme === 'light' ? 'Dark Mode' : theme === 'dark' ? 'Ocean Mode' : 'Light Mode'}</span>
               </button>
               
               <NavLink to="/settings" className="sidebar-action">
@@ -225,7 +218,7 @@ export default function AuthShell({ children }) {
       {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
 
       {/* Main Content */}
-      <main className="main-content">
+      <main className="main-content" id="main">
         {children}
       </main>
     </div>

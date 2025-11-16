@@ -2,6 +2,7 @@ import express from 'express';
 import { requireAuth } from '../middleware/auth.js';
 import { groqChat } from '../utils/groqClient.js';
 import { PrismaClient } from '@prisma/client';
+import GoogleCalendarService from '../services/googleCalendar.js';
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -87,39 +88,68 @@ router.put('/applications/:id', requireAuth, async (req, res) => {
 // Calendar Integration
 router.get('/calendar/events', requireAuth, async (req, res) => {
   try {
-    const events = [
-      {
-        id: 1,
-        title: 'Google Technical Interview',
-        date: '2024-01-25',
-        time: '10:00 AM',
-        type: 'interview',
-        company: 'Google',
-        location: 'Google Meet',
-        applicationId: 1
-      },
-      {
-        id: 2,
-        title: 'Follow up with Meta',
-        date: '2024-01-27',
-        time: '2:00 PM',
-        type: 'followup',
-        company: 'Meta',
-        applicationId: 2
-      }
-    ];
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+      select: { googleTokens: true }
+    });
+
+    if (!user?.googleTokens) {
+      return res.json({ events: [], needsAuth: true });
+    }
+
+    const calendarService = new GoogleCalendarService();
+    calendarService.setCredentials(JSON.parse(user.googleTokens));
     
-    res.json({ events });
+    const events = await calendarService.getEvents();
+    const jobEvents = events.filter(event => event.isJobRelated);
+    
+    res.json({ events: jobEvents });
   } catch (error) {
+    console.error('Calendar events error:', error);
     res.status(500).json({ error: 'Failed to load events' });
   }
 });
 
 router.post('/calendar/sync', requireAuth, async (req, res) => {
   try {
-    // Mock Google Calendar sync
-    res.json({ success: true, message: 'Calendar synced successfully', synced: 5 });
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+      select: { googleTokens: true }
+    });
+
+    if (!user?.googleTokens) {
+      return res.status(400).json({ error: 'Google Calendar not connected' });
+    }
+
+    const calendarService = new GoogleCalendarService();
+    calendarService.setCredentials(JSON.parse(user.googleTokens));
+    
+    // Get applications that need calendar sync
+    const applications = await prisma.jobApplication.findMany({
+      where: { 
+        userId: req.user.id,
+        interviewDate: { not: null },
+        calendarEventId: null
+      }
+    });
+
+    const syncedEvents = await calendarService.syncJobApplications(applications);
+    
+    // Update applications with calendar event IDs
+    for (const sync of syncedEvents) {
+      await prisma.jobApplication.update({
+        where: { id: sync.applicationId },
+        data: { calendarEventId: sync.eventId }
+      });
+    }
+    
+    res.json({ 
+      success: true, 
+      message: 'Calendar synced successfully', 
+      synced: syncedEvents.length 
+    });
   } catch (error) {
+    console.error('Calendar sync error:', error);
     res.status(500).json({ error: 'Failed to sync calendar' });
   }
 });
@@ -296,6 +326,59 @@ router.get('/analytics', requireAuth, async (req, res) => {
   } catch (error) {
     console.error('Job analytics error:', error);
     res.status(500).json({ error: 'Failed to load analytics' });
+  }
+});
+
+// Google Auth Routes
+router.get('/google/status', requireAuth, async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+      select: { googleConnected: true }
+    });
+    
+    res.json({ connected: user?.googleConnected || false });
+  } catch (error) {
+    console.error('Google status error:', error);
+    res.status(500).json({ error: 'Failed to check connection status' });
+  }
+});
+
+router.get('/google/auth-url', requireAuth, async (req, res) => {
+  try {
+    const calendarService = new GoogleCalendarService();
+    const authUrl = calendarService.getAuthUrl();
+    
+    res.json({ authUrl });
+  } catch (error) {
+    console.error('Google auth URL error:', error);
+    res.status(500).json({ error: 'Failed to generate auth URL' });
+  }
+});
+
+router.post('/google/callback', requireAuth, async (req, res) => {
+  try {
+    const { code } = req.body;
+    
+    if (!code) {
+      return res.status(400).json({ error: 'Authorization code required' });
+    }
+
+    const calendarService = new GoogleCalendarService();
+    const tokens = await calendarService.getTokens(code);
+    
+    await prisma.user.update({
+      where: { id: req.user.id },
+      data: { 
+        googleTokens: JSON.stringify(tokens),
+        googleConnected: true
+      }
+    });
+    
+    res.json({ success: true, message: 'Google Calendar connected successfully' });
+  } catch (error) {
+    console.error('Google callback error:', error);
+    res.status(500).json({ error: 'Failed to connect Google Calendar' });
   }
 });
 

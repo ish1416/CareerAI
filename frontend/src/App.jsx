@@ -51,6 +51,11 @@ import GoalNavigator from './components/GoalNavigator.jsx';
 import { WorkspaceIntegration, DigitalID, CollaborationTools, StudentEcosystem, MultiAIAgents, CareerLab } from './components/PlaceholderComponents.jsx';
 import { ConnectionStatus } from './components/LoadingSystem.jsx';
 import AICopilot, { CopilotToggle } from './components/AICopilot.jsx';
+import AIAdvanced from './pages/AIAdvanced.jsx';
+import GoogleCallback from './pages/GoogleCallback.jsx';
+import WebScraper from './components/WebScraper.jsx';
+import SEOTools from './components/SEOTools.jsx';
+import CodingQuestions from './components/CodingQuestions.jsx';
 
 
 function RequireAuth({ children }) {
@@ -60,8 +65,7 @@ function RequireAuth({ children }) {
 }
 
 function RequireVerified({ children }) {
-  const { user } = useAuth();
-  if (user && !user.emailVerified) return <Navigate to="/verify-email" />;
+  // Temporarily disabled email verification requirement
   return children;
 }
 
@@ -138,7 +142,7 @@ function App() {
         <Route path="/recruiter" element={<RequireAuth><AuthShell><RecruiterDashboard /></AuthShell></RequireAuth>} />
         <Route path="/portfolio" element={<RequireAuth><AuthShell><PortfolioBuilder /></AuthShell></RequireAuth>} />
         <Route path="/job-tracker" element={<RequireAuth><AuthShell><JobTracker /></AuthShell></RequireAuth>} />
-        <Route path="/interview" element={<RequireAuth><AuthShell><InterviewSimulator /></AuthShell></RequireAuth>} />
+        <Route path="/interview-simulator" element={<RequireAuth><AuthShell><InterviewSimulator /></AuthShell></RequireAuth>} />
         <Route path="/projects" element={<RequireAuth><AuthShell><ProjectFinder /></AuthShell></RequireAuth>} />
         <Route path="/analytics" element={<RequireAuth><AuthShell><AnalyticsCenter /></AuthShell></RequireAuth>} />
         <Route path="/career-dna" element={<RequireAuth><AuthShell><CareerDNA /></AuthShell></RequireAuth>} />
@@ -160,6 +164,11 @@ function App() {
         <Route path="/salary-negotiation" element={<RequireAuth><AuthShell><SalaryNegotiation /></AuthShell></RequireAuth>} />
         <Route path="/ai-agents" element={<RequireAuth><AuthShell><MultiAIAgents /></AuthShell></RequireAuth>} />
         <Route path="/career-lab" element={<RequireAuth><AuthShell><CareerLab /></AuthShell></RequireAuth>} />
+        <Route path="/ai-advanced" element={<RequireAuth><AuthShell><AIAdvanced /></AuthShell></RequireAuth>} />
+        <Route path="/web-scraper" element={<RequireAuth><AuthShell><WebScraper /></AuthShell></RequireAuth>} />
+        <Route path="/seo-tools" element={<RequireAuth><AuthShell><SEOTools /></AuthShell></RequireAuth>} />
+        <Route path="/coding-questions" element={<RequireAuth><AuthShell><CodingQuestions /></AuthShell></RequireAuth>} />
+        <Route path="/auth/google/callback" element={<GoogleCallback />} />
       </Routes>
     </ToastProvider>
   );

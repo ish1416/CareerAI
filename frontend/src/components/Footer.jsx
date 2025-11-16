@@ -1,26 +1,26 @@
 import { Link } from 'react-router-dom';
 import Logo from './Logo.jsx';
-import { Github, Twitter, Linkedin, Mail, Globe, Shield, FileText, Zap } from 'lucide-react';
+import { Github, Twitter, Linkedin, Mail, Zap } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="footer" role="contentinfo" style={{ 
+    <footer style={{ 
       background: 'var(--surface)', 
       borderTop: '1px solid var(--border)', 
-      padding: 'var(--space-8) 0 var(--space-4)' 
+      padding: 'var(--space-6) 0 var(--space-4)',
+      color: 'var(--text)'
     }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 var(--space-4)' }}>
-        {/* Main Footer Content */}
         <div style={{ 
           display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
-          gap: 'var(--space-8)', 
-          marginBottom: 'var(--space-8)' 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+          gap: 'var(--space-6)', 
+          marginBottom: 'var(--space-6)' 
         }}>
           {/* Brand Section */}
           <div style={{ maxWidth: '300px' }}>
             <div className="brand" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-4)' }}>
-              <Logo size={36} />
+              <Logo size={36} variant="accent" />
               <span className="brand-name gradient-text" style={{ fontSize: 'var(--text-2xl)', fontWeight: 'bold' }}>CareerAI</span>
             </div>
             <p className="muted" style={{ fontSize: 'var(--text-sm)', lineHeight: 1.6, marginBottom: 'var(--space-4)' }}>

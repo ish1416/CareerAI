@@ -23,17 +23,25 @@ export default function Verify() {
       setStatus('verifying');
       setMessage('Verifying your email…');
       try {
-        await api.get('/auth/verify-email', { params: { token } });
+        const response = await api.get('/auth/verify-email', { params: { token } });
         setStatus('success');
-        setMessage('Email verified successfully.');
+        setMessage(response.data.message || 'Email verified successfully.');
         if (user && typeof reloadUser === 'function') {
           await reloadUser();
-          setTimeout(() => navigate('/dashboard', { replace: true }), 600);
         }
+        setTimeout(() => navigate('/dashboard', { replace: true }), 1500);
       } catch (e) {
-        const msg = e?.response?.data?.error || 'Invalid or expired verification link.';
-        setStatus('error');
-        setMessage(msg);
+        const errorMsg = e?.response?.data?.error || 'Invalid or expired verification link.';
+        
+        // Handle already verified case as success
+        if (errorMsg.includes('already verified') || errorMsg.includes('already used')) {
+          setStatus('success');
+          setMessage('Email already verified. Redirecting to dashboard...');
+          setTimeout(() => navigate('/dashboard', { replace: true }), 1500);
+        } else {
+          setStatus('error');
+          setMessage(errorMsg);
+        }
       }
     };
     run();
@@ -83,7 +91,7 @@ export default function Verify() {
           }}>
             {getStatusIcon()}
           </div>
-          <Logo size={48} />
+          <Logo size={48} variant="accent" />
           <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: '700', margin: 'var(--space-3) 0 var(--space-2) 0' }}>
             Email Verification
           </h2>

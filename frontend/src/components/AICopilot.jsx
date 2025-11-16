@@ -47,7 +47,7 @@ export default function AICopilot({ isOpen, onToggle }) {
     const hasVisited = localStorage.getItem('careerai_visited');
     if (!hasVisited) {
       localStorage.setItem('careerai_visited', 'true');
-      setTimeout(() => onToggle(), 2000); // Auto-open after 2 seconds
+      setTimeout(() => onToggle(), 2000);
     }
   }, [onToggle]);
 
@@ -65,22 +65,25 @@ export default function AICopilot({ isOpen, onToggle }) {
     setIsLoading(true);
     
     try {
+      console.log('Sending AI request:', { message: input.trim() });
       const { data } = await api.post('/ai/chat', { message: input.trim() });
+      console.log('AI response received:', data);
       const botMessage = { 
         id: Date.now() + 1, 
         type: 'bot', 
         content: data.response,
-        actions: data.actions // Suggested actions
+        actions: data.actions
       };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
+      console.error('AI request failed:', error);
       const errorMessage = { 
         id: Date.now() + 1, 
         type: 'bot', 
-        content: 'Sorry, I encountered an error. Please try again.' 
+        content: `Connection error: ${error.response?.data?.message || error.message}` 
       };
       setMessages(prev => [...prev, errorMessage]);
-      showToast('Failed to get AI response', 'error');
+      showToast(`AI connection failed: ${error.response?.status || 'Network error'}`, 'error');
     } finally {
       setIsLoading(false);
     }
@@ -117,7 +120,8 @@ export default function AICopilot({ isOpen, onToggle }) {
       right: 'var(--space-4)',
       width: '400px',
       height: '600px',
-      background: 'var(--panel)',
+      background: 'var(--surface)',
+      backdropFilter: 'blur(10px)',
       border: '1px solid var(--border)',
       borderRadius: 'var(--radius-lg)',
       boxShadow: 'var(--shadow-xl)',
@@ -125,7 +129,6 @@ export default function AICopilot({ isOpen, onToggle }) {
       flexDirection: 'column',
       zIndex: 1000
     }}>
-      {/* Header */}
       <div style={{
         padding: 'var(--space-4)',
         borderBottom: '1px solid var(--border)',
@@ -153,7 +156,6 @@ export default function AICopilot({ isOpen, onToggle }) {
         </button>
       </div>
 
-      {/* Messages */}
       <div style={{
         flex: 1,
         padding: 'var(--space-3)',
@@ -240,7 +242,6 @@ export default function AICopilot({ isOpen, onToggle }) {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input */}
       <div style={{
         padding: 'var(--space-3)',
         borderTop: '1px solid var(--border)',
@@ -284,7 +285,6 @@ export default function AICopilot({ isOpen, onToggle }) {
   );
 }
 
-// Floating toggle button
 export function CopilotToggle({ onClick, hasUnread = false }) {
   return (
     <button

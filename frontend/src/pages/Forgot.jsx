@@ -27,7 +27,7 @@ export default function Forgot() {
       <div className="auth-wrap">
         <form onSubmit={onSubmit} className="card auth-card form" aria-label="Forgot password form">
           <div className="auth-header">
-            <Logo size={56} />
+            <Logo size={56} variant="accent" />
             <h2>Forgot Password</h2>
             <p className="sub">Well email you a reset link</p>
           </div>

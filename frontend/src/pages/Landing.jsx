@@ -2,16 +2,18 @@ import { Link } from 'react-router-dom';
 import Logo from '../components/Logo.jsx';
 import FeatureCard from '../components/FeatureCard.jsx';
 import FeatureShowcase from '../components/FeatureShowcase.jsx';
+import OceanEffects from '../components/OceanEffects.jsx';
 import { useEffect, useState } from 'react';
 import { 
   FileSearch, Gauge, Target, UploadCloud, Sparkles, Wand2, Rocket, UserCircle, Star, ChevronDown, 
   Briefcase, GraduationCap, Cpu, Zap, TrendingUp, Shield, Brain, Users, Globe, Video, 
   Calendar, MessageSquare, Award, BarChart3, Mic, Eye, Network, Building, Handshake,
   BookOpen, Trophy, Camera, Headphones, Bot, Compass, Lightbulb, Code, Palette,
-  Search, DollarSign, Megaphone, Link as LinkIcon, Layers, Gamepad2
+  Search, DollarSign, Megaphone, Link as LinkIcon, Layers, Gamepad2, Check
 } from 'lucide-react';
 import GradientLifeBuoy from '../components/GradientLifeBuoy.jsx';
 import Footer from '../components/Footer.jsx';
+import '../styles/landing.css';
 
 export default function Landing() {
   const [openFaq, setOpenFaq] = useState([false, false, false, false]);
@@ -43,194 +45,110 @@ export default function Landing() {
   }, []);
 
   return (
-    <div className="container" style={{ marginTop: '60px', padding: '0 24px', maxWidth: '100%', boxSizing: 'border-box' }}>
+    <div className="landing-container landing-page">
+      <OceanEffects />
       {/* Hero */}
-      <header style={{
-        minHeight: 'calc(100vh - 72px)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        background: 'var(--bg)',
-        padding: 'var(--space-8) var(--space-4)'
-      }}>
-        <div style={{
-          display: 'grid',
-          placeItems: 'center',
-          gap: 'var(--space-5)',
-          maxWidth: '1200px',
-          width: '100%'
-        }}>
-          <div style={{ display: 'grid', placeItems: 'center', gap: 'var(--space-4)' }}>
-            <Logo size={120} />
-            <div style={{ textAlign: 'center' }}>
-              <h1 style={{ 
-                margin: 0, 
-                fontSize: 'clamp(3rem, 8vw, 5.5rem)', 
-                lineHeight: 1.1,
-                fontWeight: 900,
-                letterSpacing: '-0.02em',
-                color: 'var(--text)'
-              }}>
+      <div className="aurora"></div>
+      <section className="hero-section animate-fade-in">
+        <div className="hero-content">
+          <div className="hero-header">
+            <Logo size={120} variant="accent" />
+            <div>
+              <h1 className="hero-title text-gradient theme-text">
                 Career AI
               </h1>
-              <div style={{
-                height: '4px',
-                width: '120px',
-                background: '#000000',
-                margin: 'var(--space-3) auto'
-              }} />
+              <div className="hero-divider" />
             </div>
-            <p style={{ 
-              marginTop: 'var(--space-3)', 
-              fontSize: 'var(--text-xl)', 
-              maxWidth: '750px',
-              lineHeight: 1.7,
-              color: 'var(--text-soft)',
-              fontWeight: 400
-            }}>
+            <p className="hero-description">
               The world's most comprehensive AI-powered career platform. Build resumes, develop skills, network professionally, and land your dream job with 32+ advanced features.
             </p>
           </div>
-          <div className="cta" style={{ marginTop: 'var(--space-6)', display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <Link className="btn cta gradient large" to="/register" style={{ minWidth: '220px' }}>
+          
+          <div className="hero-cta">
+            <Link className="btn btn-primary btn-xl hover-lift" to="/register">
               <Rocket size={20} />
               Start Free Today
             </Link>
-            <a className="btn secondary large" href="#features" style={{ minWidth: '180px', textDecoration: 'none' }}>
+            <a className="btn btn-ghost btn-xl" href="#features">
               <Eye size={20} />
               Explore Features
             </a>
           </div>
-          <div style={{ 
-            marginTop: 'var(--space-4)', 
-            fontSize: 'var(--text-sm)', 
-            color: 'var(--text-muted)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 'var(--space-2)',
-            flexWrap: 'wrap'
-          }}>
+          
+          <div className="hero-features">
             <span>🚀 32+ AI Features</span>
             <span>•</span>
             <span>🎯 Free Forever Plan</span>
             <span>•</span>
             <span>⚡ No Credit Card Required</span>
           </div>
-          <div className="hero-features" style={{
-            marginTop: 'var(--space-8)',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: 'var(--space-4)',
-            maxWidth: '1000px',
-            width: '100%'
-          }}>
-            <div className="feature-preview card elevated" style={{
-              background: 'var(--surface)',
-              padding: 'var(--space-5)',
-              borderRadius: 'var(--radius-lg)',
-              textAlign: 'left',
-              border: '1px solid var(--border)'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-3)' }}>
-                <div style={{
-                  width: '48px',
-                  height: '48px',
-                  background: '#000000',
-                  borderRadius: 0,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
+          
+          <div className="hero-preview-grid">
+            <div className="hero-preview-card hover-lift">
+              <div className="hero-preview-header">
+                <div className="hero-preview-icon">
                   <Sparkles size={24} color="white" />
                 </div>
-                <h3 style={{ margin: 0, fontSize: 'var(--text-lg)', fontWeight: 600 }}>AI-Powered Analysis</h3>
+                <h3 className="hero-preview-title">AI-Powered Analysis</h3>
               </div>
-              <p style={{ margin: 0, color: 'var(--text-soft)', fontSize: 'var(--text-sm)', lineHeight: 1.5 }}>
+              <p className="hero-preview-description">
                 Advanced AI analyzes your resume for ATS compatibility, keyword optimization, and provides actionable improvement suggestions.
               </p>
             </div>
             
-            <div className="feature-preview card elevated" style={{
-              background: 'var(--surface)',
-              padding: 'var(--space-5)',
-              borderRadius: 'var(--radius-lg)',
-              textAlign: 'left',
-              border: '1px solid var(--border)'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-3)' }}>
-                <div style={{
-                  width: '48px',
-                  height: '48px',
-                  background: '#333333',
-                  borderRadius: 0,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
+            <div className="hero-preview-card hover-lift">
+              <div className="hero-preview-header">
+                <div className="hero-preview-icon">
                   <Target size={24} color="white" />
                 </div>
-                <h3 style={{ margin: 0, fontSize: 'var(--text-lg)', fontWeight: 600 }}>Job Matching</h3>
+                <h3 className="hero-preview-title">Job Matching</h3>
               </div>
-              <p style={{ margin: 0, color: 'var(--text-soft)', fontSize: 'var(--text-sm)', lineHeight: 1.5 }}>
+              <p className="hero-preview-description">
                 Smart matching algorithm compares your profile with job requirements and provides personalized optimization strategies.
               </p>
             </div>
             
-            <div className="feature-preview card elevated" style={{
-              background: 'var(--surface)',
-              padding: 'var(--space-5)',
-              borderRadius: 'var(--radius-lg)',
-              textAlign: 'left',
-              border: '1px solid var(--border)'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-3)' }}>
-                <div style={{
-                  width: '48px',
-                  height: '48px',
-                  background: '#666666',
-                  borderRadius: 0,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
+            <div className="hero-preview-card hover-lift">
+              <div className="hero-preview-header">
+                <div className="hero-preview-icon">
                   <TrendingUp size={24} color="white" />
                 </div>
-                <h3 style={{ margin: 0, fontSize: 'var(--text-lg)', fontWeight: 600 }}>Track Progress</h3>
+                <h3 className="hero-preview-title">Track Progress</h3>
               </div>
-              <p style={{ margin: 0, color: 'var(--text-soft)', fontSize: 'var(--text-sm)', lineHeight: 1.5 }}>
+              <p className="hero-preview-description">
                 Comprehensive analytics dashboard tracks your career progress, skill development, and job search success metrics.
               </p>
             </div>
           </div>
         </div>
-      </header>
+      </section>
 
       {/* Platform Statistics */}
-      <section className="section" style={{ padding: 'var(--space-6) 0', background: '#000000', color: 'white' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--space-6)', textAlign: 'center' }}>
-          <div>
-            <div style={{ fontSize: 'var(--text-4xl)', fontWeight: 'bold', marginBottom: 'var(--space-2)' }}>32+</div>
-            <div style={{ fontSize: 'var(--text-lg)', opacity: 0.9 }}>AI-Powered Features</div>
-          </div>
-          <div>
-            <div style={{ fontSize: 'var(--text-4xl)', fontWeight: 'bold', marginBottom: 'var(--space-2)' }}>15+</div>
-            <div style={{ fontSize: 'var(--text-lg)', opacity: 0.9 }}>Resume Templates</div>
-          </div>
-          <div>
-            <div style={{ fontSize: 'var(--text-4xl)', fontWeight: 'bold', marginBottom: 'var(--space-2)' }}>98%</div>
-            <div style={{ fontSize: 'var(--text-lg)', opacity: 0.9 }}>ATS Compatibility</div>
-          </div>
-          <div>
-            <div style={{ fontSize: 'var(--text-4xl)', fontWeight: 'bold', marginBottom: 'var(--space-2)' }}>24/7</div>
-            <div style={{ fontSize: 'var(--text-lg)', opacity: 0.9 }}>AI Assistant Support</div>
+      <section className="stats-section">
+        <div className="container">
+          <div className="stats-grid">
+            <div className="stat-item">
+              <div className="stat-number">32+</div>
+              <div className="stat-label">AI-Powered Features</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-number">15+</div>
+              <div className="stat-label">Resume Templates</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-number">98%</div>
+              <div className="stat-label">ATS Compatibility</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-number">24/7</div>
+              <div className="stat-label">AI Assistant Support</div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* How to Use Platform */}
-      <section id="how-to-use" className="section" style={{ padding: 'var(--space-8) 0', background: 'var(--panel)' }}>
+      <section id="how-to-use" className="section" style={{ padding: 'var(--space-8) 0', background: 'var(--background)' }}>
         <div className="section-intro" style={{ textAlign: 'center', marginBottom: 'var(--space-8)' }}>
           <h2 className="section-title" style={{ fontSize: 'var(--text-4xl)', marginBottom: 'var(--space-3)' }}>How to Use CareerAI</h2>
           <p className="muted" style={{ fontSize: 'var(--text-lg)', maxWidth: '700px', margin: '0 auto var(--space-6)' }}>Your complete guide to leveraging our 32+ features for career success</p>
@@ -239,13 +157,13 @@ export default function Landing() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: 'var(--space-6)', marginBottom: 'var(--space-8)' }}>
           <div className="card shine" style={{ padding: 'var(--space-6)', textAlign: 'left' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-4)' }}>
-              <div style={{ width: '48px', height: '48px', background: 'var(--gradient-primary)', borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: '48px', height: '48px', background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)', borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Rocket size={24} color="white" />
               </div>
-              <h3 style={{ margin: 0, fontSize: 'var(--text-xl)', fontWeight: 600 }}>Core Features</h3>
+              <h3 style={{ margin: 0, fontSize: 'var(--text-xl)', fontWeight: 600, color: 'var(--text)' }}>Core Features</h3>
             </div>
-            <p style={{ color: 'var(--text-soft)', marginBottom: 'var(--space-3)', lineHeight: 1.6 }}>Start with our essential tools:</p>
-            <ul style={{ color: 'var(--text-soft)', fontSize: 'var(--text-sm)', lineHeight: 1.6, paddingLeft: 'var(--space-4)' }}>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--space-3)', lineHeight: 1.6 }}>Start with our essential tools:</p>
+            <ul style={{ color: 'var(--text-secondary)', fontSize: 'var(--text-sm)', lineHeight: 1.6, paddingLeft: 'var(--space-4)' }}>
               <li>Build resumes with our drag-and-drop editor</li>
               <li>Get AI analysis and optimization suggestions</li>
               <li>Match your resume to specific job descriptions</li>
@@ -257,13 +175,13 @@ export default function Landing() {
           
           <div className="card shine" style={{ padding: 'var(--space-6)', textAlign: 'left' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-4)' }}>
-              <div style={{ width: '48px', height: '48px', background: 'var(--gradient-secondary)', borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: '48px', height: '48px', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <TrendingUp size={24} color="white" />
               </div>
-              <h3 style={{ margin: 0, fontSize: 'var(--text-xl)', fontWeight: 600 }}>Growth & Learning</h3>
+              <h3 style={{ margin: 0, fontSize: 'var(--text-xl)', fontWeight: 600, color: 'var(--text)' }}>Growth & Learning</h3>
             </div>
-            <p style={{ color: 'var(--text-soft)', marginBottom: 'var(--space-3)', lineHeight: 1.6 }}>Develop your skills and network:</p>
-            <ul style={{ color: 'var(--text-soft)', fontSize: 'var(--text-sm)', lineHeight: 1.6, paddingLeft: 'var(--space-4)' }}>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--space-3)', lineHeight: 1.6 }}>Develop your skills and network:</p>
+            <ul style={{ color: 'var(--text-secondary)', fontSize: 'var(--text-sm)', lineHeight: 1.6, paddingLeft: 'var(--space-4)' }}>
               <li>Take AI-recommended courses and skill tests</li>
               <li>Join professional communities and forums</li>
               <li>Earn badges and showcase your expertise</li>
@@ -278,10 +196,10 @@ export default function Landing() {
               <div style={{ width: '48px', height: '48px', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Calendar size={24} color="white" />
               </div>
-              <h3 style={{ margin: 0, fontSize: 'var(--text-xl)', fontWeight: 600 }}>Tools & Tracking</h3>
+              <h3 style={{ margin: 0, fontSize: 'var(--text-xl)', fontWeight: 600, color: 'var(--text)' }}>Tools & Tracking</h3>
             </div>
-            <p style={{ color: 'var(--text-soft)', marginBottom: 'var(--space-3)', lineHeight: 1.6 }}>Manage your job search effectively:</p>
-            <ul style={{ color: 'var(--text-soft)', fontSize: 'var(--text-sm)', lineHeight: 1.6, paddingLeft: 'var(--space-4)' }}>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--space-3)', lineHeight: 1.6 }}>Manage your job search effectively:</p>
+            <ul style={{ color: 'var(--text-secondary)', fontSize: 'var(--text-sm)', lineHeight: 1.6, paddingLeft: 'var(--space-4)' }}>
               <li>Build stunning online portfolios</li>
               <li>Track job applications with CRM-style tools</li>
               <li>Practice interviews with AI simulation</li>
@@ -293,13 +211,13 @@ export default function Landing() {
           
           <div className="card shine" style={{ padding: 'var(--space-6)', textAlign: 'left' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-4)' }}>
-              <div style={{ width: '48px', height: '48px', background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)', borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: '48px', height: '48px', background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)', borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Brain size={24} color="white" />
               </div>
-              <h3 style={{ margin: 0, fontSize: 'var(--text-xl)', fontWeight: 600 }}>AI Advanced</h3>
+              <h3 style={{ margin: 0, fontSize: 'var(--text-xl)', fontWeight: 600, color: 'var(--text)' }}>AI Advanced</h3>
             </div>
-            <p style={{ color: 'var(--text-soft)', marginBottom: 'var(--space-3)', lineHeight: 1.6 }}>Leverage cutting-edge AI technology:</p>
-            <ul style={{ color: 'var(--text-soft)', fontSize: 'var(--text-sm)', lineHeight: 1.6, paddingLeft: 'var(--space-4)' }}>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--space-3)', lineHeight: 1.6 }}>Leverage cutting-edge AI technology:</p>
+            <ul style={{ color: 'var(--text-secondary)', fontSize: 'var(--text-sm)', lineHeight: 1.6, paddingLeft: 'var(--space-4)' }}>
               <li>Discover your unique Career DNA profile</li>
               <li>Find Career Twins with similar backgrounds</li>
               <li>Explore global job opportunities</li>
@@ -311,7 +229,7 @@ export default function Landing() {
         </div>
         
         <div style={{ textAlign: 'center' }}>
-          <Link className="btn cta gradient large" to="/register" style={{ minWidth: '200px' }}>
+          <Link className="btn btn-primary btn-xl" to="/register" style={{ minWidth: '200px' }}>
             <Rocket size={20} />
             Get Started Free
           </Link>
@@ -323,25 +241,27 @@ export default function Landing() {
       <FeatureShowcase />
 
       {/* Core Features */}
-      <section id="features" className="section" style={{ padding: 'var(--space-8) 0' }}>
-        <div className="section-intro" style={{ textAlign: 'center', marginBottom: 'var(--space-8)' }}>
-          <h2 className="section-title" style={{ fontSize: 'var(--text-4xl)', marginBottom: 'var(--space-3)' }}>Core Features</h2>
-          <p className="muted" style={{ fontSize: 'var(--text-lg)', maxWidth: '600px', margin: '0 auto var(--space-4)' }}>Essential tools to build, analyze, and optimize your resume with AI-powered insights</p>
-          <div style={{ height: '3px', width: '80px', background: 'var(--gradient-primary)', borderRadius: '2px', margin: '0 auto' }} />
-        </div>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--space-6)', marginBottom: 'var(--space-8)' }}>
-          <FeatureCard icon={UploadCloud} title="Resume Builder" description="Create professional resumes with our intuitive drag-and-drop builder. Choose from multiple templates and customize every detail." accent="var(--accent-blue)" />
-          <FeatureCard icon={Sparkles} title="AI Analysis" description="Get instant AI-powered feedback on content, structure, and ATS compatibility with actionable improvement suggestions." accent="var(--info)" />
-          <FeatureCard icon={Target} title="Job Matching" description="Compare your resume against job descriptions and receive tailored optimization recommendations for better matches." accent="var(--success)" />
-          <FeatureCard icon={Gauge} title="ATS Optimization" description="Ensure your resume passes Applicant Tracking Systems with keyword analysis and formatting optimization." accent="var(--warning)" />
-          <FeatureCard icon={MessageSquare} title="Cover Letters" description="Generate personalized cover letters that complement your resume and match specific job requirements." accent="var(--error)" />
-          <FeatureCard icon={TrendingUp} title="Career Insights" description="Track your progress over time with detailed analytics, scoring history, and improvement recommendations." accent="var(--accent-blue)" />
+      <section id="features" className="landing-section">
+        <div className="container">
+          <div className="section-intro">
+            <h2 className="section-title">Core Features</h2>
+            <p className="section-description">Essential tools to build, analyze, and optimize your resume with AI-powered insights</p>
+            <div className="section-divider" />
+          </div>
+          
+          <div className="feature-grid">
+            <FeatureCard icon={UploadCloud} title="Resume Builder" description="Create professional resumes with our intuitive drag-and-drop builder. Choose from multiple templates and customize every detail." accent="var(--primary)" />
+            <FeatureCard icon={Sparkles} title="AI Analysis" description="Get instant AI-powered feedback on content, structure, and ATS compatibility with actionable improvement suggestions." accent="var(--secondary)" />
+            <FeatureCard icon={Target} title="Job Matching" description="Compare your resume against job descriptions and receive tailored optimization recommendations for better matches." accent="var(--success)" />
+            <FeatureCard icon={Gauge} title="ATS Optimization" description="Ensure your resume passes Applicant Tracking Systems with keyword analysis and formatting optimization." accent="var(--warning)" />
+            <FeatureCard icon={MessageSquare} title="Cover Letters" description="Generate personalized cover letters that complement your resume and match specific job requirements." accent="var(--error)" />
+            <FeatureCard icon={TrendingUp} title="Career Insights" description="Track your progress over time with detailed analytics, scoring history, and improvement recommendations." accent="var(--accent)" />
+          </div>
         </div>
       </section>
 
       {/* Growth & Learning */}
-      <section id="growth-learning" className="section" style={{ padding: 'var(--space-8) 0', background: 'var(--muted)' }}>
+      <section id="growth-learning" className="section" style={{ padding: 'var(--space-8) 0', background: 'var(--background)' }}>
         <div className="section-intro" style={{ textAlign: 'center', marginBottom: 'var(--space-8)' }}>
           <h2 className="section-title" style={{ fontSize: 'var(--text-4xl)', marginBottom: 'var(--space-3)' }}>Growth & Learning</h2>
           <p className="muted" style={{ fontSize: 'var(--text-lg)', maxWidth: '600px', margin: '0 auto var(--space-4)' }}>Develop your skills and advance your career with gamified learning and professional networking</p>
@@ -377,7 +297,7 @@ export default function Landing() {
       </section>
 
       {/* AI Advanced Features */}
-      <section id="ai-advanced" className="section" style={{ padding: 'var(--space-8) 0', background: 'var(--muted)' }}>
+      <section id="ai-advanced" className="section" style={{ padding: 'var(--space-8) 0', background: 'var(--background)' }}>
         <div className="section-intro" style={{ textAlign: 'center', marginBottom: 'var(--space-8)' }}>
           <h2 className="section-title" style={{ fontSize: 'var(--text-4xl)', marginBottom: 'var(--space-3)' }}>AI Advanced Features</h2>
           <p className="muted" style={{ fontSize: 'var(--text-lg)', maxWidth: '600px', margin: '0 auto var(--space-4)' }}>Cutting-edge AI technology for personalized career guidance and next-generation job search</p>
@@ -418,339 +338,204 @@ export default function Landing() {
       </section>
 
       {/* How it works */}
-      <section id="how" className="section" style={{ padding: 'var(--space-8) 0' }}>
-        <div style={{ textAlign: 'center', marginBottom: 'var(--space-8)' }}>
-          <h2 style={{ fontSize: 'var(--text-4xl)', marginBottom: 'var(--space-3)', fontWeight: '800' }}>How It Works</h2>
-          <p style={{ fontSize: 'var(--text-lg)', maxWidth: '600px', margin: '0 auto', color: 'var(--text-soft)' }}>Transform your resume in 4 simple steps</p>
-        </div>
-        
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 'var(--space-8)',
-          maxWidth: '800px',
-          margin: '0 auto'
-        }}>
-          {/* Step 1 */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)' }}>
-            <div style={{
-              minWidth: '80px',
-              height: '80px',
-              background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-              borderRadius: '20px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 10px 30px rgba(240, 147, 251, 0.3)'
-            }}>
-              <UploadCloud size={40} color="white" />
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-2)' }}>
-                <span style={{
-                  background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-                  color: 'white',
-                  width: '24px',
-                  height: '24px',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '12px',
-                  fontWeight: 'bold'
-                }}>1</span>
-                <h3 style={{ margin: 0, fontSize: 'var(--text-2xl)', fontWeight: '700' }}>Upload or Build</h3>
-              </div>
-              <p style={{ margin: 0, color: 'var(--text-soft)', fontSize: 'var(--text-lg)', lineHeight: 1.6 }}>Start with an existing resume file or create sections from scratch using our intuitive drag-and-drop builder.</p>
-            </div>
+      <section id="how" className="landing-section section-alt">
+        <div className="container">
+          <div className="section-intro">
+            <h2 className="section-title">How It Works</h2>
+            <p className="section-description">Transform your resume in 4 simple steps</p>
+            <div className="section-divider" />
           </div>
+          
+          <div className="how-it-works">
+            {/* Step 1 */}
+            <div className="step-item">
+              <div className="step-icon step-icon-1">
+                <UploadCloud size={40} color="white" />
+              </div>
+              <div className="step-content">
+                <div className="step-header">
+                  <span className="step-number" style={{ background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' }}>1</span>
+                  <h3 className="step-title">Upload or Build</h3>
+                </div>
+                <p className="step-description">Start with an existing resume file or create sections from scratch using our intuitive drag-and-drop builder.</p>
+              </div>
+            </div>
 
-          {/* Step 2 */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)', flexDirection: 'row-reverse' }}>
-            <div style={{
-              minWidth: '80px',
-              height: '80px',
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              borderRadius: '20px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 10px 30px rgba(102, 126, 234, 0.3)'
-            }}>
-              <Sparkles size={40} color="white" />
-            </div>
-            <div style={{ flex: 1, textAlign: 'right' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-2)', justifyContent: 'flex-end' }}>
-                <h3 style={{ margin: 0, fontSize: 'var(--text-2xl)', fontWeight: '700' }}>Analyze with AI</h3>
-                <span style={{
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                  color: 'white',
-                  width: '24px',
-                  height: '24px',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '12px',
-                  fontWeight: 'bold'
-                }}>2</span>
+            
+            {/* Step 2 */}
+            <div className="step-item">
+              <div className="step-icon step-icon-2">
+                <Sparkles size={40} color="white" />
               </div>
-              <p style={{ margin: 0, color: 'var(--text-soft)', fontSize: 'var(--text-lg)', lineHeight: 1.6 }}>Get intelligent rewrite suggestions, tone improvements, and detailed ATS compatibility scoring from our AI engine.</p>
+              <div className="step-content">
+                <div className="step-header">
+                  <span className="step-number" style={{ background: 'linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)' }}>2</span>
+                  <h3 className="step-title">Analyze with AI</h3>
+                </div>
+                <p className="step-description">Get intelligent rewrite suggestions, tone improvements, and detailed ATS compatibility scoring from our AI engine.</p>
+              </div>
             </div>
-          </div>
 
-          {/* Step 3 */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)' }}>
-            <div style={{
-              minWidth: '80px',
-              height: '80px',
-              background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-              borderRadius: '20px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 10px 30px rgba(79, 172, 254, 0.3)'
-            }}>
-              <Wand2 size={40} color="white" />
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-2)' }}>
-                <span style={{
-                  background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-                  color: 'white',
-                  width: '24px',
-                  height: '24px',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '12px',
-                  fontWeight: 'bold'
-                }}>3</span>
-                <h3 style={{ margin: 0, fontSize: 'var(--text-2xl)', fontWeight: '700' }}>Optimize for ATS</h3>
+            
+            {/* Step 3 */}
+            <div className="step-item">
+              <div className="step-icon step-icon-3">
+                <Wand2 size={40} color="white" />
               </div>
-              <p style={{ margin: 0, color: 'var(--text-soft)', fontSize: 'var(--text-lg)', lineHeight: 1.6 }}>Identify missing keywords, improve ATS compatibility, and boost your resume's visibility to recruiters and hiring managers.</p>
+              <div className="step-content">
+                <div className="step-header">
+                  <span className="step-number" style={{ background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)' }}>3</span>
+                  <h3 className="step-title">Optimize for ATS</h3>
+                </div>
+                <p className="step-description">Identify missing keywords, improve ATS compatibility, and boost your resume's visibility to recruiters and hiring managers.</p>
+              </div>
             </div>
-          </div>
 
-          {/* Step 4 */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)', flexDirection: 'row-reverse' }}>
-            <div style={{
-              minWidth: '80px',
-              height: '80px',
-              background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-              borderRadius: '20px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 10px 30px rgba(67, 233, 123, 0.3)'
-            }}>
-              <Rocket size={40} color="white" />
-            </div>
-            <div style={{ flex: 1, textAlign: 'right' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-2)', justifyContent: 'flex-end' }}>
-                <h3 style={{ margin: 0, fontSize: 'var(--text-2xl)', fontWeight: '700' }}>Export & Apply</h3>
-                <span style={{
-                  background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-                  color: 'white',
-                  width: '24px',
-                  height: '24px',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '12px',
-                  fontWeight: 'bold'
-                }}>4</span>
+            
+            {/* Step 4 */}
+            <div className="step-item">
+              <div className="step-icon step-icon-4">
+                <Rocket size={40} color="white" />
               </div>
-              <p style={{ margin: 0, color: 'var(--text-soft)', fontSize: 'var(--text-lg)', lineHeight: 1.6 }}>Download your polished resume in multiple formats (PDF, DOCX) and start applying to your dream jobs with confidence.</p>
+              <div className="step-content">
+                <div className="step-header">
+                  <span className="step-number" style={{ background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' }}>4</span>
+                  <h3 className="step-title">Export & Apply</h3>
+                </div>
+                <p className="step-description">Download your polished resume in multiple formats (PDF, DOCX) and start applying to your dream jobs with confidence.</p>
+              </div>
             </div>
           </div>
-        </div>
-        
-        <div style={{ textAlign: 'center', marginTop: 'var(--space-8)' }}>
-          <Link className="btn cta gradient large" to="/builder" style={{ minWidth: '200px' }}>
-            <Rocket size={20} />
-            Start Building Now
-          </Link>
+          
+          <div className="section-intro">
+            <Link className="btn btn-primary btn-xl hover-lift" to="/builder">
+              <Rocket size={20} />
+              Start Building Now
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="section" style={{ padding: 'var(--space-8) 0', background: 'var(--bg-subtle)' }}>
-        <div style={{ textAlign: 'center', marginBottom: 'var(--space-8)' }}>
-          <h2 style={{ fontSize: 'var(--text-4xl)', marginBottom: 'var(--space-3)', fontWeight: '800' }}>Simple, Transparent Pricing</h2>
-          <p style={{ fontSize: 'var(--text-lg)', maxWidth: '600px', margin: '0 auto', color: 'var(--text-soft)' }}>Choose the perfect plan for your career journey</p>
-        </div>
-        
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--space-6)', maxWidth: '1000px', margin: '0 auto', flexWrap: 'wrap' }}>
-          {/* Free Plan */}
-          <div style={{
-            background: 'var(--surface)',
-            border: '1px solid var(--border)',
-            borderRadius: '16px',
-            padding: 'var(--space-6)',
-            width: '300px',
-            textAlign: 'center'
-          }}>
-            <h3 style={{ fontSize: 'var(--text-2xl)', fontWeight: '700', marginBottom: 'var(--space-2)' }}>Free</h3>
-            <div style={{ fontSize: '48px', fontWeight: '800', color: 'var(--text)', marginBottom: 'var(--space-4)' }}>₹0</div>
-            <div style={{ textAlign: 'left', marginBottom: 'var(--space-6)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                <span style={{ color: '#10b981', fontSize: '16px' }}>✓</span>
-                <span style={{ fontSize: 'var(--text-sm)' }}>Resume Builder</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                <span style={{ color: '#10b981', fontSize: '16px' }}>✓</span>
-                <span style={{ fontSize: 'var(--text-sm)' }}>Basic AI Analysis</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                <span style={{ color: '#10b981', fontSize: '16px' }}>✓</span>
-                <span style={{ fontSize: 'var(--text-sm)' }}>5 Templates</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                <span style={{ color: '#10b981', fontSize: '16px' }}>✓</span>
-                <span style={{ fontSize: 'var(--text-sm)' }}>PDF Export</span>
-              </div>
-            </div>
-            <Link to="/register" style={{
-              display: 'block',
-              width: '100%',
-              padding: '12px 24px',
-              background: 'var(--surface)',
-              border: '1px solid var(--border)',
-              borderRadius: '8px',
-              textDecoration: 'none',
-              color: 'var(--text)',
-              fontWeight: '500',
-              textAlign: 'center',
-              transition: 'all 0.2s'
-            }}>Get Started</Link>
+      <section id="pricing" className="landing-section section-alt">
+        <div className="container">
+          <div className="section-intro">
+            <h2 className="section-title">Simple, Transparent Pricing</h2>
+            <p className="section-description">Choose the perfect plan for your career journey</p>
+            <div className="section-divider" />
           </div>
+          
+          <div className="pricing-grid">
+            {/* Free Plan */}
+            <div className="pricing-card hover-lift">
+              <h3 className="pricing-title">Free</h3>
+              <div className="pricing-price">₹0</div>
+              <div className="pricing-period">forever</div>
+              <div className="pricing-features">
+                <div className="pricing-feature">
+                  <Check className="pricing-check" size={16} />
+                  <span>Resume Builder</span>
+                </div>
+                <div className="pricing-feature">
+                  <Check className="pricing-check" size={16} />
+                  <span>Basic AI Analysis</span>
+                </div>
+                <div className="pricing-feature">
+                  <Check className="pricing-check" size={16} />
+                  <span>5 Templates</span>
+                </div>
+                <div className="pricing-feature">
+                  <Check className="pricing-check" size={16} />
+                  <span>PDF Export</span>
+                </div>
+              </div>
+              <Link to="/register" className="btn btn-ghost">
+                Get Started
+              </Link>
+            </div>
 
-          {/* Pro Plan */}
-          <div style={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            border: 'none',
-            borderRadius: '16px',
-            padding: 'var(--space-6)',
-            width: '300px',
-            textAlign: 'center',
-            color: 'white',
-            position: 'relative',
-            transform: 'scale(1.05)',
-            boxShadow: '0 20px 40px rgba(102, 126, 234, 0.3)'
-          }}>
-            <div style={{
-              position: 'absolute',
-              top: '-12px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              background: 'white',
-              color: '#667eea',
-              padding: '4px 16px',
-              borderRadius: '12px',
-              fontSize: '12px',
-              fontWeight: 'bold'
-            }}>POPULAR</div>
-            <h3 style={{ fontSize: 'var(--text-2xl)', fontWeight: '700', marginBottom: 'var(--space-2)', color: 'white' }}>Pro</h3>
-            <div style={{ fontSize: '48px', fontWeight: '800', marginBottom: 'var(--space-1)' }}>₹499</div>
-            <div style={{ fontSize: 'var(--text-sm)', opacity: 0.8, marginBottom: 'var(--space-4)' }}>per month</div>
-            <div style={{ textAlign: 'left', marginBottom: 'var(--space-6)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                <span style={{ fontSize: '16px' }}>✓</span>
-                <span style={{ fontSize: 'var(--text-sm)' }}>Everything in Free</span>
+            {/* Pro Plan */}
+            <div className="pricing-card pricing-card-popular">
+              <div className="pricing-badge">POPULAR</div>
+              <h3 className="pricing-title">Pro</h3>
+              <div className="pricing-price">₹499</div>
+              <div className="pricing-period">per month</div>
+              <div className="pricing-features">
+                <div className="pricing-feature">
+                  <Check className="pricing-check" size={16} />
+                  <span>Everything in Free</span>
+                </div>
+                <div className="pricing-feature">
+                  <Check className="pricing-check" size={16} />
+                  <span>Advanced AI Analysis</span>
+                </div>
+                <div className="pricing-feature">
+                  <Check className="pricing-check" size={16} />
+                  <span>15+ Premium Templates</span>
+                </div>
+                <div className="pricing-feature">
+                  <Check className="pricing-check" size={16} />
+                  <span>Unlimited Downloads</span>
+                </div>
+                <div className="pricing-feature">
+                  <Check className="pricing-check" size={16} />
+                  <span>Cover Letter Generator</span>
+                </div>
+                <div className="pricing-feature">
+                  <Check className="pricing-check" size={16} />
+                  <span>Priority Support</span>
+                </div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                <span style={{ fontSize: '16px' }}>✓</span>
-                <span style={{ fontSize: 'var(--text-sm)' }}>Advanced AI Analysis</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                <span style={{ fontSize: '16px' }}>✓</span>
-                <span style={{ fontSize: 'var(--text-sm)' }}>15+ Premium Templates</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                <span style={{ fontSize: '16px' }}>✓</span>
-                <span style={{ fontSize: 'var(--text-sm)' }}>Unlimited Downloads</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                <span style={{ fontSize: '16px' }}>✓</span>
-                <span style={{ fontSize: 'var(--text-sm)' }}>Cover Letter Generator</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                <span style={{ fontSize: '16px' }}>✓</span>
-                <span style={{ fontSize: 'var(--text-sm)' }}>Priority Support</span>
-              </div>
+              <Link to="/pricing" className="btn" style={{ background: 'var(--text-inverse)', color: 'var(--primary)' }}>
+                Upgrade to Pro
+              </Link>
             </div>
-            <Link to="/pricing" style={{
-              display: 'block',
-              width: '100%',
-              padding: '12px 24px',
-              background: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              textDecoration: 'none',
-              color: '#667eea',
-              fontWeight: '600',
-              textAlign: 'center',
-              transition: 'all 0.2s'
-            }}>Upgrade to Pro</Link>
-          </div>
 
-          {/* Enterprise Plan */}
-          <div style={{
-            background: 'var(--surface)',
-            border: '1px solid var(--border)',
-            borderRadius: '16px',
-            padding: 'var(--space-6)',
-            width: '300px',
-            textAlign: 'center'
-          }}>
-            <h3 style={{ fontSize: 'var(--text-2xl)', fontWeight: '700', marginBottom: 'var(--space-2)' }}>Enterprise</h3>
-            <div style={{ fontSize: '48px', fontWeight: '800', color: 'var(--text)', marginBottom: 'var(--space-4)' }}>Custom</div>
-            <div style={{ textAlign: 'left', marginBottom: 'var(--space-6)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                <span style={{ color: '#f59e0b', fontSize: '16px' }}>✓</span>
-                <span style={{ fontSize: 'var(--text-sm)' }}>Everything in Pro</span>
+            {/* Enterprise Plan */}
+            <div className="pricing-card hover-lift">
+              <h3 className="pricing-title">Enterprise</h3>
+              <div className="pricing-price">Custom</div>
+              <div className="pricing-period">contact us</div>
+              <div className="pricing-features">
+                <div className="pricing-feature">
+                  <Check className="pricing-check" size={16} style={{ color: 'var(--warning)' }} />
+                  <span>Everything in Pro</span>
+                </div>
+                <div className="pricing-feature">
+                  <Check className="pricing-check" size={16} style={{ color: 'var(--warning)' }} />
+                  <span>Team Management</span>
+                </div>
+                <div className="pricing-feature">
+                  <Check className="pricing-check" size={16} style={{ color: 'var(--warning)' }} />
+                  <span>Custom Branding</span>
+                </div>
+                <div className="pricing-feature">
+                  <Check className="pricing-check" size={16} style={{ color: 'var(--warning)' }} />
+                  <span>API Access</span>
+                </div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                <span style={{ color: '#f59e0b', fontSize: '16px' }}>✓</span>
-                <span style={{ fontSize: 'var(--text-sm)' }}>Team Management</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                <span style={{ color: '#f59e0b', fontSize: '16px' }}>✓</span>
-                <span style={{ fontSize: 'var(--text-sm)' }}>Custom Branding</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                <span style={{ color: '#f59e0b', fontSize: '16px' }}>✓</span>
-                <span style={{ fontSize: 'var(--text-sm)' }}>API Access</span>
-              </div>
+              <Link to="/pricing" className="btn btn-ghost">
+                Contact Sales
+              </Link>
             </div>
-            <Link to="/pricing" style={{
-              display: 'block',
-              width: '100%',
-              padding: '12px 24px',
-              background: 'var(--surface)',
-              border: '1px solid var(--border)',
-              borderRadius: '8px',
-              textDecoration: 'none',
-              color: 'var(--text)',
-              fontWeight: '500',
-              textAlign: 'center',
-              transition: 'all 0.2s'
-            }}>Contact Sales</Link>
           </div>
-        </div>
-        
-        <div style={{ textAlign: 'center', marginTop: 'var(--space-8)' }}>
-          <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>All plans include 14-day free trial • No credit card required</p>
+          
+          <div className="section-intro">
+            <p className="section-description" style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>All plans include 14-day free trial • No credit card required</p>
+          </div>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section id="testimonials" className="section">
-        <h3>Testimonials</h3>
-        <div className="grid">
+      <section id="testimonials" className="landing-section">
+        <div className="container">
+          <div className="section-intro">
+            <h2 className="section-title">What Our Users Say</h2>
+            <p className="section-description">Join thousands of professionals who've transformed their careers with CareerAI</p>
+            <div className="section-divider" />
+          </div>
+          
+          <div className="testimonials-grid">
           <div className="card shine">
             <div className="profile" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <UserCircle size={36} color="var(--accent-blue)" />
@@ -784,20 +569,27 @@ export default function Landing() {
             </div>
             <p>“Loved the clean UI and smart recommendations.”</p>
           </div>
+          </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="section">
-        <h3>FAQ</h3>
-        <div className="faq">
+      <section id="faq" className="landing-section section-alt">
+        <div className="container">
+          <div className="section-intro">
+            <h2 className="section-title">Frequently Asked Questions</h2>
+            <p className="section-description">Everything you need to know about CareerAI</p>
+            <div className="section-divider" />
+          </div>
+          
+          <div className="faq-list">
           {[
             { q: 'Is OCR included?', a: 'Yes. Scanned PDFs are handled with client-side OCR fallback.' },
             { q: 'Do I need a card to start?', a: 'No. Free plan requires no payment and offers basic feedback.' },
             { q: 'Can I cancel anytime?', a: 'Yes. Subscriptions are flexible; cancel anytime from settings.' },
             { q: 'Is dark mode available?', a: 'Yes. Toggle in the navbar to switch themes.' },
           ].map((item, i) => (
-            <div key={i} className={`faq-item card shine ${openFaq[i] ? 'open' : ''}`}>
+            <div key={i} className={`faq-item card ${openFaq[i] ? 'open' : ''}`}>
               <button
                 className="faq-question"
                 aria-expanded={openFaq[i]}
@@ -819,23 +611,25 @@ export default function Landing() {
               </div>
             </div>
           ))}
+          </div>
         </div>
       </section>
 
       {/* Contact */}
-      <section id="contact" className="section" style={{ padding: 'var(--space-8) 0' }}>
-        <div className="section-intro" style={{ textAlign: 'center', marginBottom: 'var(--space-8)' }}>
-          <h2 className="section-title" style={{ fontSize: 'var(--text-4xl)', marginBottom: 'var(--space-3)' }}>Get in Touch</h2>
-          <p className="muted" style={{ fontSize: 'var(--text-lg)', maxWidth: '600px', margin: '0 auto var(--space-4)' }}>Have questions about CareerAI? We're here to help you succeed in your career journey.</p>
-          <div style={{ height: '3px', width: '80px', background: 'var(--gradient-primary)', borderRadius: '2px', margin: '0 auto' }} />
-        </div>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: 'var(--space-8)', maxWidth: '1200px', margin: '0 auto' }}>
-          <div className="card shine" style={{ padding: 'var(--space-6)', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '400px' }}>
-            <Logo size={300} pulse />
+      <section id="contact" className="landing-section">
+        <div className="container">
+          <div className="section-intro">
+            <h2 className="section-title">Get in Touch</h2>
+            <p className="section-description">Have questions about CareerAI? We're here to help you succeed in your career journey.</p>
+            <div className="section-divider" />
           </div>
-          <form className="card" style={{ padding: 'var(--space-6)' }} onSubmit={handleContactSubmit} noValidate>
-            <div className="form-row two">
+          
+          <div className="contact-grid">
+            <div className="card hover-lift contact-visual">
+              <Logo size={300} pulse variant="accent" />
+            </div>
+            <form className="card contact-form" onSubmit={handleContactSubmit} noValidate>
+              <div className="form-row form-row-two">
               <div className="form-field">
                 <label htmlFor="contact-name">Name</label>
                 <input
@@ -886,7 +680,7 @@ export default function Landing() {
               </div>
             </div>
             <div className="form-actions">
-              <button type="submit" className="btn cta gradient" disabled={contactStatus.sending}>
+              <button type="submit" className="btn btn-primary" disabled={contactStatus.sending}>
                 {contactStatus.sending ? 'Sending...' : 'Send Message'}
               </button>
               <span className="form-status" aria-live="polite">
@@ -895,6 +689,7 @@ export default function Landing() {
               </span>
             </div>
           </form>
+          </div>
         </div>
       </section>
 

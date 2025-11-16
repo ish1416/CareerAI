@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Bot, Play, Pause, Settings, MessageCircle, Briefcase, Calendar, Zap } from 'lucide-react';
 import api from '../utils/api.js';
+import BackButton from './BackButton.jsx';
 
 export default function CareerTwin() {
   const [twin, setTwin] = useState(null);
@@ -57,6 +58,7 @@ export default function CareerTwin() {
   if (!twin) {
     return (
       <div className="main-content">
+        <BackButton />
         <div style={{ textAlign: 'center', padding: 'var(--space-8)' }}>
           <Bot size={64} color="var(--primary)" style={{ margin: '0 auto var(--space-4)' }} />
           <h1>Career Twin</h1>
@@ -73,12 +75,13 @@ export default function CareerTwin() {
 
   return (
     <div className="main-content">
+      <BackButton />
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-6)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', textAlign: 'left' }}>
           <Bot size={32} color="var(--primary)" />
           <div>
-            <h1>Career Twin</h1>
-            <p style={{ color: 'var(--text-soft)' }}>AI Digital Clone - {twin.name}</p>
+            <h1 style={{ textAlign: 'left' }}>Career Twin</h1>
+            <p style={{ color: 'var(--text-soft)', textAlign: 'left' }}>AI Digital Clone - {twin.name}</p>
           </div>
         </div>
         

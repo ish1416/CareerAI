@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Dna, TrendingUp, Target, Brain, Zap, Award, Calendar, ArrowRight } from 'lucide-react';
 import api from '../utils/api.js';
+import BackButton from './BackButton.jsx';
 
 export default function CareerDNA() {
   const [dnaData, setDnaData] = useState(null);
@@ -55,11 +56,12 @@ export default function CareerDNA() {
 
   return (
     <div className="main-content">
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-6)' }}>
+      <BackButton />
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-6)', textAlign: 'left' }}>
         <Dna size={32} color="var(--primary)" />
         <div>
-          <h1>Your Career DNA</h1>
-          <p style={{ color: 'var(--text-soft)' }}>Personal Career Genome Analysis</p>
+          <h1 style={{ textAlign: 'left' }}>Your Career DNA</h1>
+          <p style={{ color: 'var(--text-soft)', textAlign: 'left' }}>Personal Career Genome Analysis</p>
         </div>
       </div>
 
@@ -78,7 +80,7 @@ export default function CareerDNA() {
       </div>
 
       {/* Tabs */}
-      <div style={{ borderBottom: '1px solid var(--border)', marginBottom: 'var(--space-4)' }}>
+      <div style={{ borderBottom: '1px solid var(--border)', marginBottom: 'var(--space-4)', textAlign: 'left' }}>
         {['genome', 'evolution', 'predictions', 'roadmap'].map(tab => (
           <button
             key={tab}
@@ -102,7 +104,7 @@ export default function CareerDNA() {
       {activeTab === 'genome' && (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-6)' }}>
           <div>
-            <h3>Skill DNA</h3>
+            <h3 style={{ textAlign: 'left' }}>Skill DNA</h3>
             {dnaData.skills.map((skill, idx) => (
               <div key={idx} className="card" style={{ marginBottom: 'var(--space-3)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-2)' }}>
@@ -120,7 +122,7 @@ export default function CareerDNA() {
           </div>
           
           <div>
-            <h3>Personality Traits</h3>
+            <h3 style={{ textAlign: 'left' }}>Personality Traits</h3>
             <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
               {dnaData.traits.map((trait, idx) => (
                 <div key={idx} className="card">
@@ -143,7 +145,7 @@ export default function CareerDNA() {
 
       {activeTab === 'evolution' && (
         <div>
-          <h3>Skill Evolution Timeline</h3>
+          <h3 style={{ textAlign: 'left' }}>Skill Evolution Timeline</h3>
           <div className="card">
             <div style={{ display: 'grid', gap: 'var(--space-4)' }}>
               {dnaData.evolution.map((period, idx) => (
@@ -191,7 +193,7 @@ export default function CareerDNA() {
 
       {activeTab === 'roadmap' && (
         <div>
-          <h3>Personalized Career Roadmap</h3>
+          <h3 style={{ textAlign: 'left' }}>Personalized Career Roadmap</h3>
           <div style={{ display: 'grid', gap: 'var(--space-4)' }}>
             {dnaData.roadmap.map((step, idx) => (
               <div key={idx} className="card">

@@ -39,6 +39,10 @@ import communicationCoachRoutes from './routes/communicationCoach.js';
 import jobIntelligenceRoutes from './routes/jobIntelligence.js';
 import salaryNegotiationRoutes from './routes/salaryNegotiation.js';
 import careerGoalsRoutes from './routes/careerGoals.js';
+import googleAuthRoutes from './routes/googleAuth.js';
+import scrapingRoutes from './routes/scraping.js';
+import seoRoutes from './routes/seo.js';
+import codingQuestionsRoutes from './routes/codingQuestions.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
 import './config/passport.js';
@@ -58,7 +62,9 @@ app.use(helmet({
 }));
 
 // Rate limiting
-// app.use('/api', apiLimiter);
+if (process.env.NODE_ENV === 'production') {
+  app.use('/api', apiLimiter);
+}
 
 // Enable CORS with credentials for cookie-based refresh
 const allowedOrigins = [
@@ -135,7 +141,17 @@ app.use('/api/communication-coach', communicationCoachRoutes);
 app.use('/api/job-intelligence', jobIntelligenceRoutes);
 app.use('/api/salary-negotiation', salaryNegotiationRoutes);
 app.use('/api/career-goals', careerGoalsRoutes);
+app.use('/api/google', googleAuthRoutes);
+app.use('/api/scraping', scrapingRoutes);
+app.use('/api/seo', seoRoutes);
+app.use('/api/coding-questions', codingQuestionsRoutes);
 app.use('/api', billingRoutes);
+
+// Test email route (development only)
+if (process.env.NODE_ENV !== 'production') {
+  const testEmailRoutes = await import('./routes/test-email.js');
+  app.use('/api', testEmailRoutes.default);
+}
 
 // 404 handler
 app.use(notFound);

@@ -1,0 +1,66 @@
+/* Premium Font Imports for 10/10 Typography */
+
+/* Inter - Premium Sans Serif */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* JetBrains Mono - Premium Monospace */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* Font Display Optimization */
+@font-face {
+  font-family: 'Inter';
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-display: swap;
+}
+
+/* Premium Typography Classes */
+.font-display {
+  font-family: var(--font-display);
+  font-weight: var(--font-bold);
+  letter-spacing: -0.025em;
+}
+
+.font-heading {
+  font-family: var(--font-sans);
+  font-weight: var(--font-semibold);
+  letter-spacing: -0.015em;
+  line-height: var(--leading-tight);
+}
+
+.font-body {
+  font-family: var(--font-sans);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-normal);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  font-weight: var(--font-normal);
+}
+
+/* Premium Text Styles */
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-accent {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-shadow {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+}

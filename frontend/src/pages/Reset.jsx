@@ -43,7 +43,7 @@ export default function Reset() {
       <div className="auth-wrap">
         <form onSubmit={onSubmit} className="card auth-card form" aria-label="Reset password form">
           <div className="auth-header">
-            <Logo size={56} />
+            <Logo size={56} variant="accent" />
             <h2>Reset Password</h2>
             <p className="sub">Enter and confirm your new password</p>
           </div>

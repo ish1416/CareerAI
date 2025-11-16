@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
 import api from '../utils/api';
 import { useToast } from './Toast.jsx';
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+// Initialized lazily during checkout via backend session URL; remove eager init to avoid errors when key is unset
 
-export default function StripeCheckout({ plan, planName, price, features, onSuccess }) {
+export default function StripeCheckout({ plan, price, onSuccess }) {
   const [loading, setLoading] = useState(false);
   const { showToast } = useToast();
 
@@ -15,7 +14,7 @@ export default function StripeCheckout({ plan, planName, price, features, onSucc
         await api.post('/payment/checkout', { plan: 'free' });
         showToast('Free plan activated!', 'success');
         if (onSuccess) onSuccess();
-      } catch (error) {
+      } catch {
         showToast('Failed to activate free plan', 'error');
       }
       return;
