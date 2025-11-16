@@ -46,7 +46,11 @@ export function AuthProvider({ children }) {
       const { data } = await api.post('/auth/login', { email, password });
       AuthManager.saveAuth(data.token, data.user);
       setUser(data.user);
-      return { ok: true };
+      return { 
+        ok: true, 
+        requiresVerification: data.requiresVerification || false,
+        user: data.user 
+      };
     } catch (e) {
       const error = e?.response?.data?.error || e.message || 'Login failed';
       return { ok: false, error, canRetry: !e?.response || e.response.status >= 500 };
@@ -61,7 +65,11 @@ export function AuthProvider({ children }) {
       const { data } = await api.post('/auth/register', { name, email, password });
       AuthManager.saveAuth(data.token, data.user);
       setUser(data.user);
-      return { ok: true };
+      return { 
+        ok: true, 
+        requiresVerification: !data.user.emailVerified,
+        user: data.user 
+      };
     } catch (e) {
       const error = e?.response?.data?.error || e.message || 'Registration failed';
       return { ok: false, error, canRetry: !e?.response || e.response.status >= 500 };

@@ -5,7 +5,7 @@ import { prisma } from './prisma.js';
 
 const clientID = process.env.GOOGLE_CLIENT_ID || '';
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET || '';
-const callbackURL = process.env.GOOGLE_CALLBACK_URL || 'http://localhost:5001/api/auth/google/callback';
+const callbackURL = process.env.GOOGLE_CALLBACK_URL || `${process.env.BACKEND_URL || 'http://localhost:5001'}/api/auth/google/callback`;
 
 // Only configure Google OAuth if credentials are provided
 if (clientID && clientSecret) {

@@ -13,6 +13,7 @@ import CoverLetter from './pages/CoverLetter.jsx';
 import Pricing from './pages/Pricing.jsx';
 import Navbar from './components/Navbar.jsx';
 import AuthShell from './components/AuthShell.jsx';
+import VerificationGuard from './components/VerificationGuard.jsx';
 import { ToastProvider } from './components/Toast.jsx';
 import History from './pages/History.jsx';
 import Trends from './pages/Trends.jsx';
@@ -65,8 +66,7 @@ function RequireAuth({ children }) {
 }
 
 function RequireVerified({ children }) {
-  // Temporarily disabled email verification requirement
-  return children;
+  return <VerificationGuard>{children}</VerificationGuard>;
 }
 
 function App() {
@@ -120,12 +120,12 @@ function App() {
 
         {/* Authenticated routes use full-width AuthShell layout */}
         <Route path="/dashboard" element={<RequireAuth><RequireVerified><AuthShell><Dashboard /></AuthShell></RequireVerified></RequireAuth>} />
-        <Route path="/builder" element={<RequireAuth><AuthShell><ResumeBuilder /></AuthShell></RequireAuth>} />
-        <Route path="/analysis" element={<RequireAuth><AuthShell><Analysis /></AuthShell></RequireAuth>} />
-        <Route path="/match" element={<RequireAuth><AuthShell><JobMatch /></AuthShell></RequireAuth>} />
-        <Route path="/job-match" element={<RequireAuth><AuthShell><JobMatch /></AuthShell></RequireAuth>} />
-        <Route path="/cover" element={<RequireAuth><AuthShell><CoverLetter /></AuthShell></RequireAuth>} />
-        <Route path="/cover-letters" element={<RequireAuth><AuthShell><CoverLetter /></AuthShell></RequireAuth>} />
+        <Route path="/builder" element={<RequireAuth><RequireVerified><AuthShell><ResumeBuilder /></AuthShell></RequireVerified></RequireAuth>} />
+        <Route path="/analysis" element={<RequireAuth><RequireVerified><AuthShell><Analysis /></AuthShell></RequireVerified></RequireAuth>} />
+        <Route path="/match" element={<RequireAuth><RequireVerified><AuthShell><JobMatch /></AuthShell></RequireVerified></RequireAuth>} />
+        <Route path="/job-match" element={<RequireAuth><RequireVerified><AuthShell><JobMatch /></AuthShell></RequireVerified></RequireAuth>} />
+        <Route path="/cover" element={<RequireAuth><RequireVerified><AuthShell><CoverLetter /></AuthShell></RequireVerified></RequireAuth>} />
+        <Route path="/cover-letters" element={<RequireAuth><RequireVerified><AuthShell><CoverLetter /></AuthShell></RequireVerified></RequireAuth>} />
         <Route path="/settings" element={<RequireAuth><AuthShell><Settings /></AuthShell></RequireAuth>} />
         <Route path="/history" element={<RequireAuth><AuthShell><History /></AuthShell></RequireAuth>} />
         <Route path="/trends" element={<RequireAuth><AuthShell><Trends /></AuthShell></RequireAuth>} />

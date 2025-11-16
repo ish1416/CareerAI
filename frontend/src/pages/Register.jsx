@@ -12,7 +12,7 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -26,9 +26,12 @@ export default function Register() {
     e.preventDefault();
     const res = await register(name, email, password);
     if (res.ok) {
-      const u = JSON.parse(localStorage.getItem('user') || 'null');
-      if (u?.emailVerified) navigate('/dashboard');
-      else navigate('/verify-email');
+      showToast('Account created! Please verify your email.', 'success');
+      if (res.requiresVerification || !res.user?.emailVerified) {
+        navigate('/verify-email');
+      } else {
+        navigate('/dashboard');
+      }
     }
     else {
       const msg = res.error || 'Register failed';

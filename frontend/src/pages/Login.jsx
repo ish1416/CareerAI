@@ -49,11 +49,10 @@ export default function Login() {
     
     if (res.ok) {
       showToast('Login successful!', 'success');
-      const auth = JSON.parse(localStorage.getItem('careerai_auth') || '{}');
-      if (auth.user?.emailVerified) {
-        navigate('/dashboard');
-      } else {
+      if (res.requiresVerification || !res.user?.emailVerified) {
         navigate('/verify-email');
+      } else {
+        navigate('/dashboard');
       }
     } else {
       setError(res.error);

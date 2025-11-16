@@ -1,8 +1,8 @@
-# 🚀 CareerAI - AI-Powered Resume Builder
+# CareerAI - AI-Powered Resume Builder
 
 <div align="center">
 
-![CareerAI Logo](frontend/public/brand.png)
+![CareerAI Logo](frontend/public/logo.svg)
 
 **Transform your career with AI-powered resume building, analysis, and optimization**
 
@@ -10,33 +10,33 @@
 
 </div>
 
-## ✨ Features
+## Features
 
-### 🤖 AI-Powered Analysis
+### AI-Powered Analysis
 - **ATS Score Analysis** - Get compatibility scores with Applicant Tracking Systems
 - **Smart Suggestions** - AI-driven recommendations for resume improvement
 - **Keyword Optimization** - Identify and integrate missing industry keywords
 - **Professional Rewriting** - Transform content with AI assistance
 
-### 📄 Resume Management
+### Resume Management
 - **Multiple Templates** - 5+ professional resume templates
 - **Real-time Preview** - See changes instantly as you build
 - **Export Options** - Download as PDF, DOCX, or share via link
 - **Version History** - Track changes and analysis over time
 
-### 🔐 User Experience
+### User Experience
 - **Secure Authentication** - JWT + OAuth (Google) integration
 - **Dark/Light Mode** - Seamless theme switching
 - **Responsive Design** - Works perfectly on all devices
 - **Offline Support** - PWA capabilities for offline access
 
-### 💼 Professional Tools
+### Professional Tools
 - **Cover Letter Generator** - AI-powered cover letter creation
 - **Job Matching** - Find relevant positions based on your resume
 - **Interview Prep** - Get AI-generated interview questions
 - **Career Insights** - Track your progress and improvements
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 - **React 19** - Latest React with concurrent features
@@ -58,7 +58,7 @@
 - **Nodemailer** - Email notifications
 - **PDF/DOCX Parsing** - Resume upload support
 
-## 🚀 Quick Deploy
+## Quick Deploy
 
 ### Railway (Recommended)
 1. Click the Railway button above
@@ -83,7 +83,7 @@ npm run install:all
 npm run dev
 ```
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md).
 
@@ -103,7 +103,7 @@ npm run dev
 npm test
 ```
 
-## 📈 Roadmap
+## Roadmap
 
 ### v2.0 (Next Release)
 - [ ] Real-time collaboration
@@ -119,11 +119,11 @@ npm test
 - [ ] Career path recommendations
 - [ ] Company culture matching
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **Groq** for providing free AI API
 - **Railway** for excellent deployment platform
@@ -131,7 +131,7 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 - **Tailwind CSS** for beautiful styling
 - **React Team** for the incredible framework
 
-## 📞 Support
+## Support
 
 - **Issues**: [GitHub Issues](https://github.com/ish1416/CareerAI/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/ish1416/CareerAI/discussions)
@@ -140,8 +140,8 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 
 <div align="center">
 
-**Made with ❤️ by the CareerAI Team**
+**Made with care by the CareerAI Team**
 
-[⭐ Star this repo](https://github.com/ish1416/CareerAI) • [🐦 Follow us](https://twitter.com/careerai) • [💼 LinkedIn](https://linkedin.com/company/careerai)
+[Star this repo](https://github.com/ish1416/CareerAI) • [Follow us](https://twitter.com/careerai) • [LinkedIn](https://linkedin.com/company/careerai)
 
 </div>

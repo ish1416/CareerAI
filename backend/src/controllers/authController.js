@@ -76,7 +76,14 @@ export async function login(req, res) {
   const token = createAccessToken({ id: user.id, role: user.role });
   const refreshToken = createRefreshToken({ id: user.id, role: user.role });
   setRefreshCookie(res, refreshToken);
-  res.json({ token, user: publicUser(user) });
+  
+  // Include verification status in response
+  const response = { token, user: publicUser(user) };
+  if (!user.emailVerified) {
+    response.requiresVerification = true;
+  }
+  
+  res.json(response);
 }
 
 export async function refresh(req, res) {
