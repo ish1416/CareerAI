@@ -74,7 +74,8 @@ const allowedOrigins = [
   'http://localhost:3000',
   'https://career-ai-frontend.vercel.app',
   'https://careerai.vercel.app',
-  'https://career-ai-q0tf.onrender.com'
+  'https://career-ai-q0tf.onrender.com',
+  'https://careerai-frontend-5keb.onrender.com'
 ];
 
 app.use(cors({
@@ -94,6 +95,11 @@ app.use(cors({
     
     // Allow Vercel preview deployments
     if (origin.includes('vercel.app')) {
+      return callback(null, true);
+    }
+    
+    // Allow Render deployments
+    if (origin.includes('onrender.com')) {
       return callback(null, true);
     }
     

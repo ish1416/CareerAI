@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# 🚀 CareerAI Frontend Render Deployment Script
+
+echo "🚀 Deploying CareerAI Frontend to Render..."
+
+echo "✅ Frontend deployment files ready!"
+echo ""
+echo "📋 Next Steps:"
+echo "1. Go to https://dashboard.render.com"
+echo "2. Click 'New +' → 'Static Site'"
+echo "3. Connect your GitHub repository"
+echo "4. Configure the static site:"
+echo ""
+echo "   📁 Root Directory: frontend"
+echo "   🔨 Build Command: npm install && npm run build"
+echo "   📦 Publish Directory: dist"
+echo ""
+echo "5. Add Environment Variable:"
+echo "   VITE_API_URL=https://careerai-backend-iakw.onrender.com/api"
+echo ""
+echo "6. Click 'Create Static Site'"
+echo ""
+echo "📖 For detailed instructions, see: FRONTEND_RENDER_DEPLOYMENT.md"
+echo ""
+echo "🔧 Important Settings:"
+echo "   • Root Directory: frontend (CRITICAL)"
+echo "   • Auto-Deploy: Yes"
+echo "   • Branch: main"
+echo ""
