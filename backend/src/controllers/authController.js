@@ -9,8 +9,9 @@ function setRefreshCookie(res, token) {
   res.cookie('refreshToken', token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     maxAge: 7 * 24 * 60 * 60 * 1000,
+    domain: process.env.NODE_ENV === 'production' ? undefined : undefined,
   });
 }
 
@@ -87,15 +88,34 @@ export async function login(req, res) {
 }
 
 export async function refresh(req, res) {
-  const rt = req.cookies?.refreshToken;
-  if (!rt) return res.status(401).json({ error: 'Missing refresh token' });
+  // Try to get refresh token from cookie first, then from Authorization header as fallback
+  let rt = req.cookies?.refreshToken;
+  
+  if (!rt) {
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      rt = authHeader.substring(7);
+    }
+  }
+  
+  if (!rt) {
+    console.log('Refresh token missing - cookies:', !!req.cookies?.refreshToken, 'auth header:', !!req.headers.authorization);
+    return res.status(401).json({ error: 'Missing refresh token' });
+  }
+  
   try {
     const decoded = verifyToken(rt);
     const user = await prisma.user.findUnique({ where: { id: decoded.id } });
     if (!user) return res.status(401).json({ error: 'User not found' });
     const newAccess = createAccessToken({ id: user.id, role: user.role });
-    res.json({ token: newAccess });
+    
+    // Also set a new refresh token cookie
+    const newRefresh = createRefreshToken({ id: user.id, role: user.role });
+    setRefreshCookie(res, newRefresh);
+    
+    res.json({ token: newAccess, refreshToken: newRefresh });
   } catch (e) {
+    console.log('Refresh token verification failed:', e.message);
     return res.status(401).json({ error: 'Invalid refresh token' });
   }
 }
