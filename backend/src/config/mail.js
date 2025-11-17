@@ -11,9 +11,17 @@ if (host && port && user && pass) {
   transporter = nodemailer.createTransport({
     host,
     port,
-    secure: false,
+    secure: port === 465, // true for 465, false for other ports
     auth: { user, pass },
-    tls: { rejectUnauthorized: false }
+    tls: { 
+      rejectUnauthorized: false,
+      ciphers: 'SSLv3'
+    },
+    connectionTimeout: 60000, // 60 seconds
+    greetingTimeout: 30000, // 30 seconds
+    socketTimeout: 60000, // 60 seconds
+    debug: process.env.NODE_ENV !== 'production',
+    logger: process.env.NODE_ENV !== 'production'
   });
 } else {
   // Fallback: log emails to console for dev
