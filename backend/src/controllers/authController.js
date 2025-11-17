@@ -47,7 +47,7 @@ export async function register(req, res) {
   setRefreshCookie(res, refreshToken);
 
   // Send verification email
-  const frontend = process.env.FRONTEND_URL || 'http://localhost:5174';
+  const frontend = (process.env.FRONTEND_URL || 'http://localhost:5174').replace(/\/$/, '');
   const verifyUrl = `${frontend}/verify?token=${verificationToken}`;
   console.log('🔄 Attempting to send verification email to:', email);
   console.log('🔗 Verification URL:', verifyUrl);
@@ -176,7 +176,7 @@ export async function forgotPassword(req, res) {
   const resetTokenExpires = new Date(Date.now() + 60 * 60 * 1000);
   await prisma.user.update({ where: { id: user.id }, data: { resetToken, resetTokenExpires } });
 
-  const frontend = process.env.FRONTEND_URL || 'http://localhost:5174';
+  const frontend = (process.env.FRONTEND_URL || 'http://localhost:5174').replace(/\/$/, '');
   const link = `${frontend}/reset?token=${resetToken}`;
   try {
     await sendMail({
@@ -231,7 +231,7 @@ export async function resendVerification(req, res) {
     });
 
     // Send verification email
-    const frontend = process.env.FRONTEND_URL || 'http://localhost:5174';
+    const frontend = (process.env.FRONTEND_URL || 'http://localhost:5174').replace(/\/$/, '');
     const verifyUrl = `${frontend}/verify?token=${verificationToken}`;
     console.log('🔄 Resending verification email to:', user.email);
     console.log('🔗 Verification URL:', verifyUrl);

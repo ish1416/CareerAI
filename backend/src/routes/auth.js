@@ -24,12 +24,12 @@ router.post('/reset', resetPassword);
 
 // Google OAuth
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-router.get('/google/callback', passport.authenticate('google', { session: false, failureRedirect: (process.env.FRONTEND_URL || 'http://localhost:5174') + '/login?oauth=error' }), (req, res) => {
+router.get('/google/callback', passport.authenticate('google', { session: false, failureRedirect: ((process.env.FRONTEND_URL || 'http://localhost:5174').replace(/\/$/, '')) + '/login?oauth=error' }), (req, res) => {
   // Issue tokens and auto-login via HTML page setting localStorage, then redirect to dashboard
   const user = req.user;
   const accessToken = createAccessToken({ id: user.id, role: user.role });
   const refreshToken = createRefreshToken({ id: user.id, role: user.role });
-  const frontend = process.env.FRONTEND_URL || 'http://localhost:5174';
+  const frontend = (process.env.FRONTEND_URL || 'http://localhost:5174').replace(/\/$/, '');
 
   // Set refresh token as HTTP-only cookie
   res.cookie('refreshToken', refreshToken, {
