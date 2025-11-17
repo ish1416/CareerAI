@@ -88,6 +88,10 @@ export async function login(req, res) {
 }
 
 export async function refresh(req, res) {
+  // Set CORS headers explicitly
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  
   // Try to get refresh token from cookie first, then from Authorization header as fallback
   let rt = req.cookies?.refreshToken;
   

@@ -79,32 +79,7 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (mobile apps, curl, etc.)
-    if (!origin) return callback(null, true);
-    
-    // Always allow localhost origins for development
-    if (origin && origin.includes('localhost')) {
-      return callback(null, true);
-    }
-    
-    // Check allowed origins
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-    
-    // Allow Vercel preview deployments
-    if (origin.includes('vercel.app')) {
-      return callback(null, true);
-    }
-    
-    // Allow Render deployments
-    if (origin.includes('onrender.com')) {
-      return callback(null, true);
-    }
-    
-    return callback(new Error('Not allowed by CORS'));
-  },
+  origin: true,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],

@@ -6,6 +6,15 @@ import { requireAuth } from '../middleware/auth.js';
 
 const router = Router();
 
+// Handle OPTIONS requests for CORS
+router.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization,X-Requested-With');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(200);
+});
+
 // Credentials auth
 router.post('/register', register);
 router.post('/login', login);
