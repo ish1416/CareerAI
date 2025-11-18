@@ -1,0 +1,11 @@
+{
+  "name": "careerai-email-test",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test-email": "node test-email-production.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}

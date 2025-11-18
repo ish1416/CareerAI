@@ -7,8 +7,18 @@ const pass = process.env.EMAIL_PASS;
 const from = process.env.EMAIL_FROM || 'no-reply@careerai.local';
 
 let transporter;
+
+// Log current email configuration
+console.log('📧 Email Environment Check:', {
+  EMAIL_HOST: host || 'MISSING',
+  EMAIL_PORT: port || 'MISSING', 
+  EMAIL_USER: user ? 'SET' : 'MISSING',
+  EMAIL_PASS: pass ? 'SET' : 'MISSING',
+  EMAIL_FROM: from
+});
+
 if (host && port && user && pass) {
-  console.log('📧 Email config:', { host, port, user: user ? '***' : 'missing', pass: pass ? '***' : 'missing' });
+  console.log('✅ Email credentials found - configuring SMTP transport');
   transporter = nodemailer.createTransport({
     host,
     port,
@@ -27,8 +37,20 @@ if (host && port && user && pass) {
     logger: process.env.NODE_ENV !== 'production'
   });
 } else {
-  console.warn('⚠️ Email not configured - missing credentials');
-  transporter = nodemailer.createTransport({ jsonTransport: true });
+  console.error('❌ Email credentials missing! Emails will NOT be sent.');
+  console.error('🔧 Please set these environment variables in Render:');
+  console.error('   - EMAIL_HOST (e.g., smtp.gmail.com)');
+  console.error('   - EMAIL_PORT (e.g., 587)');
+  console.error('   - EMAIL_USER (your email address)');
+  console.error('   - EMAIL_PASS (your email password or app password)');
+  console.error('   - EMAIL_FROM (sender email address)');
+  
+  // Use a transport that will fail gracefully
+  transporter = nodemailer.createTransport({ 
+    streamTransport: true,
+    newline: 'unix',
+    buffer: true
+  });
 }
 
 export async function sendMail({ to, subject, html, text }) {
@@ -36,6 +58,19 @@ export async function sendMail({ to, subject, html, text }) {
     console.log(`📧 Attempting to send email to: ${to}`);
     console.log(`📧 Subject: ${subject}`);
     console.log(`📧 From: ${from}`);
+    
+    // Check if we have proper email configuration
+    if (!host || !port || !user || !pass) {
+      console.error('❌ Cannot send email - missing SMTP configuration');
+      console.error('📧 Email would have been sent to:', to);
+      console.error('📧 Subject would have been:', subject);
+      
+      // Return a fake success to prevent app crashes, but log the issue
+      return {
+        messageId: 'fake-' + Date.now(),
+        response: 'Email not sent - missing SMTP configuration'
+      };
+    }
     
     const info = await transporter.sendMail({ 
       from, 
@@ -49,6 +84,8 @@ export async function sendMail({ to, subject, html, text }) {
     });
     
     console.log(`✅ Email sent successfully: ${info.messageId}`);
+    console.log(`📧 Response: ${info.response}`);
+    
     if (process.env.NODE_ENV !== 'production' && info.message) {
       console.log('📧 Email content:', info.message);
     }
@@ -60,7 +97,10 @@ export async function sendMail({ to, subject, html, text }) {
       code: error.code,
       command: error.command,
       to,
-      subject
+      subject,
+      host,
+      port,
+      user: user ? 'SET' : 'MISSING'
     });
     throw error;
   }
