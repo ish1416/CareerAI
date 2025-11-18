@@ -8,31 +8,60 @@ const from = process.env.EMAIL_FROM || 'no-reply@careerai.local';
 
 let transporter;
 if (host && port && user && pass) {
+  console.log('📧 Email config:', { host, port, user: user ? '***' : 'missing', pass: pass ? '***' : 'missing' });
   transporter = nodemailer.createTransport({
     host,
     port,
-    secure: port === 465, // true for 465, false for other ports
+    secure: port === 465,
     auth: { user, pass },
     tls: { 
-      rejectUnauthorized: false,
-      ciphers: 'SSLv3'
+      rejectUnauthorized: false
     },
-    connectionTimeout: 60000, // 60 seconds
-    greetingTimeout: 30000, // 30 seconds
-    socketTimeout: 60000, // 60 seconds
+    connectionTimeout: 30000,
+    greetingTimeout: 15000,
+    socketTimeout: 30000,
+    pool: true,
+    maxConnections: 5,
+    maxMessages: 100,
     debug: process.env.NODE_ENV !== 'production',
     logger: process.env.NODE_ENV !== 'production'
   });
 } else {
-  // Fallback: log emails to console for dev
+  console.warn('⚠️ Email not configured - missing credentials');
   transporter = nodemailer.createTransport({ jsonTransport: true });
 }
 
 export async function sendMail({ to, subject, html, text }) {
-  const info = await transporter.sendMail({ from, to, subject, html, text });
-  if (process.env.NODE_ENV !== 'production') {
-    console.log('Mail sent (dev):', info.messageId, subject, to);
-    if (info.message) console.log(info.message);
+  try {
+    console.log(`📧 Attempting to send email to: ${to}`);
+    console.log(`📧 Subject: ${subject}`);
+    console.log(`📧 From: ${from}`);
+    
+    const info = await transporter.sendMail({ 
+      from, 
+      to, 
+      subject, 
+      html, 
+      text,
+      headers: {
+        'X-Mailer': 'CareerAI'
+      }
+    });
+    
+    console.log(`✅ Email sent successfully: ${info.messageId}`);
+    if (process.env.NODE_ENV !== 'production' && info.message) {
+      console.log('📧 Email content:', info.message);
+    }
+    
+    return info;
+  } catch (error) {
+    console.error('❌ Email send failed:', {
+      error: error.message,
+      code: error.code,
+      command: error.command,
+      to,
+      subject
+    });
+    throw error;
   }
-  return info;
 }
