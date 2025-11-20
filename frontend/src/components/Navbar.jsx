@@ -231,7 +231,7 @@ export default function Navbar() {
               }}
               title={`Current: ${theme} mode`}
             >
-              {theme === 'dark' ? <Sun size={18} /> : theme === 'ocean' ? <Moon size={18} /> : <div style={{width: 18, height: 18, borderRadius: '50%', background: 'linear-gradient(45deg, #0ea5e9, #3b82f6)'}} />}
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
               <span style={{fontSize: '12px', textTransform: 'capitalize'}}>{theme}</span>
             </button>
 

@@ -11,8 +11,7 @@
 /* Landing Page */
 @import './styles/landing.css';
 
-/* Ocean Components */
-@import './styles/ocean-components.css';
+
 
 /* Global app resets */
 :root { 

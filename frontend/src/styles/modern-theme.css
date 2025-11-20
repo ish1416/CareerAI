@@ -136,47 +136,6 @@
 }
 
 /* Ocean Mode Theme - Enhanced */
-[data-theme="ocean"] {
-  --background: linear-gradient(135deg, #001122 0%, #003366 50%, #004488 100%);
-  --surface: rgba(0, 255, 255, 0.15);
-  --surface-elevated: rgba(0, 255, 255, 0.25);
-  --border: rgba(0, 255, 255, 0.4);
-  --border-hover: rgba(0, 255, 255, 0.6);
-  --border-focus: rgba(0, 255, 255, 0.8);
-  --text: #ffffff;
-  --text-secondary: #e0f7ff;
-  --text-muted: #b3e5fc;
-  --text-inverse: #001122;
-  
-  /* Ocean specific colors */
-  --primary: #00ffff;
-  --primary-hover: #00e6e6;
-  --secondary: #40e0d0;
-  --secondary-hover: #20b2aa;
-  --accent: #00bfff;
-  --accent-hover: #0099cc;
-  
-  /* Ocean depth colors */
-  --ocean-surface: rgba(0, 255, 255, 0.3);
-  --ocean-deep: rgba(0, 100, 200, 0.4);
-  --ocean-foam: rgba(255, 255, 255, 0.6);
-  --ocean-coral: rgba(255, 127, 80, 0.5);
-  --ocean-seaweed: rgba(46, 125, 50, 0.5);
-  
-  /* Enhanced shadows */
-  --shadow-xs: 0 2px 8px rgba(0, 255, 255, 0.2);
-  --shadow-sm: 0 4px 16px rgba(0, 255, 255, 0.3);
-  --shadow: 0 8px 32px rgba(0, 255, 255, 0.4);
-  --shadow-md: 0 16px 48px rgba(0, 255, 255, 0.5);
-  --shadow-lg: 0 24px 64px rgba(0, 255, 255, 0.6);
-  --shadow-glow: 0 0 40px rgba(0, 255, 255, 0.8);
-  --shadow-ocean: 0 8px 32px rgba(0, 191, 255, 0.6);
-  
-  /* Navbar */
-  --navbar-bg: rgba(0, 255, 255, 0.2);
-  --navbar-bg-scrolled: rgba(0, 255, 255, 0.3);
-  --navbar-border: rgba(0, 255, 255, 0.5);
-
   /* Map legacy tokens for component consistency */
   --bg: #001122;
   --bg-subtle: #003366;
@@ -327,56 +286,6 @@ body {
 
 
 
-[data-theme="ocean"] body {
-  background: 
-    linear-gradient(135deg, #001122 0%, #003366 30%, #004488 60%, #0066aa 100%),
-    radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.4) 0%, transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(64, 224, 208, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 50% 10%, rgba(0, 191, 255, 0.35) 0%, transparent 60%);
-  background-size: 400% 400%, 800px 800px, 600px 600px, 1000px 1000px;
-  animation: ocean-wave 12s ease infinite, ocean-pulse 6s ease-in-out infinite;
-  position: relative;
-  overflow-x: hidden;
-}
-
-[data-theme="ocean"] body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 15% 85%, rgba(0, 255, 255, 0.6) 0%, transparent 35%),
-    radial-gradient(circle at 85% 15%, rgba(77, 208, 225, 0.5) 0%, transparent 40%),
-    radial-gradient(circle at 45% 55%, rgba(0, 229, 255, 0.4) 0%, transparent 30%),
-    radial-gradient(circle at 70% 80%, rgba(64, 224, 208, 0.45) 0%, transparent 35%);
-  animation: ocean-currents 20s ease-in-out infinite;
-  pointer-events: none;
-  z-index: -1;
-}
-
-[data-theme="ocean"] body::after {
-  content: '';
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 200px;
-  background: 
-    linear-gradient(0deg, rgba(0, 34, 68, 0.8) 0%, transparent 100%),
-    repeating-linear-gradient(
-      90deg,
-      transparent 0px,
-      rgba(0, 255, 255, 0.1) 1px,
-      transparent 2px,
-      transparent 40px
-    );
-  animation: ocean-floor 25s linear infinite;
-  pointer-events: none;
-  z-index: -1;
-}
-
 @keyframes ocean-wave {
   0% { background-position: 0% 50%, 0% 0%, 0% 100%, 0% 50%; }
   25% { background-position: 50% 25%, 25% 25%, 25% 75%, 25% 25%; }
@@ -483,56 +392,6 @@ body {
   background: rgba(17, 17, 17, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.05);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-}
-
-[data-theme="ocean"] .card {
-  background: rgba(0, 51, 102, 0.7);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 255, 255, 0.3);
-  border-radius: 20px;
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(0, 255, 255, 0.15);
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-[data-theme="ocean"] .card::before {
-  content: '';
-  position: absolute;
-  top: -60%;
-  left: -60%;
-  width: 220%;
-  height: 220%;
-  background: 
-    radial-gradient(circle at 30% 30%, rgba(0, 255, 255, 0.2) 0%, transparent 50%),
-    radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
-  animation: ocean-bubble-float 10s ease-in-out infinite;
-  pointer-events: none;
-}
-
-[data-theme="ocean"] .card::after {
-  content: '';
-  position: absolute;
-  bottom: -40%;
-  right: -40%;
-  width: 180%;
-  height: 180%;
-  background: 
-    radial-gradient(circle at 60% 40%, rgba(64, 224, 208, 0.15) 0%, transparent 55%),
-    radial-gradient(circle at 20% 80%, rgba(0, 191, 255, 0.1) 0%, transparent 65%);
-  animation: ocean-bubble-float 14s ease-in-out infinite reverse;
-  pointer-events: none;
-}
-
-[data-theme="ocean"] .card:hover {
-  background: rgba(0, 68, 136, 0.8);
-  border-color: rgba(0, 255, 255, 0.5);
-  box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.4),
-    0 0 30px rgba(0, 255, 255, 0.25);
-  transform: translateY(-4px) scale(1.01);
 }
 
 @keyframes ocean-bubble-float {
@@ -670,89 +529,8 @@ body {
 }
 
 /* Ocean Mode Button Styling - Enhanced */
-[data-theme="ocean"] .btn-primary {
-  background: rgba(0, 102, 204, 0.8);
-  border: 1px solid rgba(0, 255, 255, 0.4);
-  border-radius: 12px;
-  color: #ffffff;
-  backdrop-filter: blur(12px);
-  box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.2),
-    0 0 12px rgba(0, 255, 255, 0.2);
-  transition: all 0.3s ease;
-}
-
-[data-theme="ocean"] .btn-primary::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.6s ease;
-}
-
-[data-theme="ocean"] .btn-primary:hover {
-  background: rgba(0, 153, 255, 0.9);
-  border-color: rgba(0, 255, 255, 0.6);
-  box-shadow: 
-    0 6px 20px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(0, 255, 255, 0.3);
-  transform: translateY(-2px);
-}
-
-[data-theme="ocean"] .btn-primary:hover::before {
-  left: 100%;
-}
-
-[data-theme="ocean"] .btn-ghost {
-  background: rgba(0, 255, 255, 0.08);
-  border: 1px solid rgba(0, 255, 255, 0.3);
-  color: var(--text-secondary);
-  backdrop-filter: blur(12px);
-}
-
-[data-theme="ocean"] .btn-ghost:hover {
-  background: rgba(0, 255, 255, 0.2);
-  border-color: rgba(0, 255, 255, 0.5);
-  color: var(--text);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 0 16px rgba(0, 255, 255, 0.4);
-}
-
 /* Ocean Mode Navbar Enhancements */
-[data-theme="ocean"] nav {
-  background: rgba(0, 255, 255, 0.12) !important;
-  backdrop-filter: blur(24px) saturate(180%) !important;
-  border: 1px solid rgba(0, 255, 255, 0.4) !important;
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(0, 255, 255, 0.2),
-    0 0 20px rgba(0, 255, 255, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-}
-
 /* Ocean Mode Input Styling */
-[data-theme="ocean"] .input,
-[data-theme="ocean"] input,
-[data-theme="ocean"] textarea {
-  background: rgba(0, 255, 255, 0.08);
-  border: 1px solid rgba(0, 255, 255, 0.3);
-  backdrop-filter: blur(12px);
-  color: var(--text);
-}
-
-[data-theme="ocean"] .input:focus,
-[data-theme="ocean"] input:focus,
-[data-theme="ocean"] textarea:focus {
-  background: rgba(0, 255, 255, 0.15);
-  border-color: rgba(0, 255, 255, 0.7);
-  box-shadow: 
-    0 0 0 3px rgba(0, 255, 255, 0.3),
-    0 4px 16px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(0, 255, 255, 0.4);
-}
-
 .btn-ghost {
   background: transparent;
   border-color: transparent;
@@ -987,37 +765,12 @@ body {
 }
 
 /* Ocean Mode Loading States */
-[data-theme="ocean"] .loading-shimmer {
-  background: linear-gradient(
-    90deg, 
-    rgba(255, 255, 255, 0.05) 0px, 
-    rgba(0, 229, 255, 0.1) 40px, 
-    rgba(255, 255, 255, 0.05) 80px
-  );
-  background-size: 200px;
-  animation: ocean-shimmer 2s infinite;
-}
-
 @keyframes ocean-shimmer {
   0% { background-position: -200px 0; }
   100% { background-position: calc(200px + 100%) 0; }
 }
 
 /* Ocean Mode Floating Elements */
-[data-theme="ocean"] .floating-element {
-  position: fixed;
-  pointer-events: none;
-  z-index: -1;
-}
-
-[data-theme="ocean"] .floating-bubble {
-  width: 8px;
-  height: 8px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(0, 229, 255, 0.3) 100%);
-  border-radius: 50%;
-  animation: bubble-rise 15s linear infinite;
-}
-
 @keyframes bubble-rise {
   0% {
     transform: translateY(100vh) scale(0);
@@ -1038,80 +791,13 @@ body {
 }
 
 /* Ocean Mode Text Enhancements */
-[data-theme="ocean"] .text-gradient {
-  background: linear-gradient(135deg, #ffffff 0%, #00e5ff 50%, #ffffff 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-size: 200% 200%;
-  animation: ocean-text-flow 4s ease-in-out infinite;
-}
-
 @keyframes ocean-text-flow {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 }
 
-[data-theme="ocean"] .section-title {
-  text-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
-}
-
 /* Ocean Mode Scrollbar Styling */
-[data-theme="ocean"] ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-[data-theme="ocean"] ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 4px;
-}
-
-[data-theme="ocean"] ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(0, 229, 255, 0.6) 0%, rgba(77, 208, 225, 0.4) 100%);
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-[data-theme="ocean"] ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, rgba(0, 229, 255, 0.8) 0%, rgba(77, 208, 225, 0.6) 100%);
-}
-
 /* Ocean Mode Selection Styling */
-[data-theme="ocean"] ::selection {
-  background: rgba(0, 229, 255, 0.3);
-  color: #ffffff;
-}
-
-[data-theme="ocean"] ::-moz-selection {
-  background: rgba(0, 229, 255, 0.3);
-  color: #ffffff;
-}
-/* Ocean Mode Advanced Features */
-[data-theme="ocean"] .ocean-fish {
-  position: fixed;
-  width: 20px;
-  height: 12px;
-  background: linear-gradient(45deg, rgba(255, 127, 80, 0.8) 0%, rgba(255, 165, 0, 0.6) 100%);
-  border-radius: 50% 0 50% 0;
-  animation: fish-swim 25s linear infinite;
-  pointer-events: none;
-  z-index: -1;
-}
-
-[data-theme="ocean"] .ocean-fish::before {
-  content: '';
-  position: absolute;
-  right: -8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 0;
-  height: 0;
-  border-left: 8px solid rgba(255, 127, 80, 0.8);
-  border-top: 6px solid transparent;
-  border-bottom: 6px solid transparent;
-}
-
 @keyframes fish-swim {
   0% {
     left: -50px;
@@ -1137,18 +823,6 @@ body {
 }
 
 /* Ocean Tide Effects */
-[data-theme="ocean"] .ocean-tide {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100px;
-  background: linear-gradient(0deg, rgba(0, 255, 255, 0.2) 0%, transparent 100%);
-  animation: tide-flow 20s ease-in-out infinite;
-  pointer-events: none;
-  z-index: -1;
-}
-
 @keyframes tide-flow {
   0%, 100% { 
     transform: translateY(0) scaleY(1);
@@ -1161,17 +835,6 @@ body {
 }
 
 /* Ocean Particles */
-[data-theme="ocean"] .ocean-particles {
-  position: fixed;
-  width: 4px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 50%;
-  animation: particle-float 30s linear infinite;
-  pointer-events: none;
-  z-index: -1;
-}
-
 @keyframes particle-float {
   0% {
     transform: translateY(100vh) translateX(0) rotate(0deg);
@@ -1190,16 +853,6 @@ body {
 }
 
 /* Ocean Loading Spinner */
-[data-theme="ocean"] .ocean-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(0, 255, 255, 0.3);
-  border-top: 3px solid rgba(0, 255, 255, 0.8);
-  border-radius: 50%;
-  animation: whirlpool 1s linear infinite;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-}
-
 @keyframes whirlpool {
   0% { transform: rotate(0deg) scale(1); }
   50% { transform: rotate(180deg) scale(1.1); }
@@ -1207,41 +860,12 @@ body {
 }
 
 /* Wave Progress Bar */
-[data-theme="ocean"] .wave-progress {
-  width: 100%;
-  height: 8px;
-  background: rgba(0, 255, 255, 0.2);
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
-}
-
-[data-theme="ocean"] .wave-progress::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  background: linear-gradient(90deg, rgba(0, 255, 255, 0.8) 0%, rgba(64, 224, 208, 0.6) 100%);
-  border-radius: 4px;
-  animation: wave-fill 2s ease-in-out;
-}
-
 @keyframes wave-fill {
   0% { width: 0%; }
   100% { width: var(--progress, 50%); }
 }
 
 /* Coral Navigation Indicators */
-[data-theme="ocean"] .coral-indicator {
-  width: 12px;
-  height: 12px;
-  background: radial-gradient(circle, rgba(255, 127, 80, 0.8) 0%, rgba(255, 107, 107, 0.6) 100%);
-  border-radius: 50% 20% 50% 20%;
-  animation: coral-pulse 3s ease-in-out infinite;
-  box-shadow: 0 0 10px rgba(255, 127, 80, 0.5);
-}
-
 @keyframes coral-pulse {
   0%, 100% { 
     transform: scale(1) rotate(0deg);
@@ -1254,46 +878,7 @@ body {
 }
 
 /* Seashell Buttons */
-[data-theme="ocean"] .seashell-btn {
-  background: 
-    radial-gradient(ellipse at top, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
-    linear-gradient(135deg, rgba(255, 182, 193, 0.4) 0%, rgba(255, 160, 122, 0.3) 100%);
-  border: 1px solid rgba(255, 182, 193, 0.5);
-  border-radius: 50% 20% 50% 20%;
-  backdrop-filter: blur(12px);
-  box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.2),
-    0 0 20px rgba(255, 182, 193, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-[data-theme="ocean"] .seashell-btn:hover {
-  transform: translateY(-2px) rotate(5deg);
-  box-shadow: 
-    0 8px 24px rgba(0, 0, 0, 0.3),
-    0 0 30px rgba(255, 182, 193, 0.6),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
 /* Click Ripple Effect */
-[data-theme="ocean"] .ripple-effect {
-  position: relative;
-  overflow: hidden;
-}
-
-[data-theme="ocean"] .ripple-effect::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(0, 255, 255, 0.4);
-  transform: translate(-50%, -50%);
-  animation: ripple 0.6s ease-out;
-}
-
 @keyframes ripple {
   0% {
     width: 0;
@@ -1308,17 +893,6 @@ body {
 }
 
 /* Mouse Trail Bubbles */
-[data-theme="ocean"] .mouse-bubble {
-  position: fixed;
-  width: 6px;
-  height: 6px;
-  background: radial-gradient(circle, rgba(0, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 100%);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 1000;
-  animation: mouse-bubble-fade 1s ease-out forwards;
-}
-
 @keyframes mouse-bubble-fade {
   0% {
     transform: scale(0);
@@ -1335,21 +909,6 @@ body {
 }
 
 /* Depth Parallax Scrolling */
-[data-theme="ocean"] .depth-layer-1 {
-  transform: translateZ(0);
-  animation: depth-float-1 15s ease-in-out infinite;
-}
-
-[data-theme="ocean"] .depth-layer-2 {
-  transform: translateZ(-10px);
-  animation: depth-float-2 20s ease-in-out infinite;
-}
-
-[data-theme="ocean"] .depth-layer-3 {
-  transform: translateZ(-20px);
-  animation: depth-float-3 25s ease-in-out infinite;
-}
-
 @keyframes depth-float-1 {
   0%, 100% { transform: translateY(0px) translateZ(0); }
   50% { transform: translateY(-10px) translateZ(0); }
@@ -1365,41 +924,7 @@ body {
   50% { transform: translateY(-20px) translateZ(-20px); }
 }
 /* Force Ocean Mode Visibility */
-[data-theme="ocean"] * {
-  color: #ffffff !important;
-}
-
-[data-theme="ocean"] .card * {
-  color: #ffffff !important;
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5) !important;
-}
-
-[data-theme="ocean"] .btn * {
-  color: #ffffff !important;
-  font-weight: 600 !important;
-}
-
-[data-theme="ocean"] h1, 
-[data-theme="ocean"] h2, 
-[data-theme="ocean"] h3, 
-[data-theme="ocean"] h4, 
-[data-theme="ocean"] h5, 
-[data-theme="ocean"] h6 {
-  color: #ffffff !important;
-  text-shadow: 0 0 20px rgba(0, 255, 255, 0.8) !important;
-}
-
 /* Ocean Mode Animated Background */
-[data-theme="ocean"] body {
-  background: 
-    radial-gradient(circle at 10% 20%, rgba(0, 255, 255, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 90% 80%, rgba(64, 224, 208, 0.25) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(0, 191, 255, 0.2) 0%, transparent 50%),
-    linear-gradient(135deg, #000d1a 0%, #001a33 25%, #002d4d 50%, #004080 75%, #0066cc 100%) !important;
-  background-size: 800px 800px, 600px 600px, 1000px 1000px, 100% 100% !important;
-  animation: ocean-mega-wave 8s ease-in-out infinite, ocean-glow-pulse 4s ease-in-out infinite !important;
-}
-
 @keyframes ocean-mega-wave {
   0%, 100% { 
     background-position: 0% 0%, 100% 100%, 50% 50%, 0% 0%;
@@ -1431,155 +956,14 @@ body {
 /* Remove excessive card animations */
 
 /* Ocean Mode Buttons Enhanced */
-[data-theme="ocean"] .btn-primary {
-  background: 
-    linear-gradient(135deg, rgba(0, 255, 255, 0.6) 0%, rgba(64, 224, 208, 0.5) 100%),
-    rgba(0, 102, 204, 0.8) !important;
-  border: 2px solid rgba(0, 255, 255, 0.8) !important;
-  box-shadow: 
-    0 0 30px rgba(0, 255, 255, 0.6),
-    0 8px 25px rgba(0, 0, 0, 0.4),
-    inset 0 2px 0 rgba(255, 255, 255, 0.3) !important;
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.8) !important;
-}
-
-[data-theme="ocean"] .btn-primary:hover {
-  background: 
-    linear-gradient(135deg, rgba(0, 255, 255, 0.8) 0%, rgba(64, 224, 208, 0.7) 100%),
-    rgba(0, 153, 255, 0.9) !important;
-  box-shadow: 
-    0 0 50px rgba(0, 255, 255, 0.9),
-    0 12px 35px rgba(0, 0, 0, 0.5),
-    inset 0 3px 0 rgba(255, 255, 255, 0.4) !important;
-  transform: translateY(-6px) scale(1.05) !important;
-}
-
 /* Ocean Mode Navbar Enhanced */
-[data-theme="ocean"] nav {
-  background: rgba(0, 34, 68, 0.9) !important;
-  backdrop-filter: blur(16px) !important;
-  border: 1px solid rgba(0, 255, 255, 0.4) !important;
-  border-radius: 16px !important;
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(0, 255, 255, 0.2) !important;
-  z-index: 9999 !important;
-}
-
-[data-theme="ocean"] nav * {
-  color: #ffffff !important;
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.8) !important;
-}
-
-[data-theme="ocean"] nav a {
-  color: #ffffff !important;
-  font-weight: 600 !important;
-}
-
-[data-theme="ocean"] nav button {
-  color: #ffffff !important;
-  border-color: rgba(0, 255, 255, 0.6) !important;
-  background: rgba(0, 255, 255, 0.2) !important;
-}
-
-[data-theme="ocean"] nav button:hover {
-  background: rgba(0, 255, 255, 0.4) !important;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.6) !important;
-}
-
 /* Make all text visible in ocean mode */
-[data-theme="ocean"] p,
-[data-theme="ocean"] span,
-[data-theme="ocean"] div,
-[data-theme="ocean"] a,
-[data-theme="ocean"] li {
-  color: #ffffff !important;
-}
-
-[data-theme="ocean"] .text-muted,
-[data-theme="ocean"] .text-secondary {
-  color: #b3e5fc !important;
-}
-/* Ocean Mode Footer Fix */
-[data-theme="ocean"] footer {
-  background: rgba(0, 34, 68, 0.9) !important;
-  border-top: 2px solid rgba(0, 255, 255, 0.6) !important;
-  backdrop-filter: blur(20px) !important;
-}
-
-[data-theme="ocean"] footer * {
-  color: #ffffff !important;
-}
-
-[data-theme="ocean"] footer a:hover {
-  color: #00ffff !important;
-}
-
 /* Ocean Mode Navbar Fix */
-[data-theme="ocean"] nav {
-  background: rgba(0, 34, 68, 0.95) !important;
-  border: 2px solid rgba(0, 255, 255, 0.8) !important;
-  backdrop-filter: blur(20px) !important;
-  box-shadow: 0 0 40px rgba(0, 255, 255, 0.6) !important;
-  z-index: 99999 !important;
-}
-
 /* Reduce Ocean Animations to Fix Performance */
-[data-theme="ocean"] body {
-  background: 
-    linear-gradient(135deg, #000d1a 0%, #001a33 25%, #002d4d 50%, #004080 75%, #0066cc 100%) !important;
-  animation: none !important;
-}
-
-[data-theme="ocean"] body::before {
-  background: 
-    radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.2) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(64, 224, 208, 0.15) 0%, transparent 50%) !important;
-  animation: ocean-simple 10s ease-in-out infinite !important;
-}
-
 @keyframes ocean-simple {
   0%, 100% { opacity: 0.6; }
   50% { opacity: 0.9; }
 }
 /* Ocean Mode Rounded Elements */
-[data-theme="ocean"] .card {
-  border-radius: 24px !important;
-}
-
-[data-theme="ocean"] .btn {
-  border-radius: 16px !important;
-}
-
-[data-theme="ocean"] .input,
-[data-theme="ocean"] input,
-[data-theme="ocean"] textarea {
-  border-radius: 12px !important;
-  background: rgba(0, 51, 102, 0.6) !important;
-  border: 1px solid rgba(0, 255, 255, 0.3) !important;
-}
-
-[data-theme="ocean"] .input:focus,
-[data-theme="ocean"] input:focus,
-[data-theme="ocean"] textarea:focus {
-  border-color: rgba(0, 255, 255, 0.6) !important;
-  box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.1) !important;
-}
-
 /* Smooth Glow Transitions */
-[data-theme="ocean"] * {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
 /* Reduce Pro Plan Glow */
-[data-theme="ocean"] .pricing-card-popular {
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    0 0 15px rgba(0, 255, 255, 0.15) !important;
-}
-
-[data-theme="ocean"] .pricing-card-popular:hover {
-  box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.4),
-    0 0 25px rgba(0, 255, 255, 0.25) !important;
-}
