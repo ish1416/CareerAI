@@ -26,18 +26,29 @@ export default function Verify() {
         const response = await api.get('/auth/verify-email', { params: { token } });
         setStatus('success');
         setMessage(response.data.message || 'Email verified successfully.');
+        
+        // If user is logged in, reload their data and go to dashboard
         if (user && typeof reloadUser === 'function') {
           await reloadUser();
+          setTimeout(() => navigate('/dashboard', { replace: true }), 1500);
+        } else {
+          // If not logged in, redirect to login page
+          setMessage('Email verified! Please log in to continue.');
+          setTimeout(() => navigate('/login', { replace: true }), 2000);
         }
-        setTimeout(() => navigate('/dashboard', { replace: true }), 1500);
       } catch (e) {
         const errorMsg = e?.response?.data?.error || 'Invalid or expired verification link.';
         
         // Handle already verified case as success
         if (errorMsg.includes('already verified') || errorMsg.includes('already used')) {
           setStatus('success');
-          setMessage('Email already verified. Redirecting to dashboard...');
-          setTimeout(() => navigate('/dashboard', { replace: true }), 1500);
+          if (user) {
+            setMessage('Email already verified. Redirecting to dashboard...');
+            setTimeout(() => navigate('/dashboard', { replace: true }), 1500);
+          } else {
+            setMessage('Email already verified. Please log in to continue.');
+            setTimeout(() => navigate('/login', { replace: true }), 2000);
+          }
         } else {
           setStatus('error');
           setMessage(errorMsg);

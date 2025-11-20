@@ -42,6 +42,7 @@ import careerGoalsRoutes from './routes/careerGoals.js';
 import googleAuthRoutes from './routes/googleAuth.js';
 import scrapingRoutes from './routes/scraping.js';
 import seoRoutes from './routes/seo.js';
+import emailTestRoutes from './routes/email-test.js';
 import codingQuestionsRoutes from './routes/codingQuestions.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
@@ -144,6 +145,7 @@ app.use('/api/career-goals', careerGoalsRoutes);
 app.use('/api/google', googleAuthRoutes);
 app.use('/api/scraping', scrapingRoutes);
 app.use('/api/seo', seoRoutes);
+app.use('/api', emailTestRoutes);
 app.use('/api/coding-questions', codingQuestionsRoutes);
 app.use('/api', billingRoutes);
 

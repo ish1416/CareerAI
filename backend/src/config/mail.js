@@ -19,6 +19,14 @@ console.log('📧 Email Environment Check:', {
 
 if (host && port && user && pass) {
   console.log('✅ Email credentials found - configuring SMTP transport');
+  console.log('📧 SMTP Configuration:', {
+    host,
+    port,
+    secure: port === 465,
+    user,
+    from
+  });
+  
   transporter = nodemailer.createTransport({
     host,
     port,
@@ -33,8 +41,18 @@ if (host && port && user && pass) {
     pool: true,
     maxConnections: 5,
     maxMessages: 100,
-    debug: process.env.NODE_ENV !== 'production',
-    logger: process.env.NODE_ENV !== 'production'
+    debug: true, // Always enable debug for better logs
+    logger: true // Always enable logger
+  });
+  
+  // Test connection on startup
+  transporter.verify((error, success) => {
+    if (error) {
+      console.error('❌ SMTP Connection Test Failed:', error.message);
+      console.error('🔧 Check your EMAIL_* environment variables');
+    } else {
+      console.log('✅ SMTP Connection Test Successful - Ready to send emails');
+    }
   });
 } else {
   console.error('❌ Email credentials missing! Emails will NOT be sent.');
@@ -44,6 +62,12 @@ if (host && port && user && pass) {
   console.error('   - EMAIL_USER (your email address)');
   console.error('   - EMAIL_PASS (your email password or app password)');
   console.error('   - EMAIL_FROM (sender email address)');
+  console.error('');
+  console.error('📊 Current values:');
+  console.error('   EMAIL_HOST:', host || 'NOT SET');
+  console.error('   EMAIL_PORT:', port || 'NOT SET');
+  console.error('   EMAIL_USER:', user || 'NOT SET');
+  console.error('   EMAIL_PASS:', pass ? 'SET (hidden)' : 'NOT SET');
   
   // Use a transport that will fail gracefully
   transporter = nodemailer.createTransport({ 
@@ -54,23 +78,56 @@ if (host && port && user && pass) {
 }
 
 export async function sendMail({ to, subject, html, text }) {
+  const timestamp = new Date().toISOString();
+  const attemptId = `EMAIL_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  
+  console.log('');
+  console.log('╔═══════════════════════════════════════════════════════╗');
+  console.log('║                    📧 EMAIL ATTEMPT                   ║');
+  console.log('╠═══════════════════════════════════════════════════════╣');
+  console.log(`║ ID: ${attemptId.padEnd(49)} ║`);
+  console.log(`║ Time: ${timestamp.padEnd(47)} ║`);
+  console.log(`║ To: ${to.padEnd(51)} ║`);
+  console.log(`║ Subject: ${subject.substring(0, 45).padEnd(45)} ║`);
+  console.log(`║ From: ${from.padEnd(49)} ║`);
+  console.log(`║ Host: ${(host || 'NOT SET').padEnd(49)} ║`);
+  console.log(`║ Port: ${(port || 'NOT SET').toString().padEnd(49)} ║`);
+  console.log(`║ User: ${(user || 'NOT SET').padEnd(49)} ║`);
+  console.log(`║ Pass: ${(pass ? `SET (${pass.length} chars)` : 'NOT SET').padEnd(49)} ║`);
+  console.log('╚═══════════════════════════════════════════════════════╝');
+  
   try {
-    console.log(`📧 Attempting to send email to: ${to}`);
-    console.log(`📧 Subject: ${subject}`);
-    console.log(`📧 From: ${from}`);
-    
     // Check if we have proper email configuration
     if (!host || !port || !user || !pass) {
-      console.error('❌ Cannot send email - missing SMTP configuration');
-      console.error('📧 Email would have been sent to:', to);
-      console.error('📧 Subject would have been:', subject);
+      console.log('');
+      console.log('╔═══════════════════════════════════════════════════════╗');
+      console.log('║                ❌ CONFIGURATION ERROR ❌              ║');
+      console.log('╠═══════════════════════════════════════════════════════╣');
+      console.log(`║ ID: ${attemptId.padEnd(49)} ║`);
+      console.log(`║ Status: FAILED - Missing SMTP Config${' '.repeat(15)} ║`);
+      console.log('║                                                       ║');
+      console.log('║ Missing Variables:                                    ║');
+      if (!host) console.log('║   ❌ EMAIL_HOST                                       ║');
+      if (!port) console.log('║   ❌ EMAIL_PORT                                       ║');
+      if (!user) console.log('║   ❌ EMAIL_USER                                       ║');
+      if (!pass) console.log('║   ❌ EMAIL_PASS                                       ║');
+      console.log('║                                                       ║');
+      console.log('║ 🔧 FIX: Set environment variables in production      ║');
+      console.log('╚═══════════════════════════════════════════════════════╝');
+      console.log('');
+      
+      // Log to a centralized email log
+      console.log(`[EMAIL_LOG] ${timestamp} | ${attemptId} | FAILED | CONFIG_MISSING | ${to} | ${subject}`);
       
       // Return a fake success to prevent app crashes, but log the issue
       return {
         messageId: 'fake-' + Date.now(),
-        response: 'Email not sent - missing SMTP configuration'
+        response: 'Email not sent - missing SMTP configuration',
+        status: 'CONFIGURATION_ERROR'
       };
     }
+    
+    console.log('📤 Sending email via SMTP...');
     
     const info = await transporter.sendMail({ 
       from, 
@@ -83,25 +140,60 @@ export async function sendMail({ to, subject, html, text }) {
       }
     });
     
-    console.log(`✅ Email sent successfully: ${info.messageId}`);
-    console.log(`📧 Response: ${info.response}`);
+    console.log('');
+    const endTime = new Date().toISOString();
     
-    if (process.env.NODE_ENV !== 'production' && info.message) {
-      console.log('📧 Email content:', info.message);
-    }
+    console.log('');
+    console.log('╔═══════════════════════════════════════════════════════╗');
+    console.log('║                   ✅ EMAIL SUCCESS ✅                 ║');
+    console.log('╠═══════════════════════════════════════════════════════╣');
+    console.log(`║ ID: ${attemptId.padEnd(49)} ║`);
+    console.log(`║ Status: SENT SUCCESSFULLY${' '.repeat(25)} ║`);
+    console.log(`║ Message ID: ${(info.messageId || 'N/A').substring(0, 39).padEnd(39)} ║`);
+    console.log(`║ Response: ${(info.response || 'N/A').substring(0, 41).padEnd(41)} ║`);
+    console.log(`║ Accepted: ${JSON.stringify(info.accepted || []).substring(0, 41).padEnd(41)} ║`);
+    console.log(`║ Rejected: ${JSON.stringify(info.rejected || []).substring(0, 41).padEnd(41)} ║`);
+    console.log(`║ End Time: ${endTime.padEnd(41)} ║`);
+    console.log('╚═══════════════════════════════════════════════════════╝');
+    console.log('');
     
-    return info;
+    // Log to centralized email log
+    console.log(`[EMAIL_LOG] ${endTime} | ${attemptId} | SUCCESS | SENT | ${to} | ${subject} | ${info.messageId}`);
+    
+    return { ...info, status: 'SUCCESS', attemptId };
   } catch (error) {
-    console.error('❌ Email send failed:', {
-      error: error.message,
-      code: error.code,
-      command: error.command,
-      to,
-      subject,
-      host,
-      port,
-      user: user ? 'SET' : 'MISSING'
-    });
+    const errorTime = new Date().toISOString();
+    
+    console.log('');
+    console.log('╔═══════════════════════════════════════════════════════╗');
+    console.log('║                    ❌ EMAIL FAILED ❌                 ║');
+    console.log('╠═══════════════════════════════════════════════════════╣');
+    console.log(`║ ID: ${attemptId.padEnd(49)} ║`);
+    console.log(`║ Status: FAILED${' '.repeat(37)} ║`);
+    console.log(`║ Error: ${(error.message || 'Unknown error').substring(0, 44).padEnd(44)} ║`);
+    console.log(`║ Code: ${(error.code || 'N/A').padEnd(46)} ║`);
+    console.log(`║ Command: ${(error.command || 'N/A').padEnd(42)} ║`);
+    console.log(`║ Response: ${(error.response || 'N/A').substring(0, 40).padEnd(40)} ║`);
+    console.log(`║ Response Code: ${(error.responseCode || 'N/A').toString().padEnd(36)} ║`);
+    console.log(`║ Error Time: ${errorTime.padEnd(39)} ║`);
+    console.log('║                                                       ║');
+    console.log('║ 🔧 Common Solutions:                                  ║');
+    console.log('║   1. Check Gmail App Password                         ║');
+    console.log('║   2. Verify 2-Step Verification enabled               ║');
+    console.log('║   3. Check network/firewall settings                  ║');
+    console.log('║   4. Try port 465 with secure: true                   ║');
+    console.log('╚═══════════════════════════════════════════════════════╝');
+    console.log('');
+    
+    // Log to centralized email log
+    console.log(`[EMAIL_LOG] ${errorTime} | ${attemptId} | FAILED | ${error.code || 'UNKNOWN'} | ${to} | ${subject} | ${error.message}`);
+    
+    // Add more context to the error
+    error.attemptId = attemptId;
+    error.timestamp = errorTime;
+    error.emailTo = to;
+    error.emailSubject = subject;
+    
     throw error;
   }
 }
