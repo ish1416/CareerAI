@@ -1,5 +1,5 @@
 import express from 'express';
-import { requireAuth, requireVerified } from '../middleware/auth.js';
+import { requireAuth } from '../middleware/auth.js';
 import { groqChat } from '../utils/groqClient.js';
 
 const router = express.Router();
@@ -37,7 +37,7 @@ router.post('/test-chat', async (req, res) => {
 });
 
 // Simple AI Chat endpoint
-router.post('/chat', requireAuth, requireVerified, async (req, res) => {
+router.post('/chat', requireAuth, async (req, res) => {
   try {
     const { message } = req.body;
     
