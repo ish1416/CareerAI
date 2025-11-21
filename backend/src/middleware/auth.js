@@ -21,14 +21,3 @@ export const requireRole = (role) => (req, res, next) => {
   next();
 };
 
-export const requireVerified = async (req, res, next) => {
-  try {
-    const user = await prisma.user.findUnique({ where: { id: req.user.id } });
-    if (!user || !user.emailVerified) {
-      return res.status(403).json({ error: 'Email not verified. Please verify to access this feature.' });
-    }
-    next();
-  } catch (e) {
-    return res.status(500).json({ error: 'Unable to verify email status' });
-  }
-};
