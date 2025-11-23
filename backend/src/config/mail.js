@@ -155,6 +155,16 @@ export async function sendMail({ to, subject, html, text }) {
       }
     });
     
+    // Log detailed delivery info
+    console.log('📬 Email delivery details:', {
+      messageId: info.messageId,
+      response: info.response,
+      accepted: info.accepted,
+      rejected: info.rejected,
+      pending: info.pending,
+      envelope: info.envelope
+    });
+    
     console.log('');
     const endTime = new Date().toISOString();
     
