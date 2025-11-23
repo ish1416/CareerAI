@@ -89,8 +89,8 @@ function App() {
       <ConnectionStatus />
       {showPublicNavbar && <Navbar />}
       
-      {/* AI Copilot - Available on authenticated pages */}
-      {user && (
+      {/* AI Copilot - Available only for verified users */}
+      {user && user.emailVerified && (
         <>
           <AICopilot isOpen={copilotOpen} onToggle={() => setCopilotOpen(!copilotOpen)} />
           {!copilotOpen && <CopilotToggle onClick={() => setCopilotOpen(true)} />}

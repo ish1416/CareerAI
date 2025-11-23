@@ -45,15 +45,30 @@ if (host && port && user && pass) {
     logger: true // Always enable logger
   });
   
-  // Test connection on startup
-  transporter.verify((error, success) => {
-    if (error) {
-      console.error('❌ SMTP Connection Test Failed:', error.message);
-      console.error('🔧 Check your EMAIL_* environment variables');
-    } else {
-      console.log('✅ SMTP Connection Test Successful - Ready to send emails');
-    }
-  });
+  // Test connection on startup with timeout
+  const testConnection = () => {
+    const timeout = setTimeout(() => {
+      console.error('❌ SMTP Connection Test Timeout (30s)');
+      console.error('🔧 Check your EMAIL_* environment variables and network connectivity');
+    }, 30000);
+    
+    transporter.verify((error, success) => {
+      clearTimeout(timeout);
+      if (error) {
+        console.error('❌ SMTP Connection Test Failed:', error.message);
+        console.error('🔧 Check your EMAIL_* environment variables');
+      } else {
+        console.log('✅ SMTP Connection Test Successful - Ready to send emails');
+      }
+    });
+  };
+  
+  // Only test connection if not in production to avoid blocking startup
+  if (process.env.NODE_ENV !== 'production') {
+    testConnection();
+  } else {
+    console.log('📧 Production mode - skipping SMTP connection test to avoid blocking startup');
+  }
 } else {
   console.error('❌ Email credentials missing! Emails will NOT be sent.');
   console.error('🔧 Please set these environment variables in Render:');
