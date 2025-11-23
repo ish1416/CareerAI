@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Logo from '../components/Logo.jsx';
 import FeatureCard from '../components/FeatureCard.jsx';
 import FeatureShowcase from '../components/FeatureShowcase.jsx';
-import OceanEffects from '../components/OceanEffects.jsx';
+
 import { useEffect, useState } from 'react';
 import { 
   FileSearch, Gauge, Target, UploadCloud, Sparkles, Wand2, Rocket, UserCircle, Star, ChevronDown, 
@@ -46,7 +46,7 @@ export default function Landing() {
 
   return (
     <div className="landing-container landing-page">
-      <OceanEffects />
+
       {/* Hero */}
       <div className="aurora"></div>
       <section className="hero-section animate-fade-in">
