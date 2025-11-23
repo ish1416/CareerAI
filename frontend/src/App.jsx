@@ -66,6 +66,11 @@ function RequireAuth({ children }) {
 }
 
 function RequireVerified({ children }) {
+  // Skip verification if disabled
+  const skipVerification = process.env.REACT_APP_SKIP_EMAIL_VERIFICATION === 'true';
+  if (skipVerification) {
+    return children;
+  }
   return <VerificationGuard>{children}</VerificationGuard>;
 }
 
