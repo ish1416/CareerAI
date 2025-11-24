@@ -16,7 +16,7 @@ function setRefreshCookie(res, token) {
 }
 
 function publicUser(u) {
-  return { id: u.id, name: u.name, email: u.email, role: u.role, plan: u.plan, emailVerified: !!u.emailVerified };
+  return { id: u.id, name: u.name, email: u.email, role: u.role, plan: u.plan, emailVerified: true };
 }
 
 export async function register(req, res) {
@@ -26,50 +26,19 @@ export async function register(req, res) {
   if (existing) return res.status(409).json({ error: 'Email already registered' });
   const hashed = await bcrypt.hash(password, 10);
 
-  // Generate verification token
-  const verificationToken = crypto.randomBytes(24).toString('hex');
-  const verificationTokenExpires = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
-
-  // Check if email verification should be skipped
-  const skipVerification = process.env.SKIP_EMAIL_VERIFICATION === 'true';
-  
   const user = await prisma.user.create({
     data: {
       name: name || '',
       email,
       password: hashed,
       role: role === 'admin' ? 'admin' : 'user',
-      emailVerified: skipVerification, // Skip verification if flag is set
-      verificationToken: skipVerification ? null : verificationToken,
-      verificationTokenExpires: skipVerification ? null : verificationTokenExpires,
+      emailVerified: true, // Always verified
     },
   });
 
   const token = createAccessToken({ id: user.id, role: user.role });
   const refreshToken = createRefreshToken({ id: user.id, role: user.role });
   setRefreshCookie(res, refreshToken);
-
-  // Send verification email only if not skipping verification
-  if (!skipVerification) {
-    const frontend = (process.env.FRONTEND_URL || 'http://localhost:5174').replace(/\/$/, '');
-    const verifyUrl = `${frontend}/verify?token=${verificationToken}`;
-    console.log('🔄 Attempting to send verification email to:', email);
-    console.log('🔗 Verification URL:', verifyUrl);
-    try {
-      const result = await sendMail({
-        to: email,
-        subject: '✨ Welcome to CareerAI - Verify Your Email',
-        html: emailTemplates.verification(verifyUrl, name),
-        text: textTemplates.verification(verifyUrl, name),
-      });
-      console.log('✅ Verification email sent successfully:', result.messageId);
-    } catch (e) {
-      console.error('❌ Email send failed (verification):', e.message);
-      console.error('Full error:', e);
-    }
-  } else {
-    console.log('📧 Email verification skipped for:', email);
-  }
 
   res.json({ token, user: publicUser(user) });
 }
@@ -85,13 +54,7 @@ export async function login(req, res) {
   const refreshToken = createRefreshToken({ id: user.id, role: user.role });
   setRefreshCookie(res, refreshToken);
   
-  // Include verification status in response
-  const response = { token, user: publicUser(user) };
-  if (!user.emailVerified) {
-    response.requiresVerification = true;
-  }
-  
-  res.json(response);
+  res.json({ token, user: publicUser(user) });
 }
 
 export async function refresh(req, res) {

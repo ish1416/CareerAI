@@ -49,12 +49,7 @@ export default function ProLogin() {
     
     if (res.ok) {
       showToast('Login successful!', 'success');
-      const auth = JSON.parse(localStorage.getItem('careerai_auth') || '{}');
-      if (auth.user?.emailVerified) {
-        navigate('/dashboard');
-      } else {
-        navigate('/verify-email');
-      }
+      navigate('/dashboard');
     } else {
       setError(res.error);
       if (res.canRetry) {
