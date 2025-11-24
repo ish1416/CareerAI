@@ -13,7 +13,7 @@ import CoverLetter from './pages/CoverLetter.jsx';
 import Pricing from './pages/Pricing.jsx';
 import Navbar from './components/Navbar.jsx';
 import AuthShell from './components/AuthShell.jsx';
-import VerificationGuard from './components/VerificationGuard.jsx';
+
 import { ToastProvider } from './components/Toast.jsx';
 import History from './pages/History.jsx';
 import Trends from './pages/Trends.jsx';
@@ -23,7 +23,7 @@ import InterviewPrep from './components/InterviewPrep.jsx';
 import CareerInsights from './components/CareerInsights.jsx';
 import Forgot from './pages/Forgot.jsx';
 import Reset from './pages/Reset.jsx';
-import VerifyEmail from './pages/VerifyEmail.jsx';
+
 import Verify from './pages/Verify.jsx';
 import CareerGoals from './pages/CareerGoals.jsx';
 import SkillDevelopment from './pages/SkillDevelopment.jsx';
@@ -65,14 +65,7 @@ function RequireAuth({ children }) {
   return children;
 }
 
-function RequireVerified({ children }) {
-  // Skip verification if disabled
-  const skipVerification = process.env.REACT_APP_SKIP_EMAIL_VERIFICATION === 'true';
-  if (skipVerification) {
-    return children;
-  }
-  return <VerificationGuard>{children}</VerificationGuard>;
-}
+
 
 function App() {
   const { user } = useAuth(); // initialize and read auth context
@@ -94,8 +87,8 @@ function App() {
       <ConnectionStatus />
       {showPublicNavbar && <Navbar />}
       
-      {/* AI Copilot - Available only for verified users */}
-      {user && user.emailVerified && (
+      {/* AI Copilot - Available for all authenticated users */}
+      {user && (
         <>
           <AICopilot isOpen={copilotOpen} onToggle={() => setCopilotOpen(!copilotOpen)} />
           {!copilotOpen && <CopilotToggle onClick={() => setCopilotOpen(true)} />}
@@ -120,17 +113,16 @@ function App() {
           }
         />
 
-        {/* Verify email (authenticated but not verified) */}
-        <Route path="/verify-email" element={<RequireAuth><div className="container"><VerifyEmail /></div></RequireAuth>} />
+
 
         {/* Authenticated routes use full-width AuthShell layout */}
-        <Route path="/dashboard" element={<RequireAuth><RequireVerified><AuthShell><Dashboard /></AuthShell></RequireVerified></RequireAuth>} />
-        <Route path="/builder" element={<RequireAuth><RequireVerified><AuthShell><ResumeBuilder /></AuthShell></RequireVerified></RequireAuth>} />
-        <Route path="/analysis" element={<RequireAuth><RequireVerified><AuthShell><Analysis /></AuthShell></RequireVerified></RequireAuth>} />
-        <Route path="/match" element={<RequireAuth><RequireVerified><AuthShell><JobMatch /></AuthShell></RequireVerified></RequireAuth>} />
-        <Route path="/job-match" element={<RequireAuth><RequireVerified><AuthShell><JobMatch /></AuthShell></RequireVerified></RequireAuth>} />
-        <Route path="/cover" element={<RequireAuth><RequireVerified><AuthShell><CoverLetter /></AuthShell></RequireVerified></RequireAuth>} />
-        <Route path="/cover-letters" element={<RequireAuth><RequireVerified><AuthShell><CoverLetter /></AuthShell></RequireVerified></RequireAuth>} />
+        <Route path="/dashboard" element={<RequireAuth><AuthShell><Dashboard /></AuthShell></RequireAuth>} />
+        <Route path="/builder" element={<RequireAuth><AuthShell><ResumeBuilder /></AuthShell></RequireAuth>} />
+        <Route path="/analysis" element={<RequireAuth><AuthShell><Analysis /></AuthShell></RequireAuth>} />
+        <Route path="/match" element={<RequireAuth><AuthShell><JobMatch /></AuthShell></RequireAuth>} />
+        <Route path="/job-match" element={<RequireAuth><AuthShell><JobMatch /></AuthShell></RequireAuth>} />
+        <Route path="/cover" element={<RequireAuth><AuthShell><CoverLetter /></AuthShell></RequireAuth>} />
+        <Route path="/cover-letters" element={<RequireAuth><AuthShell><CoverLetter /></AuthShell></RequireAuth>} />
         <Route path="/settings" element={<RequireAuth><AuthShell><Settings /></AuthShell></RequireAuth>} />
         <Route path="/history" element={<RequireAuth><AuthShell><History /></AuthShell></RequireAuth>} />
         <Route path="/trends" element={<RequireAuth><AuthShell><Trends /></AuthShell></RequireAuth>} />
