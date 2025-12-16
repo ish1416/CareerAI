@@ -5,7 +5,7 @@ import apiEnhanced from '../utils/apiEnhanced.js';
 import { SmartLoading, SkeletonLoader, ConnectionStatus } from '../components/LoadingSystem.jsx';
 import { FileText, TrendingUp, Clock, Plus, Search, Filter, RefreshCw, Trash2, Code } from 'lucide-react';
 import { useToast } from '../components/Toast.jsx';
-import VerificationBanner from '../components/VerificationBanner.jsx';
+
 
 export default function PerfectDashboard() {
   const { user } = useAuth();
@@ -117,7 +117,6 @@ export default function PerfectDashboard() {
   return (
     <div style={{ padding: 'var(--space-4)', maxWidth: '1400px', margin: '0 auto' }}>
       <ConnectionStatus />
-      <VerificationBanner />
       
       {/* Header */}
       <div style={{ 

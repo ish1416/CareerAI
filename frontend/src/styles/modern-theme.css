@@ -190,15 +190,39 @@
 /* Premium Dark Mode */
 [data-theme="dark"] {
   --background: #000000;
-  --surface: #000000;
-  --surface-elevated: #111111;
+  --surface: #111111;
+  --surface-elevated: #1a1a1a;
   --border: #333333;
   --border-hover: #555555;
-  --border-focus: #ffffff;
+  --border-focus: #40e0d0;
   --text: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
-  --text-inverse: #ffffff;
+  --text-inverse: #000000;
+  --text-soft: #cbd5e1;
+  
+  /* Legacy token mappings */
+  --bg: #000000;
+  --bg-subtle: #111111;
+  --panel: #111111;
+  --panel-hover: #1a1a1a;
+  --surface-hover: #1a1a1a;
+  --muted: #333333;
+  
+  /* Error states */
+  --error-bg: #2d1b1b;
+  --error-border: #ef4444;
+  --error: #ef4444;
+  
+  /* Success states */
+  --success-bg: #1b2d1b;
+  --success-border: #10b981;
+  --success: #10b981;
+  
+  /* Warning states */
+  --warning-bg: #2d2b1b;
+  --warning-border: #f59e0b;
+  --warning: #f59e0b;
   
   /* Northern Lights colors for dark mode */
   --primary: #40e0d0;
@@ -233,14 +257,6 @@
   --navbar-bg-scrolled: rgba(0, 0, 0, 1);
   --navbar-border: rgba(255, 255, 255, 0.1);
 
-  /* Map legacy tokens for component consistency */
-  --bg: #000000;
-  --bg-subtle: #000000;
-  --panel: #000000;
-  --panel-hover: #111111;
-  --surface-hover: #111111;
-  --text-soft: #cbd5e1;
-  --muted: #000000;
 }
 
 /* Dark Mode 3D Button Effects */
@@ -310,6 +326,32 @@ body {
   line-height: 1.5;
   margin: 0;
   padding: 0;
+}
+
+/* Dark Mode Form Styling */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus,
+[data-theme="dark"] select:focus {
+  background: var(--surface-elevated) !important;
+  border-color: var(--border-focus) !important;
+  box-shadow: 0 0 0 3px rgba(64, 224, 208, 0.1) !important;
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+  color: var(--text-muted) !important;
+}
+
+[data-theme="dark"] label {
+  color: var(--text-secondary) !important;
 }
 
 /* Override any blue button styles globally in dark mode */

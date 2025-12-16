@@ -48,7 +48,6 @@ export function AuthProvider({ children }) {
       setUser(data.user);
       return { 
         ok: true, 
-        requiresVerification: data.requiresVerification || false,
         user: data.user 
       };
     } catch (e) {
@@ -67,7 +66,6 @@ export function AuthProvider({ children }) {
       setUser(data.user);
       return { 
         ok: true, 
-        requiresVerification: !data.user.emailVerified,
         user: data.user 
       };
     } catch (e) {

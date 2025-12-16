@@ -1900,6 +1900,34 @@ label {
   min-height: 500px;
 }
 
+/* Dark mode resume preview */
+:root[data-theme="dark"] .preview-root {
+  background: var(--surface-elevated) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border);
+}
+
+:root[data-theme="dark"] .preview-root .resume-header .name {
+  color: var(--text) !important;
+}
+
+:root[data-theme="dark"] .preview-root .resume-header .contact {
+  color: var(--text-soft) !important;
+}
+
+:root[data-theme="dark"] .preview-root .resume-section h4 {
+  color: var(--text) !important;
+  border-bottom-color: var(--border) !important;
+}
+
+:root[data-theme="dark"] .preview-root .resume-list li {
+  color: var(--text-soft) !important;
+}
+
+:root[data-theme="dark"] .preview-root .resume-list li::before {
+  color: var(--primary) !important;
+}
+
 .resume-header {
   text-align: center;
   margin-bottom: var(--space-4);
@@ -1992,6 +2020,35 @@ label {
   margin-bottom: var(--space-4);
   padding: var(--space-4);
   border-radius: var(--radius) var(--radius) 0 0;
+}
+
+/* Dark mode template variations */
+:root[data-theme="dark"] .preview-root.tpl-modern {
+  background: linear-gradient(135deg, var(--surface-elevated) 0%, var(--surface) 100%) !important;
+}
+
+:root[data-theme="dark"] .preview-root.tpl-modern .resume-header {
+  background: var(--primary) !important;
+  color: var(--white) !important;
+}
+
+:root[data-theme="dark"] .preview-root.tpl-minimal .resume-section h4 {
+  color: var(--text-muted) !important;
+}
+
+:root[data-theme="dark"] .preview-root.tpl-professional .resume-header {
+  background: var(--surface-elevated) !important;
+  border: 1px solid var(--border) !important;
+}
+
+:root[data-theme="dark"] .preview-root.tpl-creative {
+  background: linear-gradient(45deg, var(--surface-elevated) 0%, var(--surface) 100%) !important;
+  border-left-color: var(--primary) !important;
+}
+
+:root[data-theme="dark"] .preview-root.tpl-creative .resume-section h4 {
+  color: var(--primary) !important;
+  border-bottom-color: var(--primary) !important;
 }
 
 .preview-root.tpl-creative {

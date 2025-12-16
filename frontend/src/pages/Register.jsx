@@ -26,12 +26,8 @@ export default function Register() {
     e.preventDefault();
     const res = await register(name, email, password);
     if (res.ok) {
-      showToast('Account created! Please verify your email.', 'success');
-      if (res.requiresVerification || !res.user?.emailVerified) {
-        navigate('/verify-email');
-      } else {
-        navigate('/dashboard');
-      }
+      showToast('Account created successfully!', 'success');
+      navigate('/dashboard');
     }
     else {
       const msg = res.error || 'Register failed';

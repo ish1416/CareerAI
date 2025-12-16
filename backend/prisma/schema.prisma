@@ -1,54 +1,28 @@
-// Prisma schema for MySQL
-// Run migrations after setting DATABASE_URL in .env
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
-}
-
-enum Role {
-  user
-  admin
-}
-
-// Added plan enum
-enum Plan {
-  free
-  pro
-  premium
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
   id        Int      @id @default(autoincrement())
-  name      String?
   email     String   @unique
-  password  String
-  role      Role     @default(user)
+  password  String?
+  name      String?
+  avatar    String?
+  plan      String   @default("free")
+  verified  Boolean  @default(false)
   createdAt DateTime @default(now())
-
-  // Auth & OAuth
-  emailVerified           Boolean  @default(false)
-  oauthProvider           String?
-  oauthProviderId         String?
-  verificationToken       String?
-  verificationTokenExpires DateTime?
-  resetToken              String?
-  resetTokenExpires       DateTime?
-
-  // Subscription and billing
-  plan                Plan     @default(free)
-  stripeCustomerId    String?
-  stripeSubscriptionId String?
-  updatedAt           DateTime @updatedAt @default(now())
-
-  // Google Integration
-  googleTokens        String?
-  googleConnected     Boolean  @default(false)
+  updatedAt DateTime @updatedAt
 
   resumes       Resume[]
   coverLetters  CoverLetter[]
@@ -112,7 +86,6 @@ model JobDescription {
   user User @relation(fields: [userId], references: [id])
 }
 
-// Learning & Development
 model LearningPath {
   id          Int      @id @default(autoincrement())
   userId      Int
@@ -189,7 +162,6 @@ model UserProgress {
   user User @relation(fields: [userId], references: [id])
 }
 
-// Networking & Community
 model NetworkConnection {
   id          Int      @id @default(autoincrement())
   userId      Int
@@ -229,7 +201,6 @@ model GroupMember {
   @@unique([userId, groupId])
 }
 
-// Portfolio & Projects
 model Portfolio {
   id          Int      @id @default(autoincrement())
   userId      Int      @unique
@@ -259,7 +230,6 @@ model Project {
   portfolio Portfolio @relation(fields: [portfolioId], references: [id])
 }
 
-// Job Tracking & Applications
 model JobApplication {
   id          Int      @id @default(autoincrement())
   userId      Int
@@ -282,7 +252,6 @@ model JobApplication {
   user User @relation(fields: [userId], references: [id])
 }
 
-// Analytics & Insights
 model UserAnalytics {
   id              Int      @id @default(autoincrement())
   userId          Int      @unique
@@ -300,7 +269,6 @@ model UserAnalytics {
   user User @relation(fields: [userId], references: [id])
 }
 
-// Career Goals & Planning
 model CareerGoal {
   id          Int      @id @default(autoincrement())
   userId      Int
@@ -316,7 +284,6 @@ model CareerGoal {
   user User @relation(fields: [userId], references: [id])
 }
 
-// Interview Preparation
 model InterviewSession {
   id          Int      @id @default(autoincrement())
   userId      Int
@@ -332,20 +299,19 @@ model InterviewSession {
   user User @relation(fields: [userId], references: [id])
 }
 
-// Coding Questions Platform
 model CodingQuestion {
   id          Int      @id @default(autoincrement())
   title       String
   slug        String   @unique
   description String   @db.Text
-  difficulty  String   // Easy, Medium, Hard
+  difficulty  String
   topic       String
   company     String
   platform    String
   examples    Json
   constraints Json
   hints       Json
-  solution    Json     // Solutions in multiple languages
+  solution    Json
   tags        Json
   frequency   Int      @default(0)
   acceptance  Int      @default(0)
@@ -361,7 +327,7 @@ model CodingSubmission {
   questionId  Int
   code        String   @db.Text
   language    String
-  status      String   // Accepted, Wrong Answer, Time Limit Exceeded, etc.
+  status      String
   runtime     String?
   memory      String?
   testResults Json?
@@ -382,7 +348,7 @@ model CodingProgress {
   hardSolved      Int      @default(0)
   streak          Int      @default(0)
   lastSolvedDate  DateTime?
-  solvedQuestions Json     @default("[]") // Array of question IDs
+  solvedQuestions Json     @default("[]")
   favoriteTopics  Json     @default("[]")
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

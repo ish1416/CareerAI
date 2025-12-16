@@ -21,11 +21,7 @@ export function ThemeProvider({ children }) {
   const value = useMemo(() => ({
     theme,
     setTheme,
-    toggleTheme: () => setTheme((t) => {
-      if (t === 'light') return 'dark';
-      if (t === 'dark') return 'ocean';
-      return 'light';
-    }),
+    toggleTheme: () => setTheme((t) => t === 'light' ? 'dark' : 'light'),
   }), [theme]);
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

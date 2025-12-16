@@ -194,10 +194,10 @@ export default function AuthShell({ children }) {
               <button
                 className="sidebar-action"
                 onClick={toggleTheme}
-                title={theme === 'light' ? 'Switch to dark mode' : theme === 'dark' ? 'Switch to ocean mode' : 'Switch to light mode'}
+                title={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
               >
                 {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-                <span>{theme === 'light' ? 'Dark Mode' : theme === 'dark' ? 'Ocean Mode' : 'Light Mode'}</span>
+                <span>{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
               </button>
               
               <NavLink to="/settings" className="sidebar-action">
