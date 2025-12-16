@@ -9,7 +9,7 @@ const from = process.env.EMAIL_FROM || 'no-reply@careerai.local';
 let transporter;
 
 // Email functionality disabled
-transporter = nodemailer.createTransporter({ 
+transporter = nodemailer.createTransport({ 
   streamTransport: true,
   newline: 'unix',
   buffer: true
