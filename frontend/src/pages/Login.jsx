@@ -49,11 +49,7 @@ export default function Login() {
     
     if (res.ok) {
       showToast('Login successful!', 'success');
-      if (res.requiresVerification || !res.user?.emailVerified) {
-        navigate('/verify-email');
-      } else {
-        navigate('/dashboard');
-      }
+      navigate('/dashboard');
     } else {
       setError(res.error);
       if (res.canRetry) {

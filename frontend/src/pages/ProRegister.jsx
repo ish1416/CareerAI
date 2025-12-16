@@ -58,9 +58,8 @@ export default function ProRegister() {
     
     const res = await register(name, email, password);
     if (res.ok) {
-      const u = JSON.parse(localStorage.getItem('user') || 'null');
-      if (u?.emailVerified) navigate('/dashboard');
-      else navigate('/verify-email');
+      showToast('Account created successfully!', 'success');
+      navigate('/dashboard');
     } else {
       const msg = res.error || 'Registration failed';
       setError(msg);

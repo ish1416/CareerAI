@@ -292,17 +292,7 @@ export default function Dashboard() {
     >
       <WelcomeBanner />
 
-      {user && !user.emailVerified && (
-        <div className="card" style={{ marginTop: 12 }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div>
-              <strong>Email verification required</strong>
-              <p className="muted" style={{ marginTop: 4 }}>Please verify your email to access full dashboard features.</p>
-            </div>
-            <Link to="/verify-email" className="btn small">Verify now</Link>
-          </div>
-        </div>
-      )}
+
 
       <section className="section">
         <div className="section-intro" style={{ marginBottom: 'var(--space-5)' }}>
